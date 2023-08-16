@@ -1,0 +1,156 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" 
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+          xmlns:jsp="http://java.sun.com/JSP/Page" 
+          xmlns:spring="http://www.springframework.org/tags" 
+          version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:eval expression="@applicationProps['application.version']" var="applicationVersion" scope="request"/>
+    <spring:eval expression="@applicationProps['resources.version']" var="resourceVersion"/>
+    <spring:eval expression="@applicationProps['localCacheObjects.version']" var="localObjectsVersion"/>
+    <spring:eval expression="@applicationProps['static_image_serverA']" var="imageServerA" scope="request"/>
+    <spring:eval expression="@applicationProps['static_image_serverB']" var="imageServerB" scope="request"/>
+    <spring:eval expression="@applicationProps['signature_serverA']" var="signatureServerA" scope="request"/>
+    <spring:eval expression="@applicationProps['co_aplicativo']" var="coAplicativo" scope="request"/>
+    <spring:eval expression="@applicationProps['version_jre']" var="versionJRE" scope="request"/>
+    <spring:eval expression="@applicationProps['staticResourcesUrl']" var="staticResourcesUrl" scope="request"/>
+    
+
+    <c:set var="resourceURL" value="resources-${resourceVersion}" scope="request"/>
+    <c:set var="staticResourcesURL" value="${staticResourcesUrl}" scope="request"/>
+    <c:set var="versionJRE" value="${versionJRE}" scope="request"/>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/menu.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/default.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/pagination.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/ui.dynatree.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/themes/custom-theme/skin.css" />    
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/historic.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/datepicker.css" />
+
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="${resourceURL}/css/dataTables.bootstrap4.min.css" />-->
+    
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            border: 0;
+        }
+
+        #main {
+            height: 100%;
+            width: 100%;
+            border: 0;
+        }
+
+        #header {
+            margin: 0;
+        }
+
+        #leftAccordion {
+            width: 25%;
+        }
+
+        #bottomTabs {
+            height: 40%;
+        }
+
+        hr.spacer {
+            border: 0;
+            background-color: #ededed;
+            width: 80%;
+            height: 1px;
+        }
+    </style>
+
+    <!-- Get the user local from the page context (it was set by Spring MVC's locale resolver) -->
+    <c:set var="userLocale">
+        <c:set var="plocale">${pageContext.response.locale}</c:set>
+        <c:out value="${fn:replace(plocale, '_', '-')}" default="es"/>
+    </c:set>
+
+    <script type="text/javascript">var resourceURL="${resourceURL}"; var versionJRE = "${versionJRE}"; var djConfig = {parseOnLoad: true, isDebug: false, locale: '${fn:toLowerCase(userLocale)}'};</script>
+    
+    <!-- 
+    <script src="${resourceURL}/js/deployJava2.js" type="text/javascript"> required for FF3 and Opera </script>
+    -->
+    <script src="${resourceURL}/js/moment.min.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/moment_es.js" type="text/javascript"><!-- required for FF3 and Opera --></script>    
+    <script src="${resourceURL}/js/jquery-1.10.1.min.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/bootstrap.min.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/bootbox.min.js" type="text/javascript"><!-- required for FF3 and Opera --></script>    
+    <script src="${resourceURL}/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/jquery.browser.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/jquery.blockUI.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/datePickerSelector.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/bigTextBox.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+    <script src="${resourceURL}/js/default.js" type="text/javascript"><!-- required for FF3 and Opera --></script>    
+
+    <!--
+    <script src="${resourceURL}/js/dataTables.bootstrap.min.js" type="text/javascript">required for FF3 and Opera</script>                
+    <script src="${resourceURL}/js/dataTables.bootstrap4.min.js" type="text/javascript">required for FF3 and Opera </script>                
+    <script src="${resourceURL}/js/dataTables.fixedHeader.min.js" type="text/javascript">required for FF3 and Opera</script>                
+    <script src="${resourceURL}/js/dataTables.responsive.min.js" type="text/javascript">required for FF3 and Opera</script>                
+    
+    <script src="${resourceURL}/js/appletManager2.js" type="text/javascript"></script>
+    -->
+    
+    <script type="text/javascript">var pRutaContexto = "${ctx}"; var pAppVersion="${applicationVersion}"; var urlImagA="${imageServerA}"; var urlImgB="${imageServerB}"; var coAplicativo = "${coAplicativo}"; var userDni = "${usuario.nuDni}" ;</script>
+    <script type="text/javascript"><![CDATA[function loadJs(varUrl) {var js = document.createElement('script');js.src = varUrl;var head = document.getElementsByTagName('head')[0];head.appendChild(js);}]]></script>
+    <script type="text/javascript"><![CDATA[function loadCss(varUrl) {var h = document.getElementsByTagName('head')[0];var link = document.createElement('link');link.href = varUrl;link.type = 'text/css';link.rel = 'stylesheet';h.appendChild(link);}]]></script>
+
+    <script type="text/javascript">
+        var version=Math.round(Math.random()*100000);
+        jQuery(document).ready(function() {
+            loadJs("${resourceURL}/js/util.js?"+version);
+            loadJs("${resourceURL}/js/utiles.js?"+version);
+            loadJs("${resourceURL}/js/fechas.js?"+version);
+            loadJs("${resourceURL}/js/overLib.js?"+version);
+            loadJs("${resourceURL}/js/menu.js?"+version);
+            loadJs("${resourceURL}/js/jquery-cookie.js?"+version);
+            loadJs("${resourceURL}/js/jquery.dataTables.min.js?"+version);
+            loadJs("${resourceURL}/js/recepDocumAdm.js?"+version);
+            loadJs("${resourceURL}/js/docObjetos.js?"+version);  //Wcutipa
+            loadJs("${resourceURL}/js/jquery.dynatree.js?"+version);
+            loadJs("${resourceURL}/js/emisionDocumAdm.js?"+version);
+            loadJs("${resourceURL}/js/emisionDocumPersonal.js?"+version);            
+            loadJs("${resourceURL}/js/jquery.fileupload.js?"+version);
+            loadJs("${resourceURL}/js/jquery.iframe-transport.js?"+version);
+            loadJs("${resourceURL}/js/docAnexos.js?"+version);
+            loadJs("${resourceURL}/js/toolBarConfig.js?"+version);
+            loadJs("${resourceURL}/js/consultas.js?"+version);
+            loadJs("${resourceURL}/js/configGeneral.js?"+version);            
+            loadJs("${resourceURL}/js/consulDocEmitidos.js?"+version);
+            loadJs("${resourceURL}/js/consulDocRecepcionados.js?"+version);
+            loadJs("${resourceURL}/js/emisionDocumAlta.js?"+version);
+            loadJs("${resourceURL}/js/mesaPartes.js?"+version);
+            loadJs("${resourceURL}/js/cargoEntrega.js?"+version);
+            /* [HPB] Inicio 28/03/23 CLS-087-2022 */
+            loadJs("${resourceURL}/js/cargoEntregaInterno.js?"+version);
+            /* [HPB] Fin 28/03/23 CLS-087-2022 */
+            /* [HPB] Inicio 17/07/23 OS-0000786-2023 Mejoras */
+            loadJs("${resourceURL}/js/reloj.js?"+version);
+            /* [HPB] Fin 17/07/23 OS-0000786-2023 Mejoras */
+            loadJs("${resourceURL}/js/consulDocExternos.js?"+version);
+            loadJs("${resourceURL}/js/consulDocEmiPers.js?"+version);
+            loadJs("${resourceURL}/js/seguiEstadosRecep.js?"+version);
+            loadJs("${resourceURL}/js/seguiEstadosEmi.js?"+version); 
+            loadJs("${resourceURL}/js/documVobo.js?"+version); 
+            loadJs("${resourceURL}/js/consulDocVobo.js?"+version); 
+            loadJs("${resourceURL}/js/consulDocSalida.js?"+version);
+            loadJs("${resourceURL}/js/mensajeriaConsult.js?"+version);
+            loadJs("${resourceURL}/js/mensajesConsult.js?"+version);
+            loadJs("${resourceURL}/js/mensajeriaDevolucionConsult.js?"+version);/*26/08/19 HPB Devolucion Doc a Oficina*/
+            loadJs("${resourceURL}/js/emisionDocumAdmModif.js?"+version);
+            loadJs("${resourceURL}/js/repAcervoDocPers.js?"+version);
+            loadJs("${resourceURL}/js/FileSaver.js?"+version);
+            loadJs("${resourceURL}/js/jszip.min.js?"+version);
+            loadJs("${resourceURL}/js/jszip.js?"+version);
+            loadJs("${resourceURL}/js/actionLog.js?"+version);//Hermes 28/05/19
+            loadJs("${resourceURL}/js/consulDocPendientes.js?"+version);/*28/08/19 HPB Devolucion Doc a Oficina*/
+            loadJs("${resourceURL}/js/wsTradoc.js"); //siempre al final
+        });
+    </script>
+</jsp:root>

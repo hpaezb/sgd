@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : consultaAccesoAdicionalDet
+    Created on : 10/03/2022, 12:38:05 PM
+    Author     : Despacho Presidencial
+-->
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+          xmlns:c="http://java.sun.com/jsp/jstl/core" 
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script languaje="javascript">jQuery(document).ready(function() {fn_eventAccesoAdicionalDet();});</script>
+    <!-- any content can be specified here, e.g.: -->
+    <div class="ui-datatable ui-datatable-scrollable">
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr valign="top">
+                <td>
+                 <div class="toolbar-left-vertical">
+                    <button title ="Agregar Dependencia" class="btn btn-default btn-xs" onclick="fn_addDependenciaAcceso();" type="button">
+                      <span class="button.ui-button-icon-only ui-icon ui-icon-circle-plus"/>
+                    </button><br/><br/>
+                    <button title ="Eliminar Dependencia" class="btn btn-default btn-xs" onclick="fn_removeDependenciaAcceso();" type="button">
+                      <span class="button.ui-button-icon-only ui-icon ui-icon-circle-minus"/>
+                    </button>
+                 </div>
+                </td> 
+                <td width="100%">
+                    <input id="txtTblAccesoAdiFilaWhereButton" name="txtTblAccesoAdiFilaWhereButton" type="hidden"/>
+                    <input id="txtTblAccesoAdiColWhereButton" name="txtTblAccesoAdiColWhereButton" type="hidden"/>
+                    <div class="ui-datatable ui-datatable-scrollable">
+                        <div class="ui-datatable-scrollable-header">
+                            <table class="ui-state-default" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">Dependencia</th>
+                                        <th width="10%">Acceso <br>Total</br></th>
+                                        <th width="10%">Consulta <br>Total</br></th>
+                                        <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                        <!-- <th width="15%">Acceso MP <br>Total</br></th>-->
+                                        <th width="10%">Acceso<br>MP Total</br></th>
+                                        <!-- <th width="15%">Consulta MP <br>Total</br></th> -->
+                                        <th width="10%">Consulta<br>MP Total</br></th>
+                                        <th width="10%">Agregar <br>Trabajador</br></th>
+                                        <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="bx_sb ui-datatable-scrollable-body" style='height:115px;'>
+                            <table class="ui-datatable-edit-data" id="tblAccesosAdicionales" cellpadding="0" cellspacing="0" style="width:100%;">
+                                <tbody>
+                                    <tr class="oculto">
+                                        <td width="50%">
+                                            <input type="text" style="width:87.8%;" onkeyup="fu_cambioTxtEmiDoc(this);fu_FiltrarTecladoCadenaFunParam(event, false, public_apenom,this);"/>
+                                            <button title ="Buscar Dependencia" class="btn btn-default btn-xs" onclick="fn_buscaDependenciaAccesoAdicional(this);" type="button">
+                                                <span class="button.ui-button-icon-only ui-icon ui-icon-search"/>
+                                            </button>                                        
+                                        </td> 
+                                        <td style="display:none">INS</td>
+                                        <!-- DEPENDENCIA -->
+                                        <td style="display:none"></td>
+                                        <td width="10%" style="text-align: center">
+                                            <input type="checkbox" id="accesoTotal" name="accesoTotal"  value="1"/>    
+                                        </td>
+                                        <td width="10%" style="text-align: center">
+                                            <input type="checkbox" id="consultaTotal" name="consultaTotal"  value="1"/>    
+                                        </td>
+                                        <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                        <!-- <td width="15%" style="text-align: center">-->
+                                        <td width="10%" style="text-align: center">
+                                        <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->    
+                                            <input type="checkbox" id="accesoMPTotal" name="accesoMPTotal"  value="1"/>
+                                        </td>
+                                        <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                        <!--  <td width="15%" style="text-align: center">-->
+                                        <td width="10%" style="text-align: center">
+                                        <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->    
+                                            <input type="checkbox" id="consultaMPTotal" name="consultaMPTotal"  value="1"/>
+                                        </td>
+                                        <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                        <td width="10%" style="text-align: center">
+                                            <input type="checkbox" id="agregarTrabajador" name="agregarTrabajador"  value="1"/>
+                                        </td>
+                                        <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->
+                                        <td style="display:none">0</td>
+                                    </tr>
+                                    <c:forEach var="lDependenciaAcceso" items="${lstDependenciaAccesos}" varStatus="status">                                                                       
+                                        <tr>
+                                            <td width="50%">
+                                                <input type="text" style="width:87.8%;" onkeyup="fu_cambioTxtEmiDoc(this);fu_FiltrarTecladoCadenaFunParam(event, false, public_apenom,this);" value="${lDependenciaAcceso.deDependencia}"/>
+                                                <button title ="Buscar Dependencia" class="btn btn-default btn-xs" onclick="fn_buscaDependenciaAccesoAdicional(this);" type="button">
+                                                    <span class="button.ui-button-icon-only ui-icon ui-icon-search"/>
+                                                </button>                                        
+                                            </td>
+                                            <td style="display:none">BD</td>
+                                            <!-- DEPENDENCIA -->
+                                            <td style="display:none">${lDependenciaAcceso.coDependencia}</td>
+                                            <td width="10%" style="text-align: center">
+                                                <c:choose>
+                                                    <c:when test="${lDependenciaAcceso.tiAcceso eq '0'}">
+                                                        <input type="checkbox" id="accesoTotal" onclick="changeAccionBDDepAdic(this);" name="accesoTotal" checked="true" value="1"/> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" id="accesoTotal" onclick="changeAccionBDDepAdic(this);" name="accesoTotal" value="0"/>
+                                                    </c:otherwise>
+                                                </c:choose>                          
+                                            </td>
+                                            <td width="10%" style="text-align: center">
+                                                <c:choose>
+                                                    <c:when test="${lDependenciaAcceso.inConsulta eq '0'}">
+                                                        <input type="checkbox" id="consultaTotal" onclick="changeAccionBDDepAdic(this);" name="consultaTotal" checked="true" value="1"/> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" id="consultaTotal" onclick="changeAccionBDDepAdic(this);" name="consultaTotal" value="0"/>
+                                                    </c:otherwise>
+                                                </c:choose>                                                                             
+                                            </td>
+                                            <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                            <!-- <td width="15%" style="text-align: center">-->
+                                            <td width="10%" style="text-align: center">
+                                            <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->    
+                                                <c:choose>
+                                                    <c:when test="${lDependenciaAcceso.tiAccesoMp eq '0'}">
+                                                        <input type="checkbox" id="accesoMPTotal" onclick="changeAccionBDDepAdic(this);" name="accesoMPTotal" checked="true" value="1"/> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" id="accesoMPTotal" onclick="changeAccionBDDepAdic(this);" name="accesoMPTotal" value="0"/>
+                                                    </c:otherwise>
+                                                </c:choose>                                                
+                                            </td>
+                                            <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                            <!-- <td width="15%" style="text-align: center">-->
+                                            <td width="10%" style="text-align: center">
+                                            <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->    
+                                                <c:choose>
+                                                    <c:when test="${lDependenciaAcceso.inConsultaMp eq '0'}">
+                                                        <input type="checkbox" id="consultaMPTotal" onclick="changeAccionBDDepAdic(this);" name="consultaMPTotal" checked="true" value="1"/> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" id="consultaMPTotal" onclick="changeAccionBDDepAdic(this);" name="consultaMPTotal" value="0"/>
+                                                    </c:otherwise>
+                                                </c:choose>                                                 
+                                            </td>
+                                            <!-- [HPB] Inicio 16/01/23 CLS-087-2022 -->
+                                            <td width="10%" style="text-align: center">
+                                                <c:choose>
+                                                    <c:when test="${lDependenciaAcceso.inTrabajador eq '1'}">
+                                                        <input type="checkbox" id="agregarTrabajador" onclick="changeAccionBDDepAdic(this);" name="agregarTrabajador" checked="true" value="1"/> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" id="agregarTrabajador" onclick="changeAccionBDDepAdic(this);" name="agregarTrabajador" value="0"/>
+                                                    </c:otherwise>
+                                                </c:choose>                                                 
+                                            </td>                                            
+                                            <!-- [HPB] Fin 16/01/23 CLS-087-2022 -->                                            
+                                            <td style="display:none">1</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>                            
+                        </div>                        
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</jsp:root>

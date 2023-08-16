@@ -1,0 +1,50 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+ <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+<jsp:output omit-xml-declaration="yes"/>
+
+    <c:set var="divId" value="windowConsultaPrevia" scope="request"/>
+    <c:set var="posiciona" value="width:450px; height:363px;" scope="request"/>
+
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <tiles:putAttribute name="title" value="BUSCAR"/>
+        <tiles:putAttribute name="body">
+            <form:form modelAttribute="citizenBean" enctype="multipart/form-data">
+            <div id="datos">
+                <table width="100%" class="tlb">
+                    <tr>
+                        <td class="td_sombra">Apellido Paterno: </td>
+                        <td> 
+                            <form:input path="deApp" maxlength="200" style="width: 250px;" class="delUpperCase"/>                            
+                        </td>
+                        <td>
+                            <button title ="Buscar ciudadano" class="btn btn-default btn-sm" onclick="fn_buscarCiudadanoBusquedaPrevio();" type="button" value="Buscar">
+                            <span class="glyphicon glyphicon-search"><jsp:text/></span> Buscar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_sombra">Apellido Materno: </td>
+                        <td> 
+                            <form:input path="deApm" maxlength="200" style="width: 250px;" class="delUpperCase"/>                            
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="td_sombra">Nombre: </td>
+                        <td> 
+                            <form:input path="deNom" maxlength="200" style="width: 250px;" class="delUpperCase"/>                            
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>                 
+            <script type="text/javascript">jQuery('#deApp').focus();</script>
+            </form:form>
+        </tiles:putAttribute>
+        <tiles:putAttribute name="footer">
+            <button title ="Regresar a m&#243;dulo anterior" class="btn btn-default btn-sm" onclick="removeDomId('windowConsultaPrevia');" type="button" value="Salir">
+                <span class="glyphicon glyphicon-arrow-left"><jsp:text/></span> Cerrar</button>
+        </tiles:putAttribute>
+    </tiles:insertTemplate>
+</jsp:root>

@@ -1,0 +1,175 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <jsp:scriptlet><![CDATA[response.setHeader("Cache-Control", "max-age=43200");]]></jsp:scriptlet>
+    
+	<script languaje="javascript">jQuery(document).ready(function() {
+            fn_iniMensajes();
+            fn_cargarResponsable() ;
+        });</script>  	    
+    <div class="ui-panel ui-corner-all" id="divBuscarMensajes">
+        <div class="ui-panel-titlebar ui-widget-header ui-corner-all">
+            <span>GESTIÓN DE MENSAJES</span>
+        </div>
+        <div class="ui-panel-body">
+                <input id="txtFechaActual" name="txtFechaActual" type="hidden" value="${fechaActual}"/>
+                <input id="txtAnnioActual" name="txtAnnioActual" type="hidden" value="${annioActual}"/>
+                <input id="txtCodOpcion" name="txtCodOpcion" type="hidden" value="M040102"/><!--Hermes - Log 28/05/19-->
+                <fieldset>
+                    <div class="btn-group btn-group-lg">
+
+                       <div class="btn-group btn-group-lg">
+                           <button title ="Exportar Consulta EXCEL" class="btn btn-primary" onclick="fu_generarReporteMsjConsulXLS();" type="button">
+                            <span class="glyphicon glyphicon-export"><jsp:text/></span> Exportar</button>
+                           <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">
+                               <span class="caret"></span>&amp;nbsp;
+                               <span class="sr-only">Toggle Dropdown</span>
+                           </button>
+                           <ul id="ullsAbrirDocumento" class="dropdown-menu" role="menu">
+                               <li><a href="#" onclick="fu_generarReporteMsjConsulPDF();" title ="Exportar Consulta PDF">Exportar PDF</a></li>
+                               <li><a href="#" onclick="fu_generarReporteMsjConsulXLS();" title ="Exportar Consulta Excel">Exportar Excel</a></li>
+                           </ul>
+                       </div>
+                              
+                       <button title ="Descargar Documento" class="btn btn-primary btn-lg" 
+                               onclick="validardescargaMasiva(this); ejecutaOpcionModal(this, '/srGestionMensajes.do?accion=goDescargarMensajePrevio&amp;codigos='+$('#txtSelecctionOption').val(), 'POST');" type="button">
+                           <span class="glyphicon glyphicon-edit"><jsp:text/></span> Descargar</button>
+                        <!-- By César Mantilla -->    
+                        <button type="button" onclick="fn_verDocMensajeriagm();" class="btn btn-primary btn-lg" title="Ver Documento"><span class="glyphicon glyphicon-list-alt"></span> Ver Documento</button>    
+
+                        <button type="button" onclick=" fn_verAnexoMensajeriaRecepAnex();" class="btn btn-primary btn-lg" title="Ver Documento Anexos - Referencias"><span class="glyphicon glyphicon-paperclip"></span> Ver Anexos</button>    
+
+                        <button type="button" onclick=" fn_verSeguimientoMensajeriaRecepAnex();" class="btn btn-primary btn-lg" title="Seguimiento de Documentos"><span class="glyphicon glyphicon-transfer"></span> Seguimiento</button>    
+
+                        <!-- Fin By César Mantilla -->
+                         
+                       <button title ="Salir Consulta Emisi&#243;n de Documentos" class="btn btn-primary btn-lg" onclick="cerrarPantalla();" type="button">
+                           <span class="glyphicon glyphicon-log-out"><jsp:text/></span> Salir</button>
+                    </div>                    
+
+                </fieldset>
+                <!--buscarDocumentoExtRecepBean-->
+            <form:form modelAttribute="buscarDocumentoCargaMsjBean">
+            <form:hidden path="tipoBusqueda"/>        
+            <form:hidden path="coDependencia"/>        
+            <form:hidden path="coEmpleado"/>        
+            <form:hidden path="tiAcceso"/>    
+            <form:hidden path="esFiltroFecha"/>  
+            <form:hidden path="feEmiIni"/>  
+            <form:hidden path="feEmiFin"/>  
+            <table width="100%">
+                <tr valign="top">
+                    <td width="80%">
+                        <fieldset>
+                        <legend>Configuración Búsqueda</legend>
+                        <table width="100%">
+                            <tr>
+                                <td>Nro Guia:</td>
+                                <td>
+                                    <form:input path="busNuSerMsj" style="width: 60px;" maxlength="10"/> - <!--Se pone a tam de 50 ya que el campo NU_DOC de la tabla TDTX_REMITOS_RESUMEN -->
+                                    <form:input path="busAnSerMsj" style="width: 60px;" maxlength="4"/>                                       
+                                </td>
+                                <td>Destinatario:</td>
+                                <td>
+                                   <form:input path="busDesti" style="width: 150px;" maxlength="20"/>
+                                </td>
+                                <td>Ámbito:</td>
+                                <td>
+                                    <form:select path="coAmbitoMsj" style="width:150px">
+                                        <form:options items="${deAmbitosList}" itemValue="celeDesele" itemLabel="celeDesele"/>
+                                    </form:select>
+                                </td>
+                                <td>Tipo Mensajero:</td>
+                                <td>
+                                    <form:select path="coTipoMsj" style="width:330px" onchange="fn_cargarResponsable()">
+                                         <form:options items="${deTipoMsjList}" itemValue="celeDesele" itemLabel="celeDesele"/>
+                                    </form:select>
+                                </td>
+                                <td>Fecha:</td>  
+                                <td>
+                                    <form:hidden path="coAnnio"/>  
+                                    <div id="fechaFiltro" class="cajaFechas">
+                                          <div class="cajaIcono"><span class="glyphicon glyphicon-calendar fa fa-calendar"><jsp:text/></span></div>
+                                          <div name="labelDate" class="cajaEtiqueta" style="text-align: center;width: 80px;"><jsp:text/></div>
+                                          <div class="cajaTriangulo"><b class="caret"><jsp:text/></b></div>
+                                    </div>                                        
+                                </td>
+                                <td>Estado:</td>
+                                <td>
+                                    <form:select path="coEstadoDoc" style="width:180px">
+                                         <form:options items="${deEstadosList}" itemValue="coEst" itemLabel="deEst"/>
+                                    </form:select>
+                                </td>
+                                <td>Nro. Documento:</td>
+                                <td>
+                                    <form:input path="busNuDoc" style="width: 100px;" maxlength="20"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nro Expediente:</td>
+                                <td>
+                                    <form:input path="busNumExpediente" style="width: 120px;" maxlength="20"/>
+                                </td>
+                                <td>Prioridad:</td>
+                                <td>
+                                     <form:select path="coTipoEnvMsj" style="width:150px">
+                                         <form:options items="${deTipoEnvList}" itemValue="celeDesele" itemLabel="celeDesele"/>
+                                     </form:select>
+                                </td>
+                                <td>Zona:</td>
+                                <td>
+                                     <form:select path="tipoZona" style="width:150px">
+                                         <form:options items="${deTipoZona}" itemValue="celeCodele" itemLabel="celeDesele"/>
+                                     </form:select>
+                                </td>
+                                <td>Responsable:</td>
+                                <td>
+                                     <div id="divResponsableMensajeria"><jsp:text/></div>                                        
+                                </td>
+                                <td>Tipo Doc:</td>
+                                <td>
+                                     <form:select path="busTipoDoc" style="width:290px">
+                                         <form:options items="${deTipoDocumentoList}" itemValue="coTipDoc" itemLabel="deTipDoc" />
+                                     </form:select>
+                                </td>								   
+                                <td>Oficina:</td>
+                                <td>
+                                    <form:select path="coOficina" style="width:180px">
+                                         <form:options items="${deOficinaList}" itemValue="coDependencia" itemLabel="deDependencia"/>
+                                    </form:select>
+                                </td>
+                                <td>
+                                </td>
+                                <td> 
+                                    <button title ="Buscar documentos" class="btn btn-default btn-sm" onclick="changeBusqMensajes('0');" type="button"> 
+                                        <span class="glyphicon c"><jsp:text/></span> Buscar</button>
+                                    <button title ="Limpiar datos de b&#250;squeda" class="btn btn-default btn-sm" onclick="fu_cleanBusqMensajes('1');" type="button"> 
+                                        <span class="glyphicon glyphicon-remove"><jsp:text/></span></button>
+                                </td> 
+                            </tr>                                
+                        </table>
+                        </fieldset>                                                  
+                    </td>                    
+                </tr>
+            </table>
+            </form:form>
+                
+                <fieldset>
+                <legend>Detalles</legend>              
+                              
+                <div id="divTablaMensajes">
+                 
+                    <jsp:directive.include file="tblMensajes.jspx"/>                   
+                                       
+                    
+                </div>
+
+                </fieldset>
+        </div>
+    </div>
+    <div id="divDescargaMsj" style="display:none;">
+        <!--jsp:directive.include file="DescargarMensajeMasivo.jspx"/-->
+    </div>                
+</jsp:root>

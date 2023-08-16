@@ -1,0 +1,58 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <c:set var="divId" value="windowDevolverDocMensajeria" scope="request"/>
+    <c:set var="posiciona" value="width:700px;top:200px;" scope="request"/>
+  
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <tiles:putAttribute name="title" value="Devolver documento a oficina origen"/>        
+        <tiles:putAttribute name="body">
+            <form:form modelAttribute="documentoEmiArBean">               
+                <fieldset>
+                    <legend>Detalle</legend>
+                    <table width="100%">
+                        <tr>
+                            <td>Fecha Devolución:</td>
+                            <td> 
+                                <input readonly="readonly" maxlength="10" id="txtFechaDevOficina" name="txtFechaDevOficina" type="text" style="width: 100px;" placeholder="dd/mm/aaaa" value="${fechaActual}"/>
+                            </td>
+                            <td>Usuario Devolución:</td>
+                            <td> 
+                                <input readonly="readonly" maxlength="20" id="txtUsuarioDevOficina" name="txtUsuarioDevOficina" type="text" style="width: 100px;" placeholder="" value="${pusuarioDevDocMsj}"/>
+                            </td>                    
+                        </tr>                
+                        <tr>
+                            <td width="20%" valign="top">Observaciones:</td>    
+                            <td colspan="3">
+                                <textarea id="txtObservacionesDevOficina" name="txtObservacionesDevOficina" rows="4" maxlength="500" style="width:100%;resize: none;"></textarea>
+                            </td>             
+                        </tr>                                  						
+                    </table>                 
+                </fieldset>
+            </form:form>
+        </tiles:putAttribute>
+        <style type="text/css">
+            #dragmodal{
+                background-color: #428BCA;
+            }
+            h3{
+                color:white !important;
+            }
+            .btn_close_modal{
+                color:white !important;
+            }
+         </style>
+        <tiles:putAttribute name="footer">
+            <button title ="Grabar" class="btn btn-default btn-sm" onclick="fn_DevolverMensajeriaRecep();" type="button" value="Grabar">
+                <span class="glyphicon glyphicon-floppy-disk"><jsp:text/></span> Grabar</button>
+            <button title ="Regresar a m&#243;dulo anterior" class="btn btn-default btn-sm" onclick="removeDomId('windowDevolverDocMensajeria');" type="button" value="Salir">
+                <span class="glyphicon glyphicon-arrow-left"><jsp:text/></span> Cerrar</button>         
+        </tiles:putAttribute>               
+    </tiles:insertTemplate>
+</jsp:root>
+
+
+

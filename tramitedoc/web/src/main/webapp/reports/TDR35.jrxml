@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TDR35" pageWidth="1259" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1219" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="2c82441b-1dc7-44dd-9279-7ba0678158be">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+	<parameter name="P_LOGO_DIR" class="java.io.InputStream">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USER" class="java.lang.String"/>
+	<parameter name="P_DE_DEPENDENCIA" class="java.lang.String"/>
+	<parameter name="P_NU_ANN" class="java.lang.String"/>
+	<parameter name="P_NU_EMI" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Hermes\\Instaladores\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TI_DOCUMENTO" class="java.lang.String"/>
+	<parameter name="P_NU_DOCUMENTO" class="java.lang.String"/>
+	<parameter name="P_NU_EXPEDIENTE" class="java.lang.String"/>
+	<parameter name="P_FE_EXPEDIENTE" class="java.lang.String"/>
+	<parameter name="P_ASUNTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="feEmi" class="java.lang.String"/>
+	<field name="deDepEmi" class="java.lang.String"/>
+	<field name="deEmpEmi" class="java.lang.String"/>
+	<field name="estadoRemito" class="java.lang.String"/>
+	<field name="nuDoc" class="java.lang.String"/>
+	<field name="deDepDes" class="java.lang.String"/>
+	<field name="deEmpDes" class="java.lang.String"/>
+	<field name="estadoDestino" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="190">
+			<staticText>
+				<reportElement uuid="6202f088-9472-4d77-bdf5-47f7a2035a2a" mode="Opaque" x="895" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OFICINA DESTINO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="12a5c23c-5ee4-4a83-b115-d5ca0a514a54" mode="Opaque" x="675" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DESTINATARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1046f903-af88-4372-a4c4-dae0dbc8dc4a" mode="Opaque" x="170" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[REMITENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8f0fc18e-ee0d-440b-851c-c1d4acf9af6f" mode="Opaque" x="965" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ESTADO DESTINO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d23563fd-7986-4bfc-862c-ba08f35f5f75" mode="Opaque" x="390" y="160" width="65" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0c3a769a-3941-4cda-8998-3fbaddac653d" mode="Opaque" x="100" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OFICINA REMITENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5e4aa36c-2b32-4964-bcb3-6ef53c66d7b1" mode="Opaque" x="0" y="160" width="100" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fe38db24-cf22-4911-8e36-0cd9f2bc724d" mode="Opaque" x="455" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO ASOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141" x="482" y="104" width="100" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. Expediente :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c968c63b-6ad2-4e04-9e01-d1bb2b39cde7" x="167" y="42" width="220" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_DE_DEPENDENCIA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141" x="10" y="104" width="100" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Documento :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141" x="10" y="140" width="100" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asunto :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b95b10d6-a867-44d2-92fc-6a60b8e0324c" x="10" y="42" width="157" height="14"/>
+				<textElement/>
+				<text><![CDATA[Dependencia :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="false">
+				<reportElement uuid="d9a8d03d-9bbc-4e0b-b31a-a677237ec11b" key="textField" x="167" y="60" width="298" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b95b10d6-a867-44d2-92fc-6a60b8e0324c" x="10" y="60" width="157" height="14"/>
+				<textElement/>
+				<text><![CDATA[Fecha de Impresión:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="51309169-3a7c-497e-ba5b-4558f5ff4f0e" x="167" y="78" width="220" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_USER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b95b10d6-a867-44d2-92fc-6a60b8e0324c" x="10" y="78" width="157" height="14"/>
+				<textElement/>
+				<text><![CDATA[Usuario :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141" x="10" y="122" width="100" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. Documento :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141" x="482" y="122" width="100" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Registro :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dd8755b8-4272-4c69-9be4-1ac14d377e5f" mode="Opaque" x="306" y="10" width="502" height="19" forecolor="#000066" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOJA DE ENVÍO DE TRÁMITE GENERAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ad0c778b-b96f-47e4-87c0-53f9bccc6763" x="115" y="104" width="191" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_TI_DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9f5632f7-771a-46b4-a487-d64a6224c985" x="115" y="122" width="350" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_NU_DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1f1d1389-3279-4f12-b2ad-dbf55f2693e9" x="115" y="140" width="657" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_ASUNTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e1eb12e3-b0b0-4558-b5b7-b387659e5937" x="592" y="104" width="180" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_NU_EXPEDIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b1f4fcae-1af0-4a9d-a5d9-095ca9f1ef5d" x="592" y="122" width="180" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{P_FE_EXPEDIENTE}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true" onErrorType="Blank">
+				<reportElement uuid="2e26840b-f43b-4dad-8032-b9c67ce05677" x="0" y="0" width="135" height="40"/>
+				<imageExpression><![CDATA[$P{P_LOGO_DIR}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="d6d2d171-8961-4f4a-ad15-4996df6ae550" positionType="Float" stretchType="RelativeToTallestObject" x="5" y="0" width="100" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{feEmi}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="77fd84cc-7740-40be-8f8a-4552c1443276" positionType="Float" stretchType="RelativeToTallestObject" x="105" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{deDepEmi}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="e0848c4a-e10c-4a09-9bfd-e8f87f6cfead" positionType="Float" stretchType="RelativeToTallestObject" x="175" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{deEmpEmi}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="bb4dd8b2-c3f4-4daa-81e4-7ee6d5dc7ae0" positionType="Float" stretchType="RelativeToTallestObject" x="395" y="0" width="65" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{estadoRemito}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="e8d44786-03bf-4713-b3b7-a038243f9920" positionType="Float" stretchType="RelativeToTallestObject" x="460" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nuDoc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="527f7fd5-2a30-4ad9-a6a0-b72fa4cf2b40" positionType="Float" stretchType="RelativeToTallestObject" x="680" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{deEmpDes}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="eb872f3f-3041-4bb5-9c05-92f8325f6d55" positionType="Float" stretchType="RelativeToTallestObject" x="900" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{deDepDes}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fe632d7b-2a46-4c53-97bd-ffbd360f33f7" positionType="Float" stretchType="RelativeToTallestObject" x="970" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{estadoDestino}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

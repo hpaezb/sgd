@@ -1,0 +1,78 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" 
+          xmlns:c="http://java.sun.com/jsp/jstl/core" 
+          xmlns:jsp="http://java.sun.com/JSP/Page" 
+          xmlns:spring="http://www.springframework.org/tags" 
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>       
+    <c:set var="divId" value="windowConsultaArchivar" scope="request"/>
+    <c:set var="posiciona" value="width:700px;top:200px;" scope="request"/>
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <tiles:putAttribute name="title" value="Documentos Adicionales"/>        
+        <tiles:putAttribute name="body">
+         <form:form modelAttribute="documentoEmiArBean">               
+            <fieldset>
+                <legend>Detalle</legend>
+                <div class="ui-datatable-fixed">
+                    <table id ="tblAnexosDetalleNew" class="display" width="100%">
+                        <thead>
+                            <tr class="ui-state-default">
+                                <th width="140px;">Nombre Doc.</th>
+                                <th width="140px;">Observación</th>
+                                <th width="82px;">Fecha Carga</th>
+                                <th width="60px;">Usuario</th>
+                                <th width="24px;">Tipo Doc.</th>
+                                <th width="26px;">Doc. Adjunto</th>
+                            </tr>
+                        </thead>				
+                        <tbody>
+                            <c:forEach var="refDocAdm" items="${docAnexoListMsj}" varStatus="status">
+                                <tr class="gradeA" tabindex="0">
+                                    <td>${refDocAdm.deDet}</td>
+                                    <td>${refDocAdm.obMsj}</td>
+                                    <td>${refDocAdm.feUseCre}</td>
+                                    <td>${refDocAdm.coUseCre}</td> 
+                                    <td>${refDocAdm.deDocMsj}</td>
+                                    <td align="center">
+                                        <button title ="Ver Documento" class="btn btn-default btn-xs" onclick="fn_verDocMsjAdicional('${refDocAdm.nuAnn}', '${refDocAdm.nuEmi}', '${refDocAdm.nuDes}', '${refDocAdm.nuAne}');" nuAnn="${refDocAdm.nuAnn}" nuEmi="${refDocAdm.nuEmi}" nuDes="${refDocAdm.nuDes}" type="button">
+                                            <span class="glyphicon glyphicon-folder-open"/>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>			
+                    </table>  
+                </div>
+                <div id="divError" class="alert alert-danger" style="display:none">
+                    <ul id="divErrorLista"><jsp:text/></ul>
+                </div>                                                                                   
+            </fieldset>
+           </form:form>  
+           <p></p>         
+           <div id="divListadoMsjAnexos"></div>
+        </tiles:putAttribute>
+           <style type="text/css">
+               #dragmodal{
+                   background-color: #428BCA;                   
+               }
+               h3{
+                    color:white !important;                   
+               }
+               .btn_close_modal
+               {color:white !important;                   
+               }
+            </style>
+
+        <tiles:putAttribute name="footer">
+            <button id="btn-cerrar-accion" title ="Regresar a m&#243;dulo anterior" class="btn btn-default btn-sm" onclick="removeDomId('windowConsultaArchivar');" type="button" value="Salir">
+                <span class="glyphicon glyphicon-arrow-left"><jsp:text/></span> Cerrar</button>   
+        </tiles:putAttribute>            
+    </tiles:insertTemplate>
+    <script>
+        fu_callEventoTablaAnexosdetalleAdicionalMensajeria();
+    </script>                 
+</jsp:root>
+
+
+

@@ -1,0 +1,90 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script languaje="javascript">jQuery(document).ready(function(){
+        fu_iniTblDocMensajeriaDevolucion();
+    });</script>  	
+    <div class="ui-datatable-fixed">
+        <input type="hidden" id="txtpnuAnn" name="txtpnuAnn" value=""/>
+        <input type="hidden" id="txtpnuEmi" name="txtpnuEmi" value=""/>
+        <input type="hidden" id="txtpnuSec" name="txtpnuSec" value=""/>
+        <input type="hidden" id="txtSelecctionOption" name="txtpnuEmi" value=""/>
+        <input type="hidden" id="txtSelecctionOptionValidar" name="txtpnuEmi" value=""/>
+        <input type="hidden" id="txtCoEstadoDoc" name="txtCoEstadoDoc" value=""/>
+        <table id ="myTableFixed" class="display" width="100%"  >
+            <thead>
+                <tr class="ui-state-default">
+                    <th style="display:none"></th>
+                    <th style="display:none"></th> 
+                    <th style="display:none"></th> 
+                    <th></th>                                       
+                    <th>TIPO DOC.</th>
+                    <th>N° DOCUMENTO</th>
+                    <th>OFICINA</th> 
+                    <th>DESTINATARIO</th>
+                    <th>ASUNTO</th>                    
+                    <th>OBSERVACIÓN</th> 
+                    <th>DIRECCION</th> 
+                    <th>UBIGEO</th> 
+                    <th>PRIORIDAD</th> 
+                    <th>FECHA DOC.</th>
+                    <th>FEC. ENV. MSJ.</th>
+                    <th>FEC. DEV. OFI.</th>                    
+                    <th>USUARIO DEV.</th>
+                    <th>ESTADO</th>
+                    <th style="display:none"></th>
+                </tr>
+            </thead>				
+            <tbody>
+                <c:forEach var="docMensajDevolucion" items="${docMensajDevolucionLst}" varStatus="status">
+                    <tr class="gradeA" tabindex="0">
+                        <td style="display:none">${docMensajDevolucion.nuAnn}</td>
+                        <td style="display:none">${docMensajDevolucion.nuEmi}</td>
+                        <td style="display:none">${docMensajDevolucion.nuSec}</td>
+                        <td>                          
+                            <c:choose>
+                                <c:when test='${docMensajDevolucion.inExisteDoc eq "1"}'>
+                                    <button title ="Ver Documento" class="btn btn-default btn-xs" onclick="fn_verDocumento('${docMensajDevolucion.nuAnn}', '${docMensajDevolucion.nuEmi}', 'M040103');" type="button"><span class="glyphicon glyphicon-file"><jsp:text/></span></button>                                                             
+                                </c:when>
+                            </c:choose>									
+                            <c:choose>
+                                <c:when test='${docMensajDevolucion.inExisteAnexo eq "1"}'>
+                                    <button title ="Documentos Anexos" class="btn btn-default btn-xs" onclick="fn_verAnexo('${docMensajDevolucion.nuAnn}', '${docMensajDevolucion.nuEmi}', 'N');" type="button"><span class="glyphicon glyphicon-paperclip"><jsp:text/></span></button>
+                                </c:when>
+                            </c:choose>                    
+                        </td>    
+                        <td>${docMensajDevolucion.deTipDocAdm}</td>
+                        <td>${docMensajDevolucion.nuDoc}</td>
+                        <td>${docMensajDevolucion.deDependencia}</td>
+                        <td>${docMensajDevolucion.deEmpDes}</td>
+                        <td>${docMensajDevolucion.deAsu}</td>                        
+                        <td>${docMensajDevolucion.obsDev}</td>
+                        <td>${docMensajDevolucion.direccion}</td>
+                        <td>${docMensajDevolucion.ubigeo}</td>                                                
+                        <td>${docMensajDevolucion.dePri}</td>
+                        <td>${docMensajDevolucion.feEmiCorta}</td>
+                        <td>${docMensajDevolucion.feEnvMes}</td>
+                        <td>${docMensajDevolucion.feDevOfi}</td> 
+                        <td>${docMensajDevolucion.coEmpDev}</td>                         
+                        <td>${docMensajDevolucion.deDocFin}</td>  
+                        <td style="display:none">${docMensajDevolucion.esDocEmi}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>			
+        </table>
+    </div>
+    <c:if test="${not empty msjEmision}">
+        <div class="alert alert-warning alert-dismissable" style="margin-bottom:0px;width:50%">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            <h4 style="margin-bottom:0px;">${msjEmision}</h4>
+        </div>            
+    </c:if>        
+    <div id="divflotante" class="divTip">&amp;nbsp;</div>   
+        <script>
+        $(document).ready(function(){
+            var idTable="myTableFixed";
+            var col=25;
+            //setEtiquetasListaDoc(idTable,col);
+        });
+    </script>  
+</jsp:root>	

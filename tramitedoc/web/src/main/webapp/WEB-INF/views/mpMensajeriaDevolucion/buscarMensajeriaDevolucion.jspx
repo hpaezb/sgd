@@ -1,0 +1,152 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <jsp:scriptlet><![CDATA[response.setHeader("Cache-Control", "max-age=43200");]]></jsp:scriptlet>
+    
+	<script languaje="javascript">jQuery(document).ready(function() {
+            fn_iniDocMensajeriaDevolucion();
+        });</script>  	    
+    <div class="ui-panel ui-corner-all" id="divBuscarDocExtRecep" >
+        <div class="ui-panel-titlebar ui-widget-header ui-corner-all">
+            <span>DOCUMENTOS DEVUELTOS POR MSJ.</span>
+        </div>
+        <div class="ui-panel-body">
+                <input id="txtFechaActual" name="txtFechaActual" type="hidden" value="${fechaActual}"/>
+                <input id="txtAnnioActual" name="txtAnnioActual" type="hidden" value="${annioActual}"/>
+                <input id="txtCodOpcion" name="txtCodOpcion" type="hidden" value="M040103"/>
+                <fieldset>
+                    <div class="btn-group btn-group-lg">
+                       <button title ="Ver Documento" class="btn btn-primary btn-lg" onclick="fn_verDocMensajeriaRecep();" type="button">
+                           <span class="glyphicon glyphicon-list-alt"><jsp:text/></span> Ver Documento</button>
+                       <button title ="Ver Documento Anexos - Referencias" class="btn btn-primary btn-lg" onclick="fn_verAnexoMensajeriaRecep();" type="button">
+                           <span class="glyphicon glyphicon-paperclip"><jsp:text/></span> Ver Anexos</button>
+                       <button title ="Seguimiento de Documentos" class="btn btn-primary btn-lg" onclick="fn_verSeguimientoMensajeriaDevolucion();" type="button">
+                           <span class="glyphicon glyphicon-transfer"><jsp:text/></span> Seguimiento</button>      
+                       <button title ="Exportar Consulta EXCEL" class="btn btn-primary btn-lg" onclick="fu_generarReporteMensajeriaDevolucionXLS();" type="button">
+                           <span class="glyphicon glyphicon-export"><jsp:text/></span> Exportar</button>
+                       <button title ="Salir" class="btn btn-primary btn-lg" onclick="cerrarPantallaMP();" type="button">
+                           <span class="glyphicon glyphicon-log-out"><jsp:text/></span> Salir</button>
+                    </div>                    
+                    
+                </fieldset>
+            <form:form modelAttribute="buscarDocumentoDevolucionMensajeriaBean">
+            <form:hidden path="tipoBusqueda"/>        
+            <form:hidden path="coDependencia"/>        
+            <form:hidden path="coEmpleado"/>        
+            <form:hidden path="tiAcceso"/>    
+            <form:hidden path="esFiltroFecha"/>  
+            <form:hidden path="esFiltroFechaEnvMsj"/>  
+            <form:hidden path="esFiltroFechaDevOfi"/>  
+            <form:hidden path="feEmiIni"/>  
+            <form:hidden path="feEmiFin"/>
+            
+            <form:hidden path="feEmiIniEnvMSJ"/>  
+            <form:hidden path="feEmiFinEnvMSJ"/>
+            
+            <form:hidden path="feEmiIniDevOfi"/>  
+            <form:hidden path="feEmiFinDevOfi"/>
+            
+            <table width="100%">
+                <tr valign="top">
+                    <td width="80%">
+                        <fieldset>
+                        <legend>Configuración Búsqueda</legend>
+                            <table width="100%">
+                                <tr>
+                                    <td >Fec. Doc.</td>
+                                    <td>
+                                        <form:hidden path="coAnnio"/>  
+					<div id="fechaFiltro" class="cajaFechas" disabled="disabled">
+                                            <div class="cajaIcono"><span class="glyphicon glyphicon-calendar fa fa-calendar"><jsp:text/></span></div>
+                                            <div name="labelDate" class="cajaEtiqueta" style="text-align: center;width: 180px;"><jsp:text/></div>
+                                            <div class="cajaTriangulo"><b class="caret"><jsp:text/></b></div>
+                                        </div>                                        
+                                    </td>
+                                    <td> Fec.Devolución:</td>
+                                    <td>
+                                      <form:hidden path="coAnnioDev"/>  
+                                        <div id="fechaFiltroDevolucion" class="cajaFechas" disabled="disabled">
+                                          <div class="cajaIcono"><span class="glyphicon glyphicon-calendar fa fa-calendar"><jsp:text/></span></div>
+                                          <div name="labelDate" class="cajaEtiqueta" style="text-align: center;width: 180px;"><jsp:text/></div>
+                                          <div class="cajaTriangulo"><b class="caret"><jsp:text/></b></div>
+                                        </div>                                        
+                                    </td>
+                                    <td>Prioridad:</td>
+                                    <td >
+                                         <form:select path="coTipoEnvMsj" style="width:180px">
+                                             <form:options items="${deTipoEnvList}" itemValue="celeCodele" itemLabel="celeDesele"/>
+                                         </form:select>
+                                    </td>
+                                    <td> Tipo doc:</td>
+                                    <td>
+                                      <form:select path="coTipoDoc" style="width:180px">
+                                         <form:options items="${deTipoDocumentoList}" itemValue="coTipDoc" itemLabel="deTipDoc" />
+                                       </form:select>
+                                    </td>
+                                    <td> Estado:</td>
+                                    <td>
+                                       <form:select path="coEstadoDoc" style="width:200px">
+                                         <form:options items="${deEstadosList}" itemValue="coEst" itemLabel="deEst"/>
+                                       </form:select>
+                                    </td>
+                                    <td> Nro Documento:</td>
+                                    <td>
+                                        <form:input path="busNumDoc" style="width: 100px;" maxlength="20"/> <!--Se pone a tam de 50 ya que el campo NU_DOC de la tabla TDTX_REMITOS_RESUMEN -->
+                                    </td>
+				</tr>
+                                <tr>   
+                                    <td> Fec.Env.Mens.</td>
+                                    <td>
+                                      <form:hidden path="coAnnioEnvio"/>  
+                                        <div id="fechaFiltroEnvMsj" class="cajaFechas" disabled="disabled">
+                                          <div class="cajaIcono"><span class="glyphicon glyphicon-calendar fa fa-calendar"><jsp:text/></span></div>
+                                          <div name="labelDate" class="cajaEtiqueta" style="text-align: center;width: 180px;"><jsp:text/></div>
+                                          <div class="cajaTriangulo"><b class="caret"><jsp:text/></b></div>
+                                        </div>                                        
+                                    </td>
+                                    <td>Observación:</td>
+                                    <td>
+                                        <form:input path="busObsDev" style="width: 290px;" maxlength="50"/>
+                                    </td> 
+                                    <td>Asunto:</td>
+                                    <td>
+                                        <form:input path="busAsunto" style="width: 180px;" maxlength="50"/>
+                                    </td>                                     
+                                    <td>Destinatario:</td>                                    
+                                    <td>
+                                        <form:input path="busDesti" style="width: 180px;" maxlength="50"/>
+                                    </td> 
+                                    <td>Oficina:</td>
+                                    <td>
+                                        <form:select path="coDependenciaBusca" style="width:200px">
+                                            <form:options items="${deDependenciaList}" itemValue="coDependencia" itemLabel="deDependencia"/> 
+                                        </form:select>
+                                    </td>
+                                    <!--Hermes 15/08/2018-->
+                                    <td>
+                                    </td>
+                                    <td> 
+                                        <button title ="Buscar documentos" class="btn btn-default btn-sm" onclick="changeTipoBusqMensajeriaDevolucion('0');" type="button"> 
+                                          <span class="glyphicon glyphicon-search"><jsp:text/></span> Buscar</button> 
+                                         <button title ="Limpiar datos de b&#250;squeda" class="btn btn-default btn-sm" onclick="fu_cleanBusDocMensajeriaDevolucion('0');" type="button"> 
+                                          <span class="glyphicon glyphicon-remove"><jsp:text/></span></button>
+                                    </td>  
+                                </tr>
+                            </table>                            
+                        </fieldset>                        
+                    </td>                    
+                </tr>
+            </table>
+            </form:form>                
+            <fieldset>
+            <legend>Detalle</legend>
+            <div id="divTablaDocMensajeriaDevolucion" >
+                <jsp:directive.include file="tblDocMensajeriaDevolucion.jspx"/>
+            </div>
+            </fieldset>
+        </div>
+    </div>
+    <div id="divDocExtRecep" style="display:none;">&amp;nbsp;</div>                
+</jsp:root>

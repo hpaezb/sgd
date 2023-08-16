@@ -1,0 +1,162 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script languaje="javascript">jQuery(document).ready(function() {fu_eventoTablaMensajes2();
+        });</script>
+    <div class="ui-datatable-fixed">
+        <input type="hidden" id="txtpnuAnn" name="txtpnuAnn" value=""/>
+        <input type="hidden" id="txtpnuEmi" name="txtpnuEmi" value=""/>
+        
+        <input type="hidden" id="txtSelecctionOption" name="txtSelecctionOption" value=""/>
+        <input type="hidden" id="txtSelecctionOptionValidar" name="txtSelecctionOptionValidar" value=""/>
+        <input type="hidden" id="txtCoEstadoDoc" name="txtCoEstadoDoc" value=""/>
+        <table id="myTableFixed" class="display" style="width:100%; empty-cells: show; table-layout: fixed; border-collapse: collapse;">
+            <thead>
+                <tr class="ui-state-default">
+                    <th style="display:none"></th>
+                    <th style="display:none"></th>
+                    
+                    <th><input onclick="fn_optionSelectionMensajesAll(this);"  type="checkbox"/></th>                                       
+                    <th style="display:none">NRO<br/> ENVÍO</th>
+                    <th>T.DOC</th>
+                    <th>N° DOC.</th>                                                            
+                    <th>OFICINA</th>
+                    <!--<th style="display:none">ASUNTO</th>-->
+                    <th>DESTINATARIO</th>     
+                    <th data-toggle="tooltip" title="DIRECCIÓN DEL DESTINO">DIRECCIÓN</th>
+                    <th data-toggle="tooltip" title="RESPONSABLE DE ENVÍO">RESPONSABLE</th>
+                    <th data-toggle="tooltip" title="DEPARTAMENTO DEL DESTINO">UBIGEO</th>
+                    <th>ÁMBITO</th>
+                    <th data-toggle="tooltip" title="TIPO DE ZONA">TIPO<br/>ZONA</th>
+                    <th data-toggle="tooltip" title="TIPO DE MENSAJERO">TIPO<br/>MENS.</th>
+                    <th>PRIORIDAD</th>
+                    <th>NRO ORDEN/<br/>GUÍA</th>
+                    <th data-toggle="tooltip" title="FECHA DE EMISIÓN">FEC.<br/> DOC.</th>
+                    <th data-toggle="tooltip" title="FECHA DE ENVIO DESDE OFICINA">FEC.<br/> ENVI.<br/> OFI.</th>
+                    <th data-toggle="tooltip" title="FECHA DE RECEPCIÓN DEL DOCUMENTO">FEC.<br/> REC.<br/> DOC.</th>
+                    <th data-toggle="tooltip" title="FECHA DE ENVÍO A MENSAJERÍA">FEC.<br/> ENVI.<br/> MENS.</th>
+                    <th data-toggle="tooltip" title="FECHA DE ENTREGA">FEC.<br/>ENTRE.</th>
+                    <th data-toggle="tooltip" title="FECHA DE DEVOLUCIÓN">FEC.<br/>DEVOL.</th> 
+                    <th data-toggle="tooltip" title="FECHA PLAZO DE ENTREGA" style="display:none">DIAS<br/>PLA.<br/>ENT.</th>
+                    <th data-toggle="tooltip" title="RESPONSABLE DE ENVÍO" style="display:none">RESP.<br/>ENVÍO</th>
+                    <th data-toggle="tooltip" title="FECHA PLAZO DE ENTREGA" style="display:none">FEC.<br/>PLA.<br/>ENT.</th>
+                    <th data-toggle="tooltip" title="FECHA PLAZO DE DEVOLUCIÓN" style="display:none">FEC. <br/>PLA.<br/>DEV.</th> 
+                    <th data-toggle="tooltip" title="DÍA(S) TRANSCURRIDOS DESDE LA ENTREGA">DÍA(S) TRAN.<br/> ENT.</th>
+                    <th data-toggle="tooltip" title="DÍA(S) TRANSCURRIDOS DESDE LA DEVOLUCION">DÍA(S) TRAN.<br/> DEV.</th>
+                    <th  style="display:none" data-toggle="tooltip" title="DÍA(S) VENCIDOS DESDE LA ENTREGA">DÍA(S) VENC.</th>
+                    <th data-toggle="tooltip" title="DÍA(S) DE PENALIZACÓN DE ENTREGA">DÍA(S)<br/>PEN.<br/>ENT.</th>
+                    <th data-toggle="tooltip" title="DÍA(S) DE PENALIZACÓN DE DEVOLUCIÓN">DÍA(S)<br/>PEN.<br/>DEV.</th>
+                    
+                    <th>ESTADO</th>
+                    <th style="display:none"></th>
+                    <th>ACCIÓN</th>                    
+                </tr>
+            </thead>				
+            <tbody>
+                <c:forEach var="docMensaje" items="${docMensajeLst}" varStatus="status">
+                    <tr class="gradeA" tabindex="0">
+                        <td style="display:none">${docMensaje.nu_ann}</td>
+                        <td style="display:none">${docMensaje.nu_emi}</td> 
+                        <td class="esOptionCheck">
+                                                         
+                             <c:choose>
+                                <c:when test='${docMensaje.cod_est_msj eq "2"  and  docMensaje.co_tipo_destino!="01"}'>
+                                    <input onclick="fn_optionSelecction_mensajes();"  type="checkbox" nuAnn="${docMensaje.nu_ann}" docEstadoMsj="${docMensaje.cod_est_msj}" nuEmi="${docMensaje.nu_emi}" nuDes="${docMensaje.nu_des}" nuMsj="${docMensaje.nu_msj}" />
+                                        
+                                </c:when>                                 
+                            </c:choose>	
+                                    
+                        </td>
+                        <td style="display:none">${docMensaje.nu_msj}</td>
+                        
+                        <!--NUEVO-->
+                        <td>${docMensaje.tipodocumento}</td>                        
+                        <td>${docMensaje.numerodocumento}</td>
+                        <!--FIN NUEVO-->
+                              
+                                                
+                        <td>${docMensaje.de_dependencia}</td>
+                        <!--td>${docMensaje.de_tip_doc}</td-->
+                        <!--<td style="display:none">${docMensaje.de_asu}</td>-->
+                        <td>${docMensaje.destinatario}</td>
+                        
+                        <td>${docMensaje.direccion}</td>
+                        <td>${docMensaje.re_env_msj}</td> 
+                        <td>${docMensaje.departamento}</td>
+                        
+                        
+                        <td>${docMensaje.de_ambito}</td> 
+                        <td>${docMensaje.tiZona}</td>
+                        <td>${docMensaje.de_tip_msj}</td>
+                        <td>${docMensaje.de_tip_env}</td>
+                        <td>${docMensaje.nu_servicio}</td> 
+                        
+                        <!--FECHA DE CREACION DE DOCUMENTO -->
+                        <td>${docMensaje.fe_emi}</td>
+                        <!--FECHA DE ENVIO DE DOCUMENTO DE OFICINA A MENSAJERIA -->
+                        <td>${docMensaje.fe_env_mes}</td> 
+                        <!--FECHA RECEPCION DE DOCUMENTO EN MENSAJERIA -->
+                        <td>${docMensaje.fec_recepmp}</td>
+                        <!--FECHA ENVIADO A MENSAJERO -->
+                        <td>${docMensaje.fec_enviomsj}</td>
+                        <!--FECHA ENTREGA DE MENSAJE VIA MENSAJERO -->
+                        <td>${docMensaje.fe_ent_msj}</td>
+                        <!--FECHA DEVOLUCION DEL MENSAJERO -->
+                        <td>${docMensaje.fe_dev_msj}</td> 
+                                              
+                        
+                        <td style="display:none">${docMensaje.re_env_msj}</td>                        
+                        <td style="display:none">${docMensaje.fe_pla_msj}</td>
+                        <td style="display:none">${docMensaje.fe_pla_dev}</td>
+
+                        <td style="display:none">${docMensaje.dias_pla_entr_d}</td>
+                        <!--DIAS TRANSCURRIDOS ENTREGA -->
+                        <td>${docMensaje.dia_tra}</td>
+                        <!--DIAS TRANSCURRIDOS DEVOLUCION -->
+                        <td>${docMensaje.dia_pen}</td>
+                        <td style="display:none">${docMensaje.dia_ven}</td> 
+                        <!--PENALIZACION DIAS ENTREGA -->
+                        <td>${docMensaje.dia_ent}</td>
+                        <!--PENALIZACION DIAS DEVOLUCION-->
+                        <td>${docMensaje.dia_dev}</td>
+                        
+                        <td>${docMensaje.est_msj}</td>
+                        <td style="display:none">${docMensaje.cod_est_msj}</td>
+                        <td align="center">
+                            
+                             <c:choose>
+                                <c:when test='${docMensaje.cod_est_msj eq "2"}'>
+                                    <button type="button" onclick="ejecutaOpcionModal(this, '/srGestionMensajes.do?accion=goDescargarMensaje&amp;nu_ann=${docMensaje.nu_ann}&amp;nu_emi=${docMensaje.nu_emi}&amp;nu_des=${docMensaje.nu_des}&amp;nu_msj=${docMensaje.nu_msj}&amp;fec_enviomsj=${docMensaje.fec_enviomsj}&amp;fec_plazo=${docMensaje.fe_pla_msj}', 'POST');" class="btn btn-default btn-xs" title="DESCARGAR"><span class="glyphicon glyphicon-floppy-open"></span></button>&amp;nbsp;
+                                    <button type="button" onclick="fn_eliminarMsj('${docMensaje.nu_ann}','${docMensaje.nu_emi}','${docMensaje.nu_des}','${docMensaje.nu_msj}');" class="btn btn-default btn-xs" title="ELIMINAR" style="color: #ac2925"><span class="glyphicon glyphicon-remove"></span></button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="button" onclick="ejecutaOpcionModal(this, '/srGestionMensajes.do?accion=goConsDescargarMensaje&amp;nu_ann=${docMensaje.nu_ann}&amp;nu_emi=${docMensaje.nu_emi}&amp;nu_des=${docMensaje.nu_des}&amp;nu_msj=${docMensaje.nu_msj}&amp;fec_enviomsj=${docMensaje.fec_enviomsj}&amp;fec_plazo=${docMensaje.fe_pla_msj}', 'POST');" class="btn btn-default btn-xs" title="VER CARGO"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                    <c:choose>
+                                        <c:when test='${docMensaje.es_doc_emi!="4"}'>
+                                            &amp;nbsp;
+                                            <button type="button" onclick="fn_revertirMsj('${docMensaje.nu_ann}','${docMensaje.nu_emi}','${docMensaje.nu_des}','${docMensaje.nu_msj}');" class="btn btn-default btn-xs" title="REVERTIR" style="color: #c77405"><span class="glyphicon glyphicon-transfer"></span></button>                                            
+                                        </c:when>
+                                    </c:choose>
+
+                                </c:otherwise>
+
+                            </c:choose>		
+                        </td>                         
+                    </tr>
+                </c:forEach>
+            </tbody>			
+        </table>
+    </div>
+      
+    <div id="divflotante" class="divTip">&amp;nbsp;</div>   
+    <script>
+        $(document).ready(function(){
+            var idTable="myTableFixed";
+            var col=34;
+            //setEtiquetasListaDoc(idTable,col);
+            pintarDiasTranscurridos();
+
+            //$('#myTableFixed').DataTable().columns.adjust().draw();            
+        });
+    </script>    
+</jsp:root>	

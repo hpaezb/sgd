@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TDR15" pageWidth="183" pageHeight="183" whenNoDataType="AllSectionsNoDetail" columnWidth="167" leftMargin="9" rightMargin="7" topMargin="7" bottomMargin="7" isFloatColumnFooter="true" uuid="15cfe25d-a470-438a-9439-039f7bf7db9a">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="102"/>
+	<parameter name="CO_USER" class="java.lang.String"/>
+	<parameter name="NU_ANN" class="java.lang.String"/>
+	<parameter name="NU_EMI" class="java.lang.String"/>
+	<parameter name="P_LOGO_DIR" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nuExpediente" class="java.lang.String"/>
+	<field name="deDependencia" class="java.lang.String"/>
+	<field name="deInstitucion" class="java.lang.String"/>
+	<field name="anexoMesaPartes" class="java.lang.String"/>
+	<field name="fonoInstitucion" class="java.lang.String"/>
+	<field name="pagWeb" class="java.lang.String"/>
+	<field name="feExp" class="java.sql.Timestamp"/>
+	<field name="nuCorrExp" class="java.lang.String"/>
+	<field name="deMesaPartes" class="java.lang.String"/>
+	<field name="deSlogan" class="java.lang.String"/>
+	<field name="cclave" class="java.lang.String"/>
+	<field name="codUser" class="java.lang.String"/>
+	<field name="feexptext" class="java.lang.String"/>
+	<field name="nuFolios" class="java.lang.String"/>
+	<pageHeader>
+		<band height="156">
+			<image hAlign="Center">
+				<reportElement uuid="cf1d87e0-8a3a-498e-8231-c9f8d700bb8d" x="0" y="9" width="167" height="25"/>
+				<imageExpression><![CDATA[$P{P_LOGO_DIR}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="e4ce4e71-390d-479b-86b6-6a3a94587e50" stretchType="RelativeToTallestObject" x="0" y="45" width="167" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="4" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deMesaPartes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9d9f758d-2186-48ec-b779-1119e91c412f" x="8" y="74" width="34" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Registro:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4fadcd5c-2cea-44b8-99d0-572e05ebb84d" x="44" y="69" width="67" height="17"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nuExpediente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e9e58d49-1142-49c5-bfc6-670615266f7b" x="-2" y="88" width="171" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nota: La recepción NO da conformidad al contenido.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e0f800c6-eb51-4951-b5f1-58c239f7b3a9" x="0" y="102" width="167" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Consultas: "+$F{pagWeb}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="54a0a8cb-53c0-40ce-ae50-69cb43e5d146" x="0" y="114" width="167" height="13"/>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Teléfonos: "+$F{fonoInstitucion}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="874b24b4-1e7a-4ee2-b49d-8252ded74ec5" x="19" y="132" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="090fe56d-8711-4947-841d-9204e2bbbe41" x="19" y="150" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement uuid="973cedbc-2751-477d-b555-5379ab120034" x="0" y="34" width="167" height="11"/>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deInstitucion}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="b986ed5a-85a6-4173-b638-c799f8e24fea" x="19" y="134" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="4640288c-de87-4d53-bc61-acf030ba9fe9" x="19" y="136" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="cb21cd7e-b1fb-4a9c-9276-91e4f353a16d" x="19" y="138" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="eb2ad838-2e47-43a9-ae31-8a75f88d3577" x="19" y="146" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="db03bce3-3b09-4cee-beb6-32573496477d" x="19" y="140" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="14437112-6077-419c-b04a-e7f4fd3dc111" x="19" y="142" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="e62239c0-bb7f-4c1e-a38a-edc3f362aaa2" x="19" y="144" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement uuid="4dd7a1d9-71f7-4811-808a-8a2362b637e6" x="19" y="148" width="135" height="3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false" barWidth="2" barHeight="5">
+					<jr:codeExpression><![CDATA[$F{nuCorrExp}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="36947793-9aec-4040-b2da-cc6281eec83d" x="132" y="69" width="35" height="17"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cclave}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fd1129c5-bf5d-4df4-88fd-c345a1f40f0a" x="119" y="12" width="49" height="8"/>
+				<textElement markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codUser}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="970fd680-37ab-4d63-9dec-5c57b10bed67" x="112" y="74" width="19" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="SansSerif" size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Clave:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3233988a-802b-40aa-9464-c7219067b4d4" x="0" y="55" width="167" height="14"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feexptext}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="96111af7-86dd-4b5c-81d5-cc1d75a7e76c" x="94" y="12" width="26" height="11"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="SansSerif" size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d2fafaa7-6cf8-4058-885e-015ce0c26ea6" x="111" y="23" width="49" height="8"/>
+				<textElement>
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nuFolios}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>

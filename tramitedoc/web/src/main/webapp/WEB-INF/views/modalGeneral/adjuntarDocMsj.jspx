@@ -1,0 +1,120 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" 
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" 
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script>
+        fu_callEventoTablaAnexosdetalleAdicional();
+    </script>        
+    <c:set var="divId" value="windowConsultaArchivar" scope="request"/>
+    <c:set var="posiciona" value="width:700px;top:200px;" scope="request"/>
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <tiles:putAttribute name="title" value="Acciones Adicionales"/>        
+        <tiles:putAttribute name="body">
+         <form:form modelAttribute="documentoEmiArBean">               
+                <!--Hermes 22/01/2019 - Requerimiento Acta 005-20019 -->
+                    <fieldset>
+                        <legend>Acciones Adicionales</legend>
+                        <input id="txtNu_Ann" name="txtNu_Ann" type="hidden" value="${pnuAnn}"/>
+                        <input id="txtNu_Emi" name="txtNu_Emi" type="hidden" value="${pnuEmi}"/>
+                        <input id="txtNu_Des" name="txtNu_Des" type="hidden" value="${pnuDes}"/>                        
+                        <table>                                        
+                            <tr>
+                                <td width="120px;">Adjuntar Doc.:</td>
+                                <td>
+                                    <input readonly="readonly" name="txtNombreAnexo" id="txtNombreAnexo" type="text" value=""/>
+                                    <input name="txtUpdate" id="txtUpdate" type="hidden" value="0"/><!--Hermes 22/01/2019 - Requerimiento Acta 005-20019 -->
+                                    <input name="txtNu_Ane" id="txtNu_Ane" type="hidden" value=""/><!--Hermes 22/01/2019 - Requerimiento Acta 005-20019 -->
+                                    <input name="txtIndicador" id="txtIndicador" type="hidden" value="1"/>
+                                    <button id="btn-ReemplazarDoc" title="Anexar Doc." class="btn btn-default btn-xs" onclick="fn_anexoDocumentoMsjAdicional('${tamanioMaxAnexos}');" type="button"><span class="glyphicon glyphicon-open"></span></button>
+                                </td>
+                                <td>
+                                   <div>
+                                        <input id="fileupload" type="file" name="files[]" data-url="" multiple="" style="display: none;"/>
+                                        <div id="progress" class="progress" style="margin-top:15px;width:100px;display: none;">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                <span style="top: 3px; "><jsp:text/></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td> 
+                                <td>Tipo Doc.:</td>
+                                <td>
+                                    <form:select path="coTipoDocMsj" style="width:100px">
+                                        <form:options items="${deTipoDocAdicMsjList}" itemValue="celeCodele" itemLabel="celeDesele"/>
+                                    </form:select>
+                                </td>                                     
+                            </tr>  
+                            <tr>
+                                <td width="90px;">Observaciones:</td>
+                                <td colspan="4"> 
+                                    <textarea id="txtObservaciones" maxlength="500" name="txtObservaciones" rows="3" cols="90" style="height:70px;width:100%;resize: none;"></textarea>
+                                </td>
+                            </tr>                        
+                        </table>  
+                        <br/>
+                        <div class="ui-datatable-fixed">
+                            <table id ="tblAnexosDetalle1" class="display" width="100%">
+                                <thead>
+                                    <tr class="ui-state-default">
+                                        <th width="140px;">Nombre Doc.</th>
+                                        <th width="140px;">Observación</th>
+                                        <th width="82px;">Fecha Carga</th>
+                                        <th width="60px;">Usuario</th>
+                                        <th width="24px;">Tipo Doc.</th>
+                                        <th width="26px;">Doc. Adjunto</th>
+                                    </tr>
+                                </thead>				
+                                <tbody>
+                                    <c:forEach var="refDocAdm" items="${docAnexoListMsj}" varStatus="status">
+                                        <tr class="gradeA" tabindex="0">
+                                            <td>${refDocAdm.deDet}</td>
+                                            <td>${refDocAdm.obMsj}</td>
+                                            <td>${refDocAdm.feUseCre}</td>
+                                            <td>${refDocAdm.coUseCre}</td> 
+                                            <td>${refDocAdm.deDocMsj}</td>
+                                            <td align="center">
+                                                <button title ="Ver Documento" class="btn btn-default btn-xs" onclick="fn_verDocMsjAdicional('${refDocAdm.nuAnn}', '${refDocAdm.nuEmi}', '${refDocAdm.nuDes}', '${refDocAdm.nuAne}');" nuAnn="${refDocAdm.nuAnn}" nuEmi="${refDocAdm.nuEmi}" nuDes="${refDocAdm.nuDes}" type="button">
+                                                    <span class="glyphicon glyphicon-folder-open"/>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>			
+                            </table>  
+                        </div>
+                        <div id="divError" class="alert alert-danger" style="display:none">
+                            <ul id="divErrorLista"><jsp:text/></ul>
+                        </div>                                                                                   
+                    </fieldset>
+                <!--Hermes 22/01/2019 - Requerimiento Acta 005-20019 -->
+           </form:form>  
+           <p></p>         
+           <div id="divListadoMsjAnexos"></div>
+        </tiles:putAttribute>
+           <style type="text/css">
+               #dragmodal{
+                   background-color: #428BCA;                   
+               }
+               h3{
+                    color:white !important;                   
+               }
+               .btn_close_modal
+               {color:white !important;                   
+               }
+            </style>
+
+        <tiles:putAttribute name="footer">
+            <button id="btn-grabar-accion" title ="Grabar" class="btn btn-default btn-sm" onclick="fn_grabarDescargaMsjAdicional('documentoEmiArBean');" type="button" value="Grabar">
+                <span class="glyphicon glyphicon-floppy-disk"><jsp:text/></span> Grabar</button>
+            <button id="btn-cerrar-accion" title ="Regresar a m&#243;dulo anterior" class="btn btn-default btn-sm" onclick="removeDomId('windowConsultaArchivar');" type="button" value="Salir">
+                <span class="glyphicon glyphicon-arrow-left"><jsp:text/></span> Cerrar</button>         
+      </tiles:putAttribute>               
+    </tiles:insertTemplate>
+</jsp:root>
+
+
+

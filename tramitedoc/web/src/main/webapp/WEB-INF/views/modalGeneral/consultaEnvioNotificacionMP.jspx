@@ -1,0 +1,152 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <script>
+        fn_activarInterMod('${psiInter}','${ptiEnv}');
+        $( function() {
+            //ADD YPA SIS
+            debugger;
+            if('${ptiEnv}'!='1')
+            {
+                $('#divMensajeria').show();    
+            }
+            else{
+                $('#divMensajeria').hide();    
+            }
+            
+            
+            if($('#pCodDepDocMsj').val()!='')
+            { 
+             $('#sMensajeria').val($('#pCodDepDocMsj').val());
+            }
+            else
+            { if($('#pbDepMsjUsuario').val()=='1')
+                 $('#sMensajeria').val( $('#pCodDepEnvUsuario').val());                
+            }
+            //END ADD YPA SIS
+            fn_selAccion();
+    } );
+    </script>
+    <c:set var="divId" value="windowConsultaAnexo" scope="request"/>
+    <c:set var="posiciona" value="width:400px;top:77px;" scope="request"/>
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <input type="hidden" id="siInter" name="siInter" value="${psiInter}"/> 
+        <tiles:putAttribute name="title" value="Envío de Documentos"/>
+        <tiles:putAttribute name="body">
+            <fieldset>                            
+                <div id="viewFisico" style="display: none;">
+                    <table width="100%">
+                        <tr>
+                            <td width="100">Acción:</td>    
+                            <td>  
+                                 <c:choose>
+                                    <c:when test='${ptiEnv!="1"}'>
+                                       <label>
+                                           <input type="radio" name="envio" id="envio1" value="0" checked="true" onclick="javascript:fn_changeChkVerInterMP('0')"/>
+                                           Mesa de Partes
+                                       </label>                                             
+                                    </c:when>
+                                    <c:otherwise>
+                                       <label>
+                                           <input type="radio" name="envio" id="envio1" value="0" onclick="javascript:fn_changeChkVerInterMP('0')"/>
+                                           Mesa de Partes
+                                       </label>    
+                                    </c:otherwise>
+                                 </c:choose>             
+                            </td>                             
+                        </tr>                      
+                         <tr>
+                            <td width="100">&amp;nbsp;</td>    
+                            <td>  
+                                &amp;nbsp;
+                            </td>                             
+                        </tr>
+                        <tr>
+                            <td width="100"></td>    
+                            <td>  
+                                <c:choose>
+                                    <c:when test='${ptiEnv!="1"}'>
+                                        <label>
+                                            <input type="radio" name="envio" id="envio2" value="1" onclick="javascript:fn_changeChkVerInterMP('1')" />
+                                            Entrega Directa
+                                        </label>                                           
+                                    </c:when>
+                                    <c:otherwise>
+                                       <label>
+                                            <input type="radio" name="envio" id="envio2" value="1" checked="true" onclick="javascript:fn_changeChkVerInterMP('1')" />
+                                            Entrega Directa
+                                       </label>    
+                                    </c:otherwise>                                        
+                                </c:choose>                  
+                            </td>                             
+                        </tr> 
+                        <tr>
+                            <td width="100">&amp;nbsp;</td>    
+                            <td>  
+                                &amp;nbsp;
+                            </td>                             
+                        </tr> 
+                        <tr id="divMensajeria">
+                            <td><div style="display: ${pdisplay}">Mensajería:</div></td>
+                                <td>
+                                    <!-- ADD YPA SIS -->
+                                    <input type="hidden" value="${pCodDepUsuario}" id="pCodDepEnvUsuario" />
+                                    <input type="hidden" value="${pCodDepDocMsj}" id="pCodDepDocMsj" />
+                                    <input type="hidden" value="${pbDepMsjUsuario}" id="pbDepMsjUsuario" />
+                                    
+                                    <!--END  ADD YPA SIS -->
+                                    <div style="display: ${pdisplay}">
+                                 <select id="sMensajeria" style="width:250px;">
+                                    <c:forEach var="itemMsj" items="${MensajeriaList}" >
+                                      <option value="${itemMsj.celeDescor}">${itemMsj.celeDesele}</option>
+                                    </c:forEach>
+                                  </select>
+                                   <!--  <select id="sMensajeria" style="width:200px;">
+                                     </select> -->
+                                     <!--  <form:select path="sMensajeria" style="width:180px">
+                                       <form:options items="${MensajeriaList}" itemValue="CELE_DESCOR" itemLabel="CELE_DESELE" />
+                                      </form:select>-->
+                                    </div> 
+                                </td>
+                        </tr>
+                   </table>  
+               </div>
+            </fieldset>
+        </tiles:putAttribute>
+           <style type="text/css">
+               #dragmodal{
+                   background-color: #428BCA;
+                   
+               }
+               h3{
+                    color:white !important;
+                   
+               }
+               .btn_close_modal
+               {color:white !important;
+                   
+               }
+            </style>
+        <tiles:putAttribute name="footer">
+            <div id="viewFisicoF" class="col-md-5" style="display: none;">         
+                <c:choose>
+                    <c:when test='${pcomboestado eq "05"}'>
+                        <button title ="Confirmar" class="btn btn-default btn-sm" onclick="fn_grabarEnvioNotificacionObjCorreo('${pnuAnn}','${pnuEmi}','${pexisteDoc}','${pexisteAnexo}','${tipoBandeja}','01','${pCorreo}');" type="button" value="Confirmar">
+                                <span class="glyphicon glyphicon-floppy-disk"><jsp:text/></span> Confirmar</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button title ="Grabar" class="btn btn-default btn-sm" onclick="fn_grabarEnvioNotificacionObj('${pnuAnn}','${pnuEmi}','${pexisteDoc}','${pexisteAnexo}','${tipoBandeja}');" type="button" value="Grabar">
+                            <span class="glyphicon glyphicon-floppy-disk"><jsp:text/></span> Grabar</button>
+                    </c:otherwise>
+                </c:choose>            
+                <button title ="Regresar a m&#243;dulo anterior" class="btn btn-default btn-sm" onclick="removeDomId('windowConsultaAnexo');" type="button" value="Salir">
+                        <span class="glyphicon glyphicon-arrow-left"><jsp:text/></span> Cerrar</button>
+            </div>                           
+        </tiles:putAttribute>
+    </tiles:insertTemplate> 
+</jsp:root>
+
+
+

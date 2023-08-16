@@ -1,0 +1,234 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <c:set var="divId" value="divOrigenMain" scope="request"/>
+    <c:set var="posiciona" value="width:670px; height:750px;" scope="request"/>
+    <script>
+    $( function() {
+
+        /* var vCantidadDias = getNumeroDeDiasDiferencia('${pfec_enviomsj}','${fechaActual}');
+
+
+ 
+        if (vCantidadDias>0)
+           {
+              vCantidadDias=-vCantidadDias;
+
+           }      */
+
+
+        var vmindate= getDiasMin('${pfec_enviomsj}');
+
+
+        $("#txtFechaEnt").datepicker(
+                
+                { minDate:new Date(vmindate) } 
+
+
+            );
+        
+          $("#txtFechaEnt").change(
+                function() {  
+                                console.log("change");
+                                //calPenEnv();
+                            }
+                                    
+                                    
+                
+            );
+    
+        $("#txtFechaDev").datepicker(                
+                { minDate:new Date(vmindate) } 
+         );
+        
+        
+          $("#txtFechaDev").change(
+                function() {  
+                                
+                                //calPenDev();
+                }
+                
+            );
+     
+        //cambio no validacion 02/02/2018
+        //calPenEnv();    
+        //calPenDev();
+        
+    } );
+    </script>                        
+            
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <tiles:putAttribute name="title" value="DESCARGAR MENSAJE PENDIENTE"/>
+        <tiles:putAttribute name="body">
+            
+      
+            
+            <form:form modelAttribute="descargaMensajeBean" enctype="multipart/form-data">
+
+            <div id="divConfigPersonal">
+                
+                    <fieldset>
+                        <div class="btn-group btn-group-lg">
+                            <button id="btn-grabar" title="Descargar" class="btn btn-primary btn-lg" onclick="fn_grabarDescargaMsj();" type="button"><span class="glyphicon glyphicon-floppy-disk"></span> Descargar</button>
+                            <button id="btn-salir" title="Salir" class="btn btn-primary btn-lg" onclick="removeDomId('divOrigenMain');" type="button"><span class="glyphicon glyphicon-log-out"></span> Salir</button>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Datos del documento</legend>
+                        <table width="640px">
+                            <tr>
+                                <td width="120px;">Nro. Mensaje:</td>
+                                <td><input readonly="readonly" id="txtNu_Msj" type="text" style="width: 100px;" value="${pnu_msj}" /></td>
+
+                                <td>Fecha Emi.:</td>
+                                <td><input readonly="readonly" id="txtFechaEnvio" type="text" style="width: 100px;" value="${pfe_emi}" /></td>
+                            </tr>
+                            <tr>
+                                <td>Documento:</td>
+                                <td><input readonly="readonly" id="tipoDoc" name="tipoDoc" type="text" style="width: 267px;" value="${pde_TipoDoc}" data-toggle="tooltip" title="${pde_TipoDoc}" /></td>
+                            </tr>
+                            <tr>
+                                <td width="90px;">Asunto:</td>
+                                <td colspan="5">
+                                    <textarea readonly="readonly" id="deAsu" name="deAsu" maxlength="1000" style="height:70px;width:100%;resize: none;background-color: #f2f5f7;" class="delUpperCase" rows="3" cols="60">${pde_Asu}</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                            
+                    <fieldset>
+                        <table>
+                            <legend>Datos de mensajería</legend>
+                            <tr>
+                                <td width="120px;">Fecha Recepción:</td>
+                                <td><input readonly="readonly" id="txtNu_Msj" type="text" style="width: 100px;" value="${pfec_recepmp}" /></td>                         
+                                <td>Fecha Envío:</td>
+                                <td><input readonly="readonly" id="txtFechaEnvio" type="text" style="width: 100px;" value="${pfec_enviomsj}" /></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                            
+                    <fieldset>
+                        <legend>Datos de descarga</legend>
+                        <input id="txtNu_Emi" name="txtNu_Emi" type="hidden" value="${pnu_emi}"/>
+                        <input id="txtNu_Ann" name="txtNu_Ann" type="hidden" value="${pnu_ann}"/>
+                        <input id="txtNu_Des" name="txtNu_Des" type="hidden" value="${pnu_des}"/>
+                        <input id="txtFe_Pla" name="txtFe_Pla" type="hidden" value="${pfe_pla}"/>
+                        <input id="txtFe_Act" name="txtFe_Act" type="hidden" value="${fechaActual}"/>
+                        <input id="txtDia_Pla_Dev" name="txtDia_Pla_Dev" type="hidden" value="${pdias_pla_dev}"/>
+                        <input id="txtAnexarCargo" name="txtAnexarCargo" type="hidden" value="${anexar_cargo}"/>
+                        <input id="txtFe_Pla_Dev" name="txtFe_Pla_Dev" type="hidden" value=""/>
+                        <input id="txtPeEnvMsj" name="txtPeEnvMsj" type="hidden" value="${pPeEnvMsj}"/>
+                        
+                        <table width="640px">
+
+                            <tr>
+                                <td width="120px;">Estado:</td>
+                                <td>
+                                        <form:select path="co_EstadoDoc" style="width:120px" onchange="fn_verMotivo()" >
+                                            <form:options items="${deEstadosList}" itemValue="coEst" itemLabel="deEst"/>
+                                        </form:select>
+                                </td>                               
+                                                               
+                                   
+                                <td colspan="4" align="right">
+                                        <div id="divMotivo" style="display:none;" >
+                                            <span> Motivo: </span>
+                                                <form:select path="coMotivo" style="width:200px">
+                                                    <form:options items="${deMotivoList}" itemValue="celeDesele" itemLabel="celeDesele"/>
+                                                </form:select>
+                                        </div>   
+                                </td>
+                                
+    
+                            </tr>
+                            <tr>
+                                <td>Observaciones:</td>
+                                <td colspan="6"> <textarea id="txtObservaciones" maxlength="500" name="txtObservaciones" rows="6" style="width:100%;resize: none;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <table>
+                                    <tr>
+                                        <td width="120px;"><div id="LblFechaEnt">Fecha de Entrega:</div></td>
+                                        <td><input readonly="readonly" maxlength="10" id="txtFechaEnt" type="text" style="width: 100px;" placeholder="dd/mm/aaaa" value="${fechaActual}" onkeypress="return filtrarTeclado(event, false, public_textual_date,'','',null);"/></td>
+                                        
+                                        <td width="65px;" align="right">Hora :</td>
+                                        <td width="120px;" colspan="2"><input maxlength="5" id="txtHoraEnt" type="text" style="width: 80px;" value="${horaActual}" placeholder="hh:mm" class="delUpperCase"/></td>
+                                        <td width="70px;" id="rowPen1">
+                                            <!--Penalización:-->
+                                        </td>                                
+                                        <td colspan="5"><input id="txtes_pen_msj" name="txtes_pen_msj" type="hidden" value="N"/><div id="txtes_pen"  style="width:30px;color:#ffffff; font-size: 14px; "></div></td>
+                                    </tr>
+                                </table>                           
+
+                            </tr>
+                            <tr>
+                                <table>
+                                    <tr>
+                                        <td width="120px;"><div id="LblFechaDev">Fecha de Devolución:</div></td>
+                                        <td><input readonly="readonly" maxlength="10" id="txtFechaDev" type="text" style="width: 100px;" placeholder="dd/mm/aaaa" value="${fechaActual}" onkeypress="return filtrarTeclado(event, false, public_textual_date,'','',null);"/></td>
+                                        
+                                        <td width="65px;" align="right">Hora :</td>
+                                        <td width="120px;" colspan="2"><input maxlength="5" id="txtHoraDev" type="text" style="width: 80px;" value="${horaActual}" placeholder="hh:mm" class="delUpperCase"/></td>
+                                        <td width="70px;" id="rowPen2">
+                                            <!--Penalización:-->
+                                        </td>                                
+                                        <td colspan="5"><input id="txtes_pen_dev" name="txtes_pen_dev" type="hidden" value="N"/><div id="txtes_dev"  style="width:30px;color:#ffffff; font-size: 14px; "></div></td>
+                                    </tr>
+                                </table>
+                                
+                            </tr>
+
+                            <tr>
+                                
+                                
+                                    <table>
+                                        
+                                            <tr >
+                                                <td width="120px;">Adjuntar Cargo:</td>
+                                                <td>
+                                                    <input readonly="readonly" name="txtNombreAnexo" id="txtNombreAnexo" type="text" value=""/>
+                                                </td>
+                                                <td width="20%" align="">
+                                                    <div id="btn-opciones">
+                                                        <button id="btn-ReemplazarDoc" title="Anexar Cargo" class="btn btn-default btn-xs" onclick="fn_anexoDocumento('${tamanioMaxAnexos}');" type="button"><span class="glyphicon glyphicon-open"></span></button>
+                                                             
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                   <div>
+                                                        <input id="fileupload" type="file" name="files[]" data-url="" multiple="" style="display: none;"/>
+                                                        <div id="progress" class="progress" style="margin-top:15px;width:200px;display: none;">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                                <span style="top: 3px; "><jsp:text/></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>    
+                                            </tr>
+                                        
+                                    </table>
+                                                        
+
+
+                                
+                            </tr>
+                        </table>
+
+                        <br/>
+                        
+                        <input type="hidden" id="codEmp" value=""/>
+                        <input type="hidden" id="codDep" value=""/>
+                    </fieldset>
+                
+            </div>
+        </form:form>
+        </tiles:putAttribute>
+        <tiles:putAttribute name="footer">
+            <jsp:text/>
+        </tiles:putAttribute>
+    </tiles:insertTemplate>
+
+</jsp:root>

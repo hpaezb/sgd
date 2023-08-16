@@ -1,0 +1,60 @@
+<jsp:root xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags"
+          xmlns:form="http://www.springframework.org/tags/form">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <c:set var="divId" value="windowObsExpediente" scope="request"/>
+    <c:set var="posiciona" value="width:700px;top:200px;" scope="request"/>
+  
+    <tiles:insertTemplate template="/WEB-INF/templates/windowmodaldraggable.jspx" flush="true">
+        <tiles:putAttribute name="title" value="Detalle de Observación del Expediente"/>        
+        <tiles:putAttribute name="body">
+            <input id="txtIndChangeObsRecDocExt" type="hidden" value="0"/>
+            <form:form modelAttribute="expedienteDocExtRecepBean">               
+                <fieldset>
+                    <legend>Detalle</legend>
+                    <table width="100%">
+                        <c:choose>
+                            <c:when test="${empty expedienteDocExtRecepBean.deDetalle}">
+                                <tr>
+                                    <td><h5>No se encuentran datos.</h5></td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <tr>                                     
+                                    <td width="100%" colspan="3">
+                                        <form:textarea path="deDetalle" rows="4" class="delUpperCase" style="height:90px;width:98%;" maxlength="400" readonly="true"/>
+                                    </td>             
+                                </tr>
+                                <!-- [HPB] Inicio 27/03/23 CLS-087-2022 -->
+                                <tr>
+                                    <td width="20%">Fecha Observación:</td>
+                                    <td><form:input path="feEnvCorObs" readonly="true" style="text-align: left; width: 150px;"/></td>
+                                </tr>
+                                <tr></tr>
+                                <tr></tr>
+                                <!-- [HPB] Fin 27/03/23 CLS-087-2022 -->
+                            </c:otherwise>
+                        </c:choose>                              						
+                    </table>                 
+                </fieldset>
+            </form:form>
+        </tiles:putAttribute>
+        <style type="text/css">
+            #dragmodal{
+                background-color: #428BCA;
+            }
+            h3{
+                color:white !important;
+            }
+            .btn_close_modal{
+                color:white !important;
+            }
+         </style>
+        <tiles:putAttribute name="footer">
+            <button title ="Regresar a m&#243;dulo anterior" class="btn btn-default btn-sm" onclick="removeDomId('windowObsExpediente');" type="button" value="Salir">
+                <span class="glyphicon glyphicon-arrow-left"><jsp:text/></span> Cerrar</button>         
+        </tiles:putAttribute>               
+    </tiles:insertTemplate>
+</jsp:root>
