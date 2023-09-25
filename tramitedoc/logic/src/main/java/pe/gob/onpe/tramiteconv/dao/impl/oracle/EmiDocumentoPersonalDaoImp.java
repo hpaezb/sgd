@@ -25,6 +25,7 @@ import pe.gob.onpe.tramitedoc.bean.DestinatarioDocumentoEmiBean;
 import pe.gob.onpe.tramitedoc.bean.DestinoBean;
 import pe.gob.onpe.tramitedoc.bean.DocumentoEmiBean;
 import pe.gob.onpe.tramitedoc.bean.DocumentoObjBean;
+import pe.gob.onpe.tramitedoc.bean.ExpedienteBean;
 import pe.gob.onpe.tramitedoc.bean.ReferenciaBean;
 import pe.gob.onpe.tramitedoc.bean.ReferenciaEmiDocBean;
 import pe.gob.onpe.tramitedoc.bean.ReferenciaRemitoBean;
@@ -292,25 +293,50 @@ public class EmiDocumentoPersonalDaoImp   extends SimpleJdbcDaoBase implements E
     }    
     
     @Override
-    public String updDocumentoEmiAdmBean(DocumentoEmiBean documentoEmiBean) {
+    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+    //public String updDocumentoEmiAdmBean(DocumentoEmiBean documentoEmiBean) {
+    public String updDocumentoEmiAdmBean(String nuAnn, String nuEmi,DocumentoEmiBean documentoEmiBean, ExpedienteBean expedienteBean, String pcoUserMod) {
+    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */    
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         String vReturn = "NO_OK";
         StringBuilder  sqlUpd = new StringBuilder();
         sqlUpd.append("update tdtv_remitos A \n"
-                + "set A.CO_USE_MOD=?,\n" +
-                "A.DE_ASU=?\n" +
+            /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */    
+                //+ "set A.CO_USE_MOD=?,\n" +
+                + "set A.CO_USE_MOD=?,\n");
+            if (documentoEmiBean != null) {
+                //"A.DE_ASU=?\n" +    
+                sqlUpd.append("A.DE_ASU=?\n" +
+            /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */            
                 ",A.NU_DIA_ATE=?\n" +
                 ",A.CO_TIP_DOC_ADM=?\n" +        
                 ",A.NU_DOC_EMI=?\n" +
-                ",A.DE_DOC_SIG=?,\n" +      
-                "A.FE_USE_MOD=SYSDATE "
+            /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */            
+                //",A.DE_DOC_SIG=?,\n" +
+                ",A.DE_DOC_SIG=?,\n");
+            }
+            if (expedienteBean != null) {
+                sqlUpd.append("A.NU_ANN_EXP='" + expedienteBean.getNuAnnExp() + "',\n");
+                sqlUpd.append("A.NU_SEC_EXP='" + expedienteBean.getNuSecExp() + "',\n");
+            }
+                //"A.FE_USE_MOD=SYSDATE "
+                sqlUpd.append("A.FE_USE_MOD=SYSDATE "
+            /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */            
                 + "where\n"
                 + "A.NU_ANN=? and\n"
                 + "A.NU_EMI=?");
                 
         try {
-            this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{documentoEmiBean.getCoUseMod(),documentoEmiBean.getDeAsu(),documentoEmiBean.getNuDiaAte(),
-                    documentoEmiBean.getCoTipDocAdm(),documentoEmiBean.getNuDocEmi(),documentoEmiBean.getDeDocSig(),documentoEmiBean.getNuAnn(),documentoEmiBean.getNuEmi()});
+            /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+            //this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{documentoEmiBean.getCoUseMod(),documentoEmiBean.getDeAsu(),documentoEmiBean.getNuDiaAte(),
+            if (documentoEmiBean != null) {
+            this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{pcoUserMod,documentoEmiBean.getDeAsu(),documentoEmiBean.getNuDiaAte(),
+                    //documentoEmiBean.getCoTipDocAdm(),documentoEmiBean.getNuDocEmi(),documentoEmiBean.getDeDocSig(),documentoEmiBean.getNuAnn(),documentoEmiBean.getNuEmi()});
+                    documentoEmiBean.getCoTipDocAdm(),documentoEmiBean.getNuDocEmi(),documentoEmiBean.getDeDocSig(),nuAnn, nuEmi});
+            }else{
+                this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{pcoUserMod, nuAnn, nuEmi});
+            }
+            /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
             vReturn = "OK";
         }catch(DuplicateKeyException con){
             //con.printStackTrace();

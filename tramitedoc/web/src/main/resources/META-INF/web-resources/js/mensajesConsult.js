@@ -1823,9 +1823,43 @@ function fn_eliminarArchivoMsj(pNuAnn,pNuEmi,pNuDes, pNuAne)
     }, 'text', false, false, "POST");
     return false;
 }
+/*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras*/
+function fn_eliminarAdjuntarDoc(pNuAnn,pNuEmi,pNuDes, pNuAne){
+    var p = new Array();
+    var accion;
+    accion = "accion=goDelete";
+ 
+    p[0] = accion;
+    p[1] = "nu_ann=" + pNuAnn;
+    p[2] = "nu_emi=" + pNuEmi;
+    p[3] = "nu_des=" + pNuDes;
+    p[4] = "nu_ane=" + pNuAne; 
+    
+    ajaxCall("/srGestionMensajes.do", p.join("&"), function(data) {
+        if (data !== null){
+            alert_Sucess("MENSAJE", "archivo eliminado");
+            fn_verListadoAdjuntarDocAnexos(pNuAnn,pNuEmi);
+        }
+    }, 'text', false, false, "POST");
+    return false;
+}
 
-
-
+function fn_verListadoAdjuntarDocAnexos(pann,pemi) {
+    var p = new Array();
+    var accion;
+    accion = "accion=goListadoAdjuntarDocAnexos";
+ 
+    p[0] = accion;
+    p[1] = "nuAnn=" + pann;
+    p[2] = "nuEmi=" + pemi;
+    ajaxCall("/srDocObjeto.do", p.join("&"), function(data) {
+        if (data !== null){
+            refreshScript("divListadoMsjAnexos", data);
+        }
+    }, 'text', false, false, "POST");
+    return false;
+}
+/*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras*/
 function calPenEnv()
 {
     console.log("calPenEnv");

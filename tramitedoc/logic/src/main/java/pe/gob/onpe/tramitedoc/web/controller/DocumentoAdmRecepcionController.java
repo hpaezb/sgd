@@ -207,8 +207,12 @@ public class DocumentoAdmRecepcionController {
             documentoBean.setDeProceso(expedienteBean.getDeProceso());
             /*HPB 11/02/2020 - Inicio - Requerimiento Remitente expediente*/
             documentoBean.setCoGru(expedienteBean.getCoGru());
-            documentoBean.setTiEmi(expedienteBean.getTiEmi());
-            documentoBean.setNuOriEmi(expedienteBean.getNuOriEmi());
+            /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+            //documentoBean.setTiEmi(expedienteBean.getTiEmi());
+            documentoBean.setTiEmi(documentoBean.getTiEmi());
+            //documentoBean.setNuOriEmi(expedienteBean.getNuOriEmi());
+            documentoBean.setNuOriEmi(documentoBean.getNuOriEmi());
+            /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
             /*HPB 11/02/2020 - Fin - Requerimiento Remitente expediente*/
            }
            list = recepDocumentoAdmService.getDocumentosRefRecepAdm(snuAnn, snuEmi);

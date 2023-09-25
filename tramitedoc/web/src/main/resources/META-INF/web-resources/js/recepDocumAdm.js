@@ -2286,7 +2286,7 @@ function fu_validaFechaAteArchDoc(){
 
 
 function fu_atenderDerivarDocumentoPersonal(){
-  var esDocAdmRecepcion = jQuery('#documentoRecepBean').find('#esDocRec').val(); 
+  var esDocAdmRecepcion = jQuery('#documentoRecepBean').find('#esDocRec').val();
   if(esDocAdmRecepcion==="0" || esDocAdmRecepcion==="9"){
      bootbox.alert("No se puede atender Documento.");
   }else{

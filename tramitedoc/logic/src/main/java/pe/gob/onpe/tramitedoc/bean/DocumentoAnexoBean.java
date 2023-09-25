@@ -38,7 +38,10 @@ public class DocumentoAnexoBean {
     private String tipDocMsj;
     private String deDocMsj;
     /*----Hermes 22/01/2019----*/
-    
+    /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras*/
+    private String difHora;
+    private int inDifHora;
+    /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras*/
     public String getNuAnn() {
         return nuAnn;
     }
@@ -212,6 +215,21 @@ public class DocumentoAnexoBean {
     public void setInAneSub(String inAneSub) {
         this.inAneSub = inAneSub;
     }
-    
-    
+    /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras*/
+    public String getDifHora() {
+        return difHora;
+    }
+
+    public void setDifHora(String difHora) {
+        this.difHora = difHora;
+    }
+
+    public int getInDifHora() {
+        return inDifHora;
+    }
+
+    public void setInDifHora(int inDifHora) {
+        this.inDifHora = inDifHora;
+    }
+    /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras*/
 }

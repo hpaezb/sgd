@@ -2559,7 +2559,37 @@ public class DocumentoObjetoController {
         model.addAttribute("tamanioMaxAnexos", tamanioMaxAnexos);/*HPB 17/02/2020 - Requerimiento capacidad archivo configurable*/        
         return "/modalGeneral/adjuntarDocMsj";
     }    
-    //Hermes 28/01/2019 - Requerimiento Mensajeria: Acta 0005-2019   
+    //Hermes 28/01/2019 - Requerimiento Mensajeria: Acta 0005-2019  
+    /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras*/
+    @RequestMapping(method = RequestMethod.POST, params = "accion=goListadoAdjuntarDocAnexos")
+    public String goListadoAdjuntarDocAnexos(HttpServletRequest request, Model model) {
+        String pNuAnn = ServletUtility.getInstancia().loadRequestParameter(request, "nuAnn");
+        String pNuEmi = ServletUtility.getInstancia().loadRequestParameter(request, "nuEmi");
+        String mensaje = "NO_OK";
+        String tamanioMaxAnexos = commonQryService.obtenerValorParametro("CAP_MAXIMA_ANEXOS");
+
+        if (pNuAnn != null) {
+            try {
+                List<DocumentoAnexoBean> docAnexoListMsj = documentoMensajesService.getAnexosListMsj2(pNuAnn, pNuEmi);
+                model.addAttribute("docAnexoListMsj", docAnexoListMsj);
+                model.addAttribute("tamanioMaxAnexos", tamanioMaxAnexos);
+                mensaje = "OK";
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje = e.getMessage();
+            }
+        } else {
+            mensaje = "Faltan Datos";
+        }
+        
+        if (mensaje.equals("OK")) {
+            return "/modalGeneral/adjuntarDocMsjListado";
+        } else {
+            model.addAttribute("pMensaje", mensaje);
+            return "respuesta";
+        }
+    }
+    /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras*/
     /*--HPB 05/12/2019 - Requerimiento MPV-OBSERVADOS--*/
     @RequestMapping(method = RequestMethod.POST, params = "accion=goArcDocObsMesaPartesVirtual")
     public String goArcDocObsMesaPartesVirtual(HttpServletRequest request, Model model) {

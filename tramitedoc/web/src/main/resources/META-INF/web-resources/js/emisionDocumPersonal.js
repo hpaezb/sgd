@@ -518,7 +518,10 @@ function fn_inicializaEditEmiDocPersonal(sTipoDestEmi,sEstadoDocAdm){
    fu_cargaEdicionDocAdm("02",sEstadoDocAdm); 
    if(jQuery("#txtEsNuevoDocAdm").val() === '1'){
        jQuery("#coTipDocAdm").focus();
-   }   
+   }
+   else{
+       //jQuery("#coTipDocAdm").val("-1");
+   }
 }
 
 function fn_jsonVerificarNumeracionDocPersonalEmi(/*ptipoCmb,*/pnuDocEmiAnn,pnuAnn,pnuEmi,ptiEmi,pcoTipDocAdm,pcoDepEmi,pnuDocEmi,pcoEmpEmi){
@@ -732,10 +735,12 @@ function fn_buildSendJsontoServerDocuEmiPersonal(){
     if(valEnvio === "1"){
         result = result + '"documentoEmiBean":' + JSON.stringify(getJsonFormDocPersonalEmiBean()) + ',';
     }
-//    valEnvio = jQuery('#envExpedienteEmiBean').val();
-//    if(valEnvio === "1"){
-//        result = result + '"expedienteEmiBean":' + JSON.stringify(getJsonFormExpedienteEmiBean()) + ',';
-//    }
+    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+    valEnvio = jQuery('#envExpedienteEmiBean').val();
+    if(valEnvio === "1"){
+        result = result + '"expedienteEmiBean":' + JSON.stringify(getJsonFormExpedientePersEmiBean()) + ',';
+    }
+    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
     valEnvio = jQuery('#envRemitenteEmiBean').val();
     if(valEnvio === "1"){
         result = result + '"remitenteEmiBean":' + JSON.stringify(getJsonFormPersRemitenteEmiBean()) + ',';
@@ -761,6 +766,10 @@ function getJsonFormDocPersonalEmiBean(){
     arrCampoBean[11] = "tiEmi";
     arrCampoBean[12] = "deDocSig";
     arrCampoBean[13] = "nuCorDoc";
+    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+    arrCampoBean[14] = "nuAnnExp";
+    arrCampoBean[15] = "nuSecExp";
+    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
     var noForm='#documentoPersonalEmiBean';
     var o = {};
     arrCampoBean.forEach(function(campo) {
@@ -773,7 +782,32 @@ function getJsonFormDocPersonalEmiBean(){
     });
     return o;     
 }
-
+/* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+function getJsonFormExpedientePersEmiBean() {
+    var arrCampoBean = new Array();
+    arrCampoBean[0] = "nuAnnExp";
+    arrCampoBean[1] = "nuSecExp";
+    arrCampoBean[2] = "nuExpediente";
+    arrCampoBean[3] = "feExp";
+    var o = {};
+    var a = $('#documentoPersonalEmiBean').serializeArray();
+    $.each(a, function() {
+        for (var i = 0; i < arrCampoBean.length; i++) {
+            if (this.name === arrCampoBean[i]) {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            }
+        }
+    });
+    return o;
+}
+/* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
 function getJsonFormPersRemitenteEmiBean(){
   var arrCampoBean = new Array();  
   arrCampoBean[0] = "coDependencia=coDepEmi";
@@ -1023,16 +1057,35 @@ function fn_goGrabarDocumentoEmiPersonal(){
     //Se descomenta bloque HPB
     var pcrearExpediente="0";
     var pesnuevoDocEmiAdm=jQuery("#txtEsNuevoDocAdm").val();
-    if(pesnuevoDocEmiAdm==="1"){
+    /*[HPB] Inicio 20/09/23 OS-0000786-2023 Mejoras al generar expediente personal */
+    //if(pesnuevoDocEmiAdm==="1"){
+    if (pesnuevoDocEmiAdm === "1" && jQuery("#nuAnnExp").val() === "" && jQuery("#nuSecExp").val() === "") {
+    /*[HPB] Fin 20/09/23 OS-0000786-2023 Mejoras al generar expediente personal */
         //if (confirm('¿ Desea Crear Expediente ?')){
-            pcrearExpediente="1";
-        //}        
+            //pcrearExpediente="1";
+        //}
+        /*[HPB] Inicio 20/09/23 OS-0000786-2023 Mejoras al generar expediente personal */
+        var inCreaExpediente = jQuery("#inCreaExpediente").val();
+        if(inCreaExpediente==='SI'){
+            pcrearExpediente = "1";
+        }else{
+            pcrearExpediente = "0";                 
+        }
+        /*[HPB] Fin 20/09/23 OS-0000786-2023 Mejoras al generar expediente personal */
     }
     /* [HPB] Fin 24/02/23 CLS-087-2022 */
+    /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+    var pnuAnnExp= $("#nuAnnExp").val();
+    var pnuSecExp= $("#nuSecExp").val();
+    var pnuExpediente= $("#nuExpediente").val();
+    /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
     jQuery('#documentoPersonalEmiBean').find("#nuSecuenciaFirma").val("");
     /* [HPB] Inicio 24/02/23 CLS-087-2022 */
     //ajaxCallSendJson("/srDocumentoEmisionPersonal.do?accion=goGrabaDocumentoEmi"/*&pcrearExpediente="+pcrearExpediente*/,cadenaJson,function(data){
-    ajaxCallSendJson("/srDocumentoEmisionPersonal.do?accion=goGrabaDocumentoEmi&pcrearExpediente="+pcrearExpediente,cadenaJson,function(data){
+    /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+    //ajaxCallSendJson("/srDocumentoEmisionPersonal.do?accion=goGrabaDocumentoEmi&pcrearExpediente="+pcrearExpediente,cadenaJson,function(data){
+    ajaxCallSendJson("/srDocumentoEmisionPersonal.do?accion=goGrabaDocumentoEmi&pnuAnnExp="+pnuAnnExp+"&pnuSecExp="+pnuSecExp+"&pnuExpediente="+pnuExpediente+"&pcrearExpediente="+pcrearExpediente,cadenaJson,function(data){
+    /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/    
                //fn_rptaGrabaDocPersonalEmi(data/*,pcrearExpediente*/); 
                fn_rptaGrabaDocPersonalEmi(data,pcrearExpediente);
     /* [HPB] Fin 24/02/23 CLS-087-2022 */           
@@ -1050,10 +1103,12 @@ function fn_goGrabarDocumentoEmiPersonal(){
         if(data.coRespuesta==="1"){
             if(jQuery('#txtEsNuevoDocAdm').val()==="1"){
                 jQuery('#txtEsNuevoDocAdm').val("0");
-                jQuery('#documentoPersonalEmiBean').find("#nuEmi").val(data.nuEmi);
-                jQuery('#documentoPersonalEmiBean').find("#nuCorEmi").val(data.nuCorEmi);                                
-                jQuery('#documentoPersonalEmiBean').find("#nuDocEmi").val(data.nuDocEmi);                                
-                jQuery('#documentoPersonalEmiBean').find("#nuDoc").val(data.nuDoc);                                
+                /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+                //jQuery('#documentoPersonalEmiBean').find("#nuEmi").val(data.nuEmi);
+                //jQuery('#documentoPersonalEmiBean').find("#nuCorEmi").val(data.nuCorEmi);                                
+                //jQuery('#documentoPersonalEmiBean').find("#nuDocEmi").val(data.nuDocEmi);                                
+                //jQuery('#documentoPersonalEmiBean').find("#nuDoc").val(data.nuDoc);                                
+                /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */                
 //                jQuery("#nuEmi").val(data.nuEmi);
 //                jQuery("#nuCorEmi").val(data.nuCorEmi);
                 /* [HPB] Inicio 24/02/23 CLS-087-2022 */
@@ -1068,6 +1123,15 @@ function fn_goGrabarDocumentoEmiPersonal(){
                 }
                 /* [HPB] Fin 24/02/23 CLS-087-2022 */
             }
+            /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+            jQuery("#nuEmi").val(data.nuEmi);
+            if (jQuery("#nuDoc").val() === "") {
+                jQuery("#nuDoc").val(data.nuDoc);
+            }
+            if(!!data.nuDocEmi&&data.nuDocEmi!==null&&data.nuDocEmi!=='null'){
+                jQuery('#nuDocEmi').val(data.nuDocEmi);
+            }
+            /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
             fn_seteaCamposDocPersonalEmi();            //resetear variables del documento
             fu_cargaEdicionDocAdm("02",jQuery('#esDocEmi').val());            
             //alert("Datos Guardados.");
@@ -1201,7 +1265,9 @@ function fn_rptaChangeToProyectoDocEmiPersonal(data){
 
 function fn_validarEstadoDocEmiPersonal(pEstadoDoc){
     var vResult = "0";
-    if(jQuery('#txtEsNuevoDocAdm').val()==="0"){
+    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+    //if(jQuery('#txtEsNuevoDocAdm').val()==="0"){
+    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
         if(pEstadoDoc==="0"){
             var pesDocEmi = jQuery('#documentoPersonalEmiBean').find('#esDocEmi').val();
             if(pesDocEmi === "7"){        
@@ -1216,9 +1282,11 @@ function fn_validarEstadoDocEmiPersonal(pEstadoDoc){
                 jQuery('#nuDocEmi').focus();
             }          
         }
-    }else{
-        alert_Warning("Emisión :", "Necesita grabar los cambios");
-    }
+    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */    
+    //}else{
+      //  alert_Warning("Emisión :", "Necesita grabar los cambios");
+    //}
+    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
     return vResult;
 }
 

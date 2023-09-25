@@ -478,7 +478,7 @@ public class DocumentoXmlServiceImp implements DocumentoXmlService{
 
     @Override
     public DatosPlantillaDoc datosParaPlantillaGlosa(String pnuAnn, String pnuEmi) {
-        
+
         DatosPlantillaDoc  datosPlantilla = null;        
         List<DestinatarioDocumentoEmiBean> listDestinos = null;    
         

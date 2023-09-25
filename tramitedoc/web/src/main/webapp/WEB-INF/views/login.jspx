@@ -54,7 +54,10 @@
                 <table width="100%" border="0" cellspacing="0" align="center" >
                     <tr>
                         <td width="40%" align="center">
+                            <!-- [HPB] Inicio 18/08/23 OS-0000786-2023 Desplegar en Wildfly -->
                             <img src="${staticResourcesURL}/images/inicio_login.jpg" width="352" height="280"/>
+                            <!--<img src="${staticResourcesURL}images/inicio_login.jpg" width="352" height="280"/>-->
+                            <!-- [HPB] Fin 18/08/23 OS-0000786-2023 Desplegar en Wildfly -->
                         </td>
                         <td width="60%" valign="top" >
                             <div>

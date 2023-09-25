@@ -96,7 +96,6 @@ public class DocumentoAdmEmisionController {
     @RequestMapping(method = RequestMethod.GET, params = "accion=goInicio")
     public String goInicio(HttpServletRequest request, Model model){
         //BuscarDocumentoEmiBean buscarDocumentoEmiBean = new BuscarDocumentoEmiBean();
-        System.out.println("goInicio() 1");
         String codDependencia = ServletUtility.getInstancia().loadRequestParameter(request, "coDep");
         String pEstado = ServletUtility.getInstancia().loadRequestParameter(request, "estadoDoc");        
         String pTiEnvMsj = ServletUtility.getInstancia().loadRequestParameter(request, "tiEnvMsj");/*--28/08/19 HPB Devolucion Doc a Oficina--*/        

@@ -135,23 +135,38 @@ public class EmiDocumentoPersonalServiceImp implements EmiDocumentoPersonalServi
             String pcoUserMod = trxDocumentoEmiBean.getCoUserMod();
             DocumentoEmiBean documentoEmiBean = trxDocumentoEmiBean.getDocumentoEmiBean();
             //RemitenteEmiBean remitenteEmiBean = trxDocumentoEmiBean.getRemitenteEmiBean();
+            /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+            ExpedienteBean expedienteEmiBean = trxDocumentoEmiBean.getExpedienteEmiBean();
+            /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
             ArrayList<ReferenciaEmiDocBean> lstReferencia = trxDocumentoEmiBean.getLstReferencia();
             ArrayList<DestinatarioDocumentoEmiBean> lstDestinatario = trxDocumentoEmiBean.getLstDestinatario();            
             if(pnuAnn != null && pnuEmi != null && pnuAnn.trim().length()>0 && pnuEmi.trim().length()>0){//UPD
-                if(documentoEmiBean != null){
-                    documentoEmiBean.setCoUseMod(pcoUserMod);
-                    documentoEmiBean.setNuAnn(pnuAnn);
-                    documentoEmiBean.setNuEmi(pnuEmi);
+                /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+                //if(documentoEmiBean != null){
+                if(documentoEmiBean != null || expedienteEmiBean != null){
+                    //documentoEmiBean.setCoUseMod(pcoUserMod);
+                    //documentoEmiBean.setNuAnn(pnuAnn);
+                    //documentoEmiBean.setNuEmi(pnuEmi);
+                    //if(!(documentoEmiBean.getNuDocEmi()!=null&&documentoEmiBean.getNuDocEmi().trim().length()>0)){
+                    if(documentoEmiBean != null){
+                /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */        
                     if(!(documentoEmiBean.getNuDocEmi()!=null&&documentoEmiBean.getNuDocEmi().trim().length()>0)){
                         throw new validarDatoException("Especifique Número de Documento.");
                     }
-                    vReturn = emiDocumentoPersonalDao.updDocumentoEmiAdmBean(documentoEmiBean);
+                    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+                    }
+                    //vReturn = emiDocumentoPersonalDao.updDocumentoEmiAdmBean(documentoEmiBean);
+                    vReturn = emiDocumentoPersonalDao.updDocumentoEmiAdmBean(pnuAnn, pnuEmi, documentoEmiBean, expedienteEmiBean, pcoUserMod);
+                    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
                     if (!"OK".equals(vReturn)) {
                         throw new validarDatoException("Error al Actualizar Documento.");
                     }
                                         
                     /**insertar codigo jazanero**/
                     boolean flag = false;
+                    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+                    if(documentoEmiBean != null){
+                    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
                     if(documentoEmiBean.getCoTipDocAdm().equals("243") || documentoEmiBean.getCoTipDocAdm().equals("246")
                             || documentoEmiBean.getCoTipDocAdm().equals("247")|| documentoEmiBean.getCoTipDocAdm().equals("012")){ //Hermes 11/01/2019 Directiva 2019                               
                         if(lstDestinatario!=null && lstDestinatario.size()>0){
@@ -163,7 +178,9 @@ public class EmiDocumentoPersonalServiceImp implements EmiDocumentoPersonalServi
                             }                                    
                         }
                     }
-
+                    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+                    }
+                    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
                     vReturn = emiDocumentoPersonalDao.updClaveDocumentoEmi(pnuAnn, pnuEmi, (flag? Utilidades.getCadenaAlfanumAleatoria(7):null));
                     if ("NO_OK".equals(vReturn)) {
                         throw new validarDatoException("Error Agregando Clave");

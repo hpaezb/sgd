@@ -5070,6 +5070,13 @@ function fun_agregarDocumentoAlExpediente(pnuAnnExp, pnuSecExp) {
                 jQuery('#documentoEmiBean').find('#deProceso').val(data.deProceso === "null" ? "" : data.deProceso);
                 fu_changeExpedienteEmiBean();
                 jQuery("#txtEsNuevoDocAdm").val("0");
+                /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+                jQuery('#documentoPersonalEmiBean').find('#nuAnnExp').val(data.nuAnnExp);
+                jQuery('#documentoPersonalEmiBean').find('#nuSecExp').val(data.nuSecExp);
+                jQuery('#documentoPersonalEmiBean').find('#nuExpediente').val(data.nuExpediente);
+                jQuery('#documentoPersonalEmiBean').find('#feExp').val(data.feExp);
+                jQuery('#documentoPersonalEmiBean').find('#feExpCorta').val(data.feExpCorta);
+                /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
             } else {
                 alert_Danger("Expediente:", data.deRespuesta);
             }

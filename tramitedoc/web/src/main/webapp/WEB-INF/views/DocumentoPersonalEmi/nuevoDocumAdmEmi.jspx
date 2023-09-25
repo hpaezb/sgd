@@ -16,6 +16,9 @@
             </fieldset>
             <input id="txtfechaHoraActual" name="txtfechaHoraActual" type="hidden" value="${pfechaHoraActual}"/>
             <input id="txtEsNuevoDocAdm" name="txtEsNuevoDocAdm" type="hidden" value="${sEsNuevoDocAdm}"/>
+            <!-- [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia -->
+            <input id="envExpedienteEmiBean" name="envExpedienteEmiBean" type="hidden" value="0"/>
+            <!-- [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia -->
             <input id="envDocumentoEmiBean" name="envDocumentoEmiBean" type="hidden" value="0"/>
             <input id="envRemitenteEmiBean" name="envRemitenteEmiBean" type="hidden" value="0"/>
             <input id="rutaDocFirma" name="rutaDocFirma" type="hidden" value=""/>

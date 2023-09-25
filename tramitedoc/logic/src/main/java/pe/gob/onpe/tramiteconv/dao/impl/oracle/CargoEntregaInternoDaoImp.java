@@ -482,6 +482,9 @@ public class CargoEntregaInternoDaoImp extends SimpleJdbcDaoBase implements Carg
         prutaReporte.append("		G.CO_LOC_DES, ");
         prutaReporte.append("		PK_SGD_DESCRIPCION.DE_DEPENDENCIA(G.CO_DEP_DES) DE_DEP_DES_CAB, ");
         prutaReporte.append("		GD.NU_COR, ");
+        /* [HPB] Inicio 16/08/23 OS-0000786-2023 Mejoras */
+        prutaReporte.append("		R.DE_ASU, ");
+        /* [HPB] Fin 16/08/23 OS-0000786-2023 Mejoras */        
         prutaReporte.append("		RR.NU_EXPEDIENTE, ");
         prutaReporte.append("		CASE R.TI_EMI ");
         prutaReporte.append("			WHEN '01' THEN PK_SGD_DESCRIPCION.DE_NOM_EMP(R.CO_EMP_EMI) ");

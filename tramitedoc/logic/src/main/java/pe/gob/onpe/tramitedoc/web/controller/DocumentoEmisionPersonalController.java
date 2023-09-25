@@ -153,7 +153,9 @@ public class DocumentoEmisionPersonalController {
 //           }
            model.addAttribute("sTipoDestEmi","01");
            model.addAttribute("sEsNuevoDocAdm","0");
-           
+           /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+           model.addAttribute("inCreaExpediente",commonQryService.obtenerValorParametro("IN_CREA_EXPEDIENTE"));
+           /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
            listReferenciaDocAdmEmi = emiDocumentoPersonalService.getLstDocumReferenciatblEmi(snuAnn,snuEmi);
            model.addAttribute("lstTipDocDependencia",referencedData.listTipDocXDependencia(codDependencia));
            model.addAttribute("pfechaHoraActual",fechaHoraActual);
@@ -251,10 +253,19 @@ public class DocumentoEmisionPersonalController {
         /* [HPB] Inicio 24/02/23 CLS-087-2022 */
         String sCrearExpediente = ServletUtility.getInstancia().loadRequestParameter(request,"pcrearExpediente");//0 no crea, 1 crea
         /* [HPB] Fin 24/02/23 CLS-087-2022 */
+        /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+        String pnuAnnExp = ServletUtility.getInstancia().loadRequestParameter(request,"pnuAnnExp");
+        String pnuSecExp = ServletUtility.getInstancia().loadRequestParameter(request,"pnuSecExp");
+        String pnuExpediente = ServletUtility.getInstancia().loadRequestParameter(request,"pnuExpediente");
+        /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/        
         Usuario usuario = Utilidades.getInstancia().loadUserFromSession(request);
         trxDocumentoEmiBean.setCoUserMod(usuario.getCoUsuario());
         trxDocumentoEmiBean.setCempCodEmp(usuario.getCempCodemp());
-        
+        /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+        trxDocumentoEmiBean.setNuAnnExp(pnuAnnExp);
+        trxDocumentoEmiBean.setNuSecExp(pnuSecExp);
+        trxDocumentoEmiBean.setNuExpediente(pnuExpediente);
+        /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
         try{
             /* [HPB] Inicio 24/02/23 CLS-087-2022 */
             //mensaje = emiDocumentoPersonalService.grabaDocumentoEmiAdm(trxDocumentoEmiBean,usuario);
@@ -461,6 +472,12 @@ public class DocumentoEmisionPersonalController {
 //           documentoEmiBean.setNuAnn(nuAnn);
            documentoEmiBean.setDeAsu(documentoRecepBean.getDeAsu());
            model.addAttribute("sEsNuevoDocAdm","1");
+           /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+           documentoEmiBean.setNuAnnExp(documentoRecepBean.getNuAnnExp());
+           documentoEmiBean.setNuSecExp(documentoRecepBean.getNuSecExp());
+           documentoEmiBean.setNuExpediente(documentoRecepBean.getNuExpediente());  
+           documentoEmiBean.setFeExpCorta(documentoRecepBean.getFeExpCorta());
+           /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/           
            model.addAttribute("sTipoDestEmi","01");
            model.addAttribute("deAnnioList",referencedData.getAnnioList());
            model.addAttribute("lstTipDocReferenciaEmi",referencedData.getLstTipDocReferencia(codDependencia));           
@@ -475,6 +492,9 @@ public class DocumentoEmisionPersonalController {
 //           model.addAttribute("pcodEmp",usuario.getCempCodemp());
 //           model.addAttribute("pdesEmp",usuario.getDeFullName());
            model.addAttribute("documentoPersonalEmiBean",documentoEmiBean);
+           /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+           model.addAttribute("inCreaExpediente",commonQryService.obtenerValorParametro("IN_CREA_EXPEDIENTE"));
+           /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
            mensaje = "OK";
        }catch(Exception ex){
           mensaje = ex.getMessage(); 

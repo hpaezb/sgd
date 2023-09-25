@@ -43,8 +43,10 @@
                 GLASSFISH=(catalina.base) glassfish\glassfish\domains\domain1\
                 TOMACT=(catalina.base) apache-tomcat-7.0.42\
                 WEBLOGIC=DOMAIN_HOME-->
-                
+                <!-- [HPB] Inicio 18/08/23 OS-0000786-2023 Desplegar en Wildfly -->
                  <value>file:///${catalina.base}/sgdproperties/application.properties</value>
+                 <!--<value>file:///${jboss.server.config.dir}/sgdproperties/application.properties</value>-->
+                 <!-- [HPB] Fin 18/08/23 OS-0000786-2023 Desplegar en Wildfly -->
                 <!--
                 
                <value>/WEB-INF/i18n/application.properties</value>

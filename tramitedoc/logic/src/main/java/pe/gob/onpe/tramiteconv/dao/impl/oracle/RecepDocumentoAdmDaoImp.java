@@ -629,13 +629,18 @@ public class RecepDocumentoAdmDaoImp extends SimpleJdbcDaoBase implements RecepD
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT B.NU_ANN_EXP,B.NU_SEC_EXP,FE_EXP,TO_CHAR(FE_EXP,'DD/MM/YYYY') FE_EXP_CORTA,FE_VENCE,CO_PROCESO,PK_SGD_DESCRIPCION.DE_PROCESO_EXP(CO_PROCESO) DE_PROCESO,\n"
                 + " DE_DETALLE,CO_DEP_EXP,B.CO_GRU,NU_CORR_EXP,NU_EXPEDIENTE,B.NU_FOLIOS,NU_PLAZO,US_CREA_AUDI,FE_CREA_AUDI,US_MODI_AUDI,FE_MODI_AUDI,ES_ESTADO\n"
-                + " ,A.TI_EMI, DECODE(A.TI_EMI, '02', A.NU_RUC_EMI, '03', A.NU_DNI_EMI, '04', A.CO_OTR_ORI_EMI) NU_ORI_EMI\n"
-                + "FROM TDTC_EXPEDIENTE\n"
-                + " B INNER JOIN TDTV_REMITOS A\n"
-                + " ON A.NU_ANN_EXP = B.NU_ANN_EXP AND A.NU_SEC_EXP = B.NU_SEC_EXP \n"
+                /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/                 
+                //+ " ,A.TI_EMI, DECODE(A.TI_EMI, '02', A.NU_RUC_EMI, '03', A.NU_DNI_EMI, '04', A.CO_OTR_ORI_EMI) NU_ORI_EMI\n"               
+                //+ "FROM TDTC_EXPEDIENTE\n"
+                + "FROM TDTC_EXPEDIENTE B\n"
+                //+ " B INNER JOIN TDTV_REMITOS A\n"
+                //+ " ON A.NU_ANN_EXP = B.NU_ANN_EXP AND A.NU_SEC_EXP = B.NU_SEC_EXP \n"
+                /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
                 + "where\n"
-                + "B.NU_ANN_EXP=? and B.NU_SEC_EXP=? AND A.CO_GRU='3'");
-
+                /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
+                //+ "B.NU_ANN_EXP=? and B.NU_SEC_EXP=? AND A.CO_GRU='3'");
+                + "B.NU_ANN_EXP=? and B.NU_SEC_EXP=?");
+                /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras: Mostrar numero expediente al recepcionar*/
         ExpedienteBean expedienteBean = new ExpedienteBean();
         try {
             expedienteBean = this.jdbcTemplate.queryForObject(sql.toString(), BeanPropertyRowMapper.newInstance(ExpedienteBean.class),

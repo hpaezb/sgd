@@ -24,6 +24,7 @@ import pe.gob.onpe.tramitedoc.bean.DestinatarioDocumentoEmiBean;
 import pe.gob.onpe.tramitedoc.bean.DestinoBean;
 import pe.gob.onpe.tramitedoc.bean.DocumentoEmiBean;
 import pe.gob.onpe.tramitedoc.bean.DocumentoObjBean;
+import pe.gob.onpe.tramitedoc.bean.ExpedienteBean;
 import pe.gob.onpe.tramitedoc.bean.ReferenciaBean;
 import pe.gob.onpe.tramitedoc.bean.ReferenciaEmiDocBean;
 import pe.gob.onpe.tramitedoc.bean.ReferenciaRemitoBean;
@@ -330,7 +331,10 @@ public class EmiDocumentoPersonalDaoImp   extends SimpleJdbcDaoBase implements E
     }    
     
     @Override
-    public String updDocumentoEmiAdmBean(DocumentoEmiBean documentoEmiBean) {
+    /* [HPB] Inicio 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */
+    //public String updDocumentoEmiAdmBean(DocumentoEmiBean documentoEmiBean) {
+    public String updDocumentoEmiAdmBean(String nuAnn, String nuEmi,DocumentoEmiBean documentoEmiBean, ExpedienteBean expedienteBean, String pcoUserMod) {
+    /* [HPB] Fin 31/08/23 OS-0000786-2023 Mejoras:Generar doc personal con referencia */    
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         String vReturn = "NO_OK";
         StringBuilder  sqlUpd = new StringBuilder();

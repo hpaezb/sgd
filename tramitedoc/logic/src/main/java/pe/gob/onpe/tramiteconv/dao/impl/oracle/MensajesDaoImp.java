@@ -1580,7 +1580,13 @@ public class MensajesDaoImp extends SimpleJdbcDaoBase implements MensajesDao {
                     "de_det,\n" +
                     "de_rut_ori,\n" +
                     "co_use_cre,\n" +
-                    "fe_use_cre,\n" +
+                    /*[HPB] Inicio 18/08/23 OS-0000786-2023 Mejoras*/
+                    //"fe_use_cre,\n" +
+                    "TO_DATE(TO_CHAR(fe_use_cre, 'dd/mm/yyyy hh24:mi'), 'dd/mm/yyyy hh24:mi') fe_use_cre,\n"+
+                    "(select 24 * (sysdate - to_date(TO_CHAR(fe_use_cre, 'dd/mm/yyyy hh24:mi'), 'dd/mm/yyyy hh24:mi')) from dual) dif_hora,\n"+
+                    "CASE WHEN (select 24 * (sysdate - to_date(TO_CHAR(fe_use_cre, 'dd/mm/yyyy hh24:mi'), 'dd/mm/yyyy hh24:mi')) from dual) < 24 THEN 1\n" +
+                    " ELSE 0 END in_dif_hora,\n"+
+                    /*[HPB] Fin 18/08/23 OS-0000786-2023 Mejoras*/
                     "co_use_mod,\n" +
                     "fe_use_mod,\n" +
                     "nvl(req_firma,'0') req_firma, \n" +
