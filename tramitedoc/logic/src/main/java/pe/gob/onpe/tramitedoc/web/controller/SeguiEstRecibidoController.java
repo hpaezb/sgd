@@ -28,10 +28,12 @@ import pe.gob.onpe.tramitedoc.bean.BuscarDocumentoSeguiEstRecBean;
 import pe.gob.onpe.tramitedoc.bean.DependenciaBean;
 import pe.gob.onpe.tramitedoc.bean.DocumentoRecepSeguiBean;
 import pe.gob.onpe.tramitedoc.bean.ReporteBean;
+import pe.gob.onpe.tramitedoc.bean.TemaBean;
 import pe.gob.onpe.tramitedoc.bean.UsuarioConfigBean;
 import pe.gob.onpe.tramitedoc.service.CommonQryService;
 import pe.gob.onpe.tramitedoc.service.ReferencedData;
 import pe.gob.onpe.tramitedoc.service.SeguiEstRecibidoService;
+import pe.gob.onpe.tramitedoc.service.TemaService;
 import pe.gob.onpe.tramitedoc.web.util.ApplicationProperties;
 import pe.gob.onpe.tramitedoc.web.util.Utilidades;
 
@@ -54,7 +56,10 @@ public class SeguiEstRecibidoController {
     
     @Autowired
     private ApplicationProperties applicationProperties;
-
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    @Autowired
+    private TemaService temaService; 
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */    
     @RequestMapping(method = RequestMethod.GET, params = "accion=goInicio")
     public String goInicio(HttpServletRequest request, Model model) {
         String codDependencia = ServletUtility.getInstancia().loadRequestParameter(request, "coDep");
@@ -70,6 +75,11 @@ public class SeguiEstRecibidoController {
         model.addAttribute("deAnnioList", referencedData.getAnnioList());
         model.addAttribute("deEstadosList",referencedData.getLstEstadosDocumentoRec("TDTV_DESTINOS"));
         model.addAttribute("dePrioridadesList", referencedData.getPrioridadesDocumentoList());
+        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+        TemaBean temabean =  new TemaBean();
+        temabean.setCoDependencia(codDependencia);
+        model.addAttribute("deListTema", temaService.getListTema(temabean));
+        /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
         model.addAttribute("deTipoDocumentoList", referencedData.getTipoDocumentoEmiList(codDependencia));
         //model.addAttribute("deExpedienteList", referencedData.getExpedienteList(codDependencia));
         model.addAttribute("deEtiquetasList", referencedData.getEtiquetasList());

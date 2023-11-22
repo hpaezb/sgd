@@ -111,6 +111,10 @@ public class DocumentoEmiBean {
     /*-- [HPB] Inicio 24/04/23 CLS-087-2022 Extension expediente--*/
     //private String nuExtension;
     /*-- [HPB] Fin 24/04/23 CLS-087-2022 Extension expediente--*/
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    private String coTema;
+    private String deTema;
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */     
     public String getRecursoenvio() {
         return recursoenvio;
     }
@@ -845,5 +849,21 @@ public class DocumentoEmiBean {
 //        this.nuExtension = nuExtension;
 //    }
     /*-- [HPB] Fin 24/04/23 CLS-087-2022 Extension expediente--*/
-    
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    public String getCoTema() {
+        return coTema;
+    }
+
+    public void setCoTema(String coTema) {
+        this.coTema = coTema;
+    }
+
+    public String getDeTema() {
+        return deTema;
+    }
+
+    public void setDeTema(String deTema) {
+        this.deTema = deTema;
+    }
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
 }

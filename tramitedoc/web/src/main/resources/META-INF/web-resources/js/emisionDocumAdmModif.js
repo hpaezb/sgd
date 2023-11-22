@@ -87,7 +87,11 @@ function fn_verAvanceRecepcionObj(pnuAnn, pnuEmi, pnuDes) {
 
 function fu_grabarTema(){  
     var codigosDestinos=$("#codigoEmision").val();  
-    if(codigosDestinos != null && codigosDestinos!=""  ){   
+    if(codigosDestinos != null && codigosDestinos!=""  ){ 
+        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+        var coTema = $("#divOrigenMain").find("select").val();
+        if(coTema!==null && coTema!==""){
+        /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
          var p = new Array();
         p[0] = "accion=goGrabarTema";
         p[1] = "codigoEmision=" +$("#codigoEmision").val();  
@@ -95,7 +99,10 @@ function fu_grabarTema(){
         p[3] = "coTema="+$("#divOrigenMain").find("select").val();  
        ajaxCall("/srDocObjeto.do", p.join("&"), function(data) {
                         fn_rptagrabarTema(data);
-                    },'json', false, false, "POST");                                     
+                    },'json', false, false, "POST"); 
+        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+        }else{bootbox.alert('Debe Seleccionar el tema.');}
+        /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
     }else{
        bootbox.alert('Debe Seleccionar por lo menos un Destino.');
     }

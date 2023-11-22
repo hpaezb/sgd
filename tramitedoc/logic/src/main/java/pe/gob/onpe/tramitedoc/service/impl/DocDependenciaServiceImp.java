@@ -110,7 +110,13 @@ public class DocDependenciaServiceImp implements DocDependenciaService {
             documentoDependenciaBean.setCoUseCre(coUsuario);
             documentoDependenciaBean.setCoUseMod(coUsuario);
 //            documentoDependenciaBean.setEsOblCarga("0");
+            /* [HPB] Inicio 06/10/23 OS-0000786-2023 Deshabilitar firma obligatoria de proveido */
+            if(documentoDependenciaBean.getCoTipDoc().equals("232")){
+                documentoDependenciaBean.setEsOblFirma("0");
+            }else{
             documentoDependenciaBean.setEsOblFirma("1");
+            }
+            /* [HPB] Fin 06/10/23 OS-0000786-2023 Deshabilitar firma obligatoria de proveido */
 //            documentoDependenciaBean.setInGeneOfic("0");
 
             vReturn = docDependenciaDao.insDocDependencia(documentoDependenciaBean);

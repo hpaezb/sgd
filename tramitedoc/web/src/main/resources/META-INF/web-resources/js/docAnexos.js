@@ -123,6 +123,10 @@ function fn_fileUpload(reemplazarDoc, tamanioMaxAnexos) {
         done: function(e, data) {
             if (data.textStatus === "success")
             {
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+                var result=JSON.parse(data.result);
+                if(result!==null && result.length>0 && result[0].mensaje==="OK"){
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
                 contAux++;
                 if (contAux === numFiles) {
                     if (reemplazarDoc) {
@@ -139,6 +143,15 @@ function fn_fileUpload(reemplazarDoc, tamanioMaxAnexos) {
                     }
                     alert_Sucess("MENSAJE", "cambios guardados");
                 }
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+                }else if (result!==null && result.length>0 && result[0].mensaje!=="OK"){
+                    $("#progress").hide();
+                    alert_Danger("ERROR",result[0].mensaje);
+                }else {
+                    $("#progress").hide();
+                    alert_Danger("ERROR", "Error al cargar el archivo");
+                }
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
             } else {
                 alert_Danger("ERROR", "Error al cargar el archivo");
             }

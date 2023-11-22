@@ -1346,4 +1346,9 @@ public class MaestrosDaoImp extends SimpleJdbcDaoBase implements MaestrosDao{
     public List<SiElementoBean> getLsSiElementoPerfil(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public List<SiElementoBean> getLsSiElementoTipoExpediente(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -356,6 +356,21 @@
                                         </fieldset>                                                                
                                     </td>
                                 </tr>
+                                <!-- [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes -->
+                                <tr>
+                                    <td>
+                                        <fieldset>
+                                            <legend>Tema</legend>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>Tema: </td>
+                                                    <td><form:input path="deTema" readonly="true"/></td>
+                                                </tr>
+                                            </table>
+                                        </fieldset>                                    
+                                    </td>
+                                </tr>
+                                <!-- [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes -->
                                 <!--HPB 05/12/2019 - Requerimiento MPV-OBSERVADOS -->   
                                 <tr>
                                     <td>

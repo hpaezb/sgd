@@ -91,8 +91,10 @@ public class MesaPartesController {
         }
         buscarDocumentoExtRecepBean.setCoDependencia(codDependencia);
         model.addAttribute(buscarDocumentoExtRecepBean);
-        
-        model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+        /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+        //model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+        model.addAttribute("lstTipoExp", referencedData.grpElementoListTipoExpediente("TIP_EXPEDIENTE"));
+        /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
         model.addAttribute("lstOrigen", referencedData.grpElementoList("ORI_DOCUMENTO"));
         model.addAttribute("lstTupaExp",referencedData.getTupaExpList());
         model.addAttribute("deTipoDocumentoList",referencedData.getTipoDocumentoEmiList(codDependencia));                
@@ -188,7 +190,10 @@ public class MesaPartesController {
                 /*--HPB 13/01/20 Integrar PIDE--*/                
                 //Nuevos Campos
                 model.addAttribute("lstDpto", referencedData.getlistaDepartamento());
-                model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+                /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+                //model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+                model.addAttribute("lstTipoExp", referencedData.grpElementoListTipoExpediente("TIP_EXPEDIENTE"));
+                /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
                 model.addAttribute("lstOrigen", referencedData.grpElementoList("ORI_DOCUMENTO"));
                 
                 model.addAttribute("lstTraDest", referencedData.getNewUpdListDependenciaDestinatarioEmi(usuario.getCoDep(), pdeDepen));
@@ -399,8 +404,10 @@ public class MesaPartesController {
            model.addAttribute("lstDpto", referencedData.getlistaDepartamento());
            model.addAttribute("lstProv", referencedData.listProvincia(dpto));
            model.addAttribute("lstDist", referencedData.listDistrito(dpto,prov));
-           
-           model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+           /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+           //model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+           model.addAttribute("lstTipoExp", referencedData.grpElementoListTipoExpediente("TIP_EXPEDIENTE"));
+           /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
            model.addAttribute("lstOrigen", referencedData.grpElementoList("ORI_DOCUMENTO"));
            
            model.addAttribute("lstTraDest", referencedData.getNewUpdListDependenciaDestinatarioEmi(usuario.getCoDep(), pdeDepen));

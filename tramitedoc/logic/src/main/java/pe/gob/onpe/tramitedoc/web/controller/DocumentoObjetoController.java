@@ -18,9 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths; 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -1205,9 +1208,12 @@ public class DocumentoObjetoController {
         String nombreArchivo=fileMeta.getNombreArchivo();
         String tamanoArchivo=fileMeta.getTamanoArchivo();
         String tipoArchivo=fileMeta.getTipoArchivo();
-        
-        String res= "[{\"id\":\"%s\",\"name\":\"%s\",\"fileSize\":\"%s\",\"fileType\":\"%s\"}]";
-        res=String.format(res, id,nombreArchivo,tamanoArchivo,tipoArchivo);
+        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+        //String res= "[{\"id\":\"%s\",\"name\":\"%s\",\"fileSize\":\"%s\",\"fileType\":\"%s\"}]";
+        String res= "[{\"id\":\"%s\",\"name\":\"%s\",\"fileSize\":\"%s\",\"fileType\":\"%s\",\"mensaje\":\"%s\"}]";
+        //res=String.format(res, id,nombreArchivo,tamanoArchivo,tipoArchivo);
+        res=String.format(res, id,nombreArchivo,tamanoArchivo,tipoArchivo,vreturn);
+        /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
         return res;
         //return files;
 
@@ -2657,10 +2663,35 @@ public class DocumentoObjetoController {
                 files.add(new File(filePath + obj.getNombreArchivo()));
             }
         }
-
+        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+        String SPLIT_FILENAME_EXTENSION_REGEX = "\\.(?=[^\\.]+$)";
+        Map<String, Integer> namesPostfixes = new HashMap();
+        /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
         // package files
         for (File file : files) {
-            zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+            /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+            String nombreAnexoGenerado;
+            if (namesPostfixes.containsKey(file.getName())) {
+                String namePart;
+                String extension;
+                if (file.getName().contains(".")) {
+                    String[] splittedName = file.getName().split(SPLIT_FILENAME_EXTENSION_REGEX);
+                    namePart = splittedName[0];
+                    extension = "." + splittedName[1];
+                } else {
+                    namePart = file.getName();
+                    extension = "";
+                } 
+                Integer secuencia = namesPostfixes.get(file.getName());
+                nombreAnexoGenerado = namePart + "_" + ++secuencia + extension;
+                namesPostfixes.put(file.getName(), secuencia);                
+            }else{
+                nombreAnexoGenerado = file.getName();
+                namesPostfixes.put(file.getName(), 0);                
+            }            
+            //zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+            zipOutputStream.putNextEntry(new ZipEntry(nombreAnexoGenerado));
+            /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
             FileInputStream fileInputStream = new FileInputStream(file);
 
             IOUtils.copy(fileInputStream, zipOutputStream);

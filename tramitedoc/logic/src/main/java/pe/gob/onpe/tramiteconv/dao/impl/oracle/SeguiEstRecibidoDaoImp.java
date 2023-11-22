@@ -168,6 +168,12 @@ public class SeguiEstRecibidoDaoImp extends SimpleJdbcDaoQuery implements SeguiE
                 sql.append(" AND B.CO_PRI = :pCoPrioridad ");
                 objectParam.put("pCoPrioridad", buscarDocumentoSeguiEstRecBean.getPrioridadDoc());
             }
+            /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+            if (buscarDocumentoSeguiEstRecBean.getCoTema()!= null && buscarDocumentoSeguiEstRecBean.getCoTema().trim().length() > 0) {
+                sql.append(" AND B.CO_TEMA = :pCoTema ");
+                objectParam.put("pCoTema", buscarDocumentoSeguiEstRecBean.getCoTema());
+            }            
+            /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
             if (buscarDocumentoSeguiEstRecBean.getCoDepRemite() != null && buscarDocumentoSeguiEstRecBean.getCoDepRemite().trim().length() > 0) {
                 sql.append(" AND nvl(C.CO_DEP_EMI_REF,'0') = :pTiEmiRef ");
                 objectParam.put("pTiEmiRef", buscarDocumentoSeguiEstRecBean.getCoDepRemite());
@@ -723,6 +729,9 @@ public class SeguiEstRecibidoDaoImp extends SimpleJdbcDaoQuery implements SeguiE
                 "		 WHERE CEMP_CODEMP = A.CO_EMP_RES) DE_EMP_RES,\n" +
                 "		 PK_SGD_DESCRIPCION.MOTIVO(B.CO_MOT) DE_MOTIVO,\n" +
                 "		 PK_SGD_DESCRIPCION.DE_PRIORIDAD(B.CO_PRI) DE_PRIORIDAD,\n" +
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+                "                B.CO_TEMA, (SELECT de_tema FROM tdtr_tema WHERE CO_TEMA=B.CO_TEMA AND CO_DEPENDENCIA=B.CO_DEP_DES) AS DE_TEMA," +
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
                 "		 (SELECT CEMP_APEPAT || ' ' || CEMP_APEMAT || ' ' || CEMP_DENOM\n" +
                 "		 FROM RHTM_PER_EMPLEADOS\n" +
                 "		 WHERE CEMP_CODEMP = B.CO_EMP_REC) DE_EMP_REC,\n" +
@@ -844,6 +853,12 @@ public class SeguiEstRecibidoDaoImp extends SimpleJdbcDaoQuery implements SeguiE
                 sql.append(" AND B.CO_PRI = :pCoPrioridad \n");
                 objectParam.put("pCoPrioridad", buscarDocumentoSeguiEstRecBean.getPrioridadDoc());
             }
+            /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+            if (buscarDocumentoSeguiEstRecBean.getCoTema()!= null && buscarDocumentoSeguiEstRecBean.getCoTema().trim().length() > 0) {
+                sql.append(" AND B.CO_TEMA = :pCoTema ");
+                objectParam.put("pCoTema", buscarDocumentoSeguiEstRecBean.getCoTema());
+            }            
+            /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */            
             if (buscarDocumentoSeguiEstRecBean.getCoDepRemite() != null && buscarDocumentoSeguiEstRecBean.getCoDepRemite().trim().length() > 0) {
                 //sql.append(" AND COALESCE(C.CO_DEP_EMI_REF,'0') = '").append(buscarDocumentoSeguiEstRecBean.getCoDepRemite()).append("'");
                 sql.append(" AND COALESCE(C.CO_DEP_EMI_REF,'0') = :pTiEmiRef \n");

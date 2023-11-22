@@ -63,7 +63,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
         StringBuilder sql = new StringBuilder();
         Map<String, Object> objectParam = new HashMap<String, Object>();        
         sql.append("SELECT X.*,");
-        sql.append("PK_SGD_DESCRIPCION.TI_DESTINO (X.TI_EMI) DE_TI_EMI,");
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append("PK_SGD_DESCRIPCION.TI_DESTINO (X.TI_EMI) DE_TI_EMI,");
+        sql.append("IDOSGD.PK_SGD_DESCRIPCION.TI_DESTINO (X.TI_EMI) DE_TI_EMI,");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
 //        sql.append(" DECODE");
 //        sql.append("    (X.TI_EMI,");
 //        sql.append(" 	'01', PK_SGD_DESCRIPCION.DE_DEPENDENCIA (X.CO_DEP_EMI)");
@@ -74,8 +77,12 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
 //        sql.append(" 	'04', PK_SGD_DESCRIPCION.OTRO_ORIGEN (X.CO_OTR_ORI_EMI),");
 //        sql.append(" 	'05', PK_SGD_DESCRIPCION.DE_NOM_EMP (X.CO_EMP_EMI)");
 //        sql.append("    ) DE_ORI_EMI_MP,PK_SGD_DESCRIPCION.DE_DOCUMENTO(X.CO_TIP_DOC_ADM) DE_TIP_DOC_ADM,");
-        sql.append("PK_SGD_DESCRIPCION.TI_EMI_EMP(X.NU_ANN, X.NU_EMI) DE_ORI_EMI_MP,");
-        sql.append("PK_SGD_DESCRIPCION.DE_DOCUMENTO(X.CO_TIP_DOC_ADM) DE_TIP_DOC_ADM,");
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append("PK_SGD_DESCRIPCION.TI_EMI_EMP(X.NU_ANN, X.NU_EMI) DE_ORI_EMI_MP,");
+        sql.append("IDOSGD.PK_SGD_DESCRIPCION.TI_EMI_EMP(X.NU_ANN, X.NU_EMI) DE_ORI_EMI_MP,");
+        //sql.append("PK_SGD_DESCRIPCION.DE_DOCUMENTO(X.CO_TIP_DOC_ADM) DE_TIP_DOC_ADM,");
+        sql.append("IDOSGD.PK_SGD_DESCRIPCION.DE_DOCUMENTO(X.CO_TIP_DOC_ADM) DE_TIP_DOC_ADM,");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         /* [HPB] Inicio 15/03/23 CLS-087-2022 */
         //sql.append(" DECODE (X.TI_EMI,");
         sql.append(" REGEXP_REPLACE( DECODE (X.TI_EMI,");
@@ -88,33 +95,58 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
         sql.append(" 	   ) ,'[¿,@?+^]', '' ) NU_DOC,");
         /* [HPB] Fin 15/03/23 CLS-087-2022 */
         sql.append(" DECODE (X.NU_CANDES,");
-        sql.append(" 		1, PK_SGD_DESCRIPCION.TI_DES_EMP (X.NU_ANN, X.NU_EMI),");
-        sql.append(" 		PK_SGD_DESCRIPCION.TI_DES_EMP_V (X.NU_ANN, X.NU_EMI)");
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append(" 		1, PK_SGD_DESCRIPCION.TI_DES_EMP (X.NU_ANN, X.NU_EMI),");
+        sql.append(" 		1, IDOSGD.PK_SGD_DESCRIPCION.TI_DES_EMP (X.NU_ANN, X.NU_EMI),");
+        //sql.append(" 		PK_SGD_DESCRIPCION.TI_DES_EMP_V (X.NU_ANN, X.NU_EMI)");
+        sql.append(" 		IDOSGD.PK_SGD_DESCRIPCION.TI_DES_EMP_V (X.NU_ANN, X.NU_EMI)");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         sql.append(" 	   ) DE_EMP_DES,"); 
         sql.append(" X.ES_DOC_EMI CO_ES_DOC_EMI_MP,");//Hermes 28/05/19
-        sql.append(" PK_SGD_DESCRIPCION.ESTADOS_MP(X.ES_DOC_EMI,'TDTV_REMITOS') DE_ES_DOC_EMI_MP,");        
-        sql.append(" PK_SGD_DESCRIPCION.DE_LOCAL(X.CO_LOC_EMI) DE_LOC_EMI,");
-        sql.append(" PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP) DE_DEPENDENCIA,");
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append(" PK_SGD_DESCRIPCION.ESTADOS_MP(X.ES_DOC_EMI,'TDTV_REMITOS') DE_ES_DOC_EMI_MP,");
+        sql.append(" IDOSGD.PK_SGD_DESCRIPCION.ESTADOS_MP(X.ES_DOC_EMI,'TDTV_REMITOS') DE_ES_DOC_EMI_MP,");        
+        //sql.append(" PK_SGD_DESCRIPCION.DE_LOCAL(X.CO_LOC_EMI) DE_LOC_EMI,");
+        sql.append(" IDOSGD.PK_SGD_DESCRIPCION.DE_LOCAL(X.CO_LOC_EMI) DE_LOC_EMI,");
+        //sql.append(" PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP) DE_DEPENDENCIA,");
+        sql.append(" IDOSGD.PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP) DE_DEPENDENCIA,");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         sql.append(" ROWNUM");
         sql.append(" FROM ( ");
-        sql.append(" SELECT A.NU_ANN,A.NU_EMI,B.NU_EXPEDIENTE,TO_CHAR(A.FE_EMI,'DD/MM/YYYY') FE_EMI_CORTA, TO_CHAR(C.FE_EXP,'DD/MM/YYYY') FE_EXP, PK_SGD_DESCRIPCION.DE_DOMINIOS('TIP_EXPEDIENTE',C.CCOD_TIPO_EXP) CO_TIPO_EXP,");
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append(" SELECT A.NU_ANN,A.NU_EMI,B.NU_EXPEDIENTE,TO_CHAR(A.FE_EMI,'DD/MM/YYYY') FE_EMI_CORTA, TO_CHAR(C.FE_EXP,'DD/MM/YYYY') FE_EXP, PK_SGD_DESCRIPCION.DE_DOMINIOS('TIP_EXPEDIENTE',C.CCOD_TIPO_EXP) CO_TIPO_EXP,");
+        sql.append(" SELECT A.NU_ANN,A.NU_EMI,B.NU_EXPEDIENTE,TO_CHAR(A.FE_EMI,'DD/MM/YYYY') FE_EMI_CORTA, TO_CHAR(C.FE_EXP,'DD/MM/YYYY') FE_EXP, IDOSGD.PK_SGD_DESCRIPCION.DE_DOMINIOS('TIP_EXPEDIENTE',C.CCOD_TIPO_EXP) CO_TIPO_EXP,");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         sql.append(" A.DE_ASU,A.CO_DEP_EMI,A.CO_EMP_EMI,A.CO_OTR_ORI_EMI,A.CO_TIP_DOC_ADM,A.NU_DOC_EMI,A.DE_DOC_SIG,");
         sql.append(" B.IN_EXISTE_DOC EXISTE_DOC,");
         sql.append(" A.TI_EMI,A.NU_RUC_EMI,A.NU_DNI_EMI,A.NU_CANDES,A.ES_DOC_EMI,A.CO_LOC_EMI,");
-        sql.append(" A.CO_DEP");
-        sql.append(" FROM TDTV_REMITOS A, TDTX_REMITOS_RESUMEN B, TDTC_EXPEDIENTE C");
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append(" A.CO_DEP");
+        sql.append(" A.CO_DEP,A.CO_GRU ");
+        //sql.append(" FROM TDTV_REMITOS A, TDTX_REMITOS_RESUMEN B, TDTC_EXPEDIENTE C");
+        sql.append(" FROM IDOSGD.TDTV_REMITOS A ");
+        sql.append(" INNER JOIN IDOSGD.TDTX_REMITOS_RESUMEN B ON B.NU_ANN=A.NU_ANN AND B.NU_EMI=A.NU_EMI ");
+        sql.append(" INNER JOIN IDOSGD.TDTC_EXPEDIENTE C ON C.NU_ANN_EXP=A.NU_ANN_EXP AND C.NU_SEC_EXP=A.NU_SEC_EXP ");
         sql.append(" WHERE");
-        sql.append(" B.NU_ANN=A.NU_ANN");
-        sql.append(" AND B.NU_EMI=A.NU_EMI");
-        sql.append(" AND C.NU_ANN_EXP=A.NU_ANN_EXP AND C.NU_SEC_EXP=A.NU_SEC_EXP");     
+        //sql.append(" B.NU_ANN=A.NU_ANN");
+        //sql.append(" AND B.NU_EMI=A.NU_EMI");
+        //sql.append(" AND C.NU_ANN_EXP=A.NU_ANN_EXP AND C.NU_SEC_EXP=A.NU_SEC_EXP");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         String pNuAnn = buscarDocumentoExtRecepBean.getCoAnnio();
         String pEsFiltroFecha = buscarDocumentoExtRecepBean.getEsFiltroFecha();
         if (!(pEsFiltroFecha.equals("1")&&pNuAnn.equals("0"))) {
-            sql.append(" AND A.NU_ANN = :pNuAnn");
+            /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+            //sql.append(" AND A.NU_ANN = :pNuAnn");
+            sql.append(" A.NU_ANN = :pNuAnn");
+            sql.append(" AND ");
+            /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
             // Parametros Basicos
             objectParam.put("pNuAnn", pNuAnn);
         }
-        sql.append(" AND A.CO_GRU = :pCoGru");        
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        //sql.append(" AND A.CO_GRU = :pCoGru");
+        sql.append(" A.CO_GRU = :pCoGru");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         objectParam.put("pCoGru", buscarDocumentoExtRecepBean.getCoGrupo());
 //        sql.append(" AND A.ES_DOC_EMI<>9");
         //sql.append(" AND A.TI_EMI<>'01'");
@@ -236,12 +268,14 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
                 }
             }
         //}
-
+        /* [HPB] Inicio 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
+        sql.append(" AND ROWNUM <=  100 ");
+        /* [HPB] Fin 27/10/23 OS-0001287-2023 Optimizar QUERY recepcion de documentos externos  */
         sql.append(" ORDER BY A.NU_COR_EMI DESC");
         sql.append(") X ");
         //sql.append("WHERE ROWNUM < 51");        
         sql.append("WHERE ROWNUM <=  ").append(applicationProperties.getTopRegistrosConsultas());
-        System.out.println("SQL CONSULTA EXPEDIENTES: "+ sql);
+
         List<DocumentoExtRecepBean> list = new ArrayList<DocumentoExtRecepBean>();
 
         try {

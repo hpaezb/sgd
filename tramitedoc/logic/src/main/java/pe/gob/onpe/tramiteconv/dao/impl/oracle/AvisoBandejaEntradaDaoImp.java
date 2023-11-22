@@ -72,7 +72,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "        AND r.nu_emi = t.nu_emi\n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"        AND r.es_doc_emi NOT IN ('5', '9', '7') \n" +
-                    "        AND r.es_doc_emi NOT IN ('5', '9', '7', 'A', 'B') \n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"        AND r.es_doc_emi NOT IN ('5', '9', '7', 'A', 'B') \n" +
+                    "        AND r.es_doc_emi NOT IN ('5', '9', '7', '4', 'A', 'B') \n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "        AND t.es_doc_rec = '0'\n" +
                     "        AND t.es_eli = '0'\n" +
@@ -89,7 +92,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "        AND r.nu_emi = t.nu_emi\n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"        AND r.es_doc_emi NOT IN ('5', '9', '7') \n" +
-                    "        AND r.es_doc_emi NOT IN ('5', '9', '7', 'A', 'B') \n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"        AND r.es_doc_emi NOT IN ('5', '9', '7', 'A', 'B') \n" +
+                    "        AND r.es_doc_emi NOT IN ('5', '9', '7', '4', 'A', 'B') \n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "        AND t.es_doc_rec = '0'\n" +
                     "        AND t.es_eli = '0'\n" +
@@ -127,7 +133,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "       AND r.Nu_Emi = t.Nu_Emi \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9')\n" +
-                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B')\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "       AND t.Es_Doc_Rec = '1'\n" +
                     "       AND t.Es_Eli = '0'\n" +
@@ -147,7 +156,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "       AND r.Nu_Emi = t.Nu_Emi \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9')\n" +
-                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B')\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "       AND t.Es_Doc_Rec = '0'\n" +
                     "       AND t.Es_Eli = '0'\n" +
@@ -167,7 +179,9 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "       AND r.Nu_Emi = t.Nu_Emi \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9')\n" +
-                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B')\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "       AND t.Es_Doc_Rec = '0'\n" +
                     "       AND t.Es_Eli = '0'\n" +
@@ -195,7 +209,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     " LEFT JOIN IDOSGD.TDTX_REMITOS_RESUMEN RS ON RE.NU_ANN = RS.NU_ANN AND RE.NU_EMI = RS.NU_EMI \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //" WHERE RE.ES_DOC_EMI NOT IN ('5', '9', '7')) W \n" +
-                    " WHERE RE.ES_DOC_EMI NOT IN ('5', '9', '7', 'A', 'B')) W \n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //" WHERE RE.ES_DOC_EMI NOT IN ('5', '9', '7', 'A', 'B')) W \n" +
+                    " WHERE RE.ES_DOC_EMI NOT IN ('5', '9', '7', '4', 'A', 'B')) W \n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     " ON t.NU_ANN=W.NU_ANN_REF2 AND t.NU_EMI=W.NU_EMI_REF2 AND t.NU_DES = W.NU_DES_REF2 \n" +
                             
@@ -203,7 +220,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "       AND r.Nu_Emi = t.Nu_Emi \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9')\n" +
-                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B')\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "       AND t.Es_Doc_Rec = '1'\n" +
                     "       AND t.Es_Eli = '0'\n" +
@@ -228,7 +248,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "       AND r.Nu_Emi = t.Nu_Emi \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9')\n" +
-                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B')\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "       AND t.Es_Doc_Rec = '0'\n" +
                     "       AND t.Es_Eli = '0'\n" +
@@ -249,7 +272,13 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "SELECT 12 orden,'09' Ti_Pen, 'OBSERVADOS (Mesa Partes Virtual)' De_Pen, 'Documentos emitidos observados en la Mesa de Partes Virtual' de_resumen, \n" +
                     "       COUNT(1) Nu_Can , :pCoDep co_dep , '' co_bandeja  \n" +
                     "       FROM tdtv_remitos a \n" +
-                    "      WHERE a.es_doc_emi in ('0') \n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    "       ,tdtv_Destinos t\n" +
+                    "       WHERE a.Nu_Ann = t.Nu_Ann AND a.Nu_Emi = t.Nu_Emi\n"+
+                    //"      WHERE a.es_doc_emi in ('0') \n" +
+                    "        AND a.es_doc_emi in ('0') \n" +
+                    "        AND t.Es_Eli = '0'\n"+
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     "        AND a.doc_estado_msj IN ('7','8') \n" +
                     "        AND a.ti_env_msj is null \n" +
                     "        AND a.co_dep_emi=:pCoDep \n" +
@@ -268,7 +297,7 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                             "       from dual) \n"); 
                 }
                 sql.append( "ORDER BY 1");/*[HPB-22/07/21] Inicio - Adicionar estado POR SUBSANAR*/
-                
+  
         List<AvisoBandejaEntradaBean> list = new ArrayList<AvisoBandejaEntradaBean>();
         Map<String, Object> objectParam = new HashMap<String, Object>();
         objectParam.put("pCoDep", coDependencia);
@@ -339,7 +368,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "   AND r.Nu_Emi = t.Nu_Emi\n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"   AND r.Es_Doc_Emi NOT IN ('5', '7', '9') --en proyecto, anulados\n" +
-                    "   AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B') --en proyecto, anulados\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"   AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B') --en proyecto, anulados\n" +
+                    "   AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B') --en proyecto, anulados\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "   AND t.Co_Dep_Des = :pCoDep \n" +
                     "   AND t.Co_Emp_Des = :pCoEmp \n" +
@@ -359,7 +391,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "   AND r.Nu_Emi = t.Nu_Emi\n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"   AND r.Es_Doc_Emi NOT IN ('5', '7', '9') --en proyecto, anulados\n" +
-                    "   AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B') --en proyecto, anulados\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"   AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B') --en proyecto, anulados\n" +
+                    "   AND r.Es_Doc_Emi NOT IN ('5', '7', '9', '4', 'A', 'B') --en proyecto, anulados\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "   AND t.Co_Dep_Des = :pCoDep \n" +
                     "   AND t.Co_Emp_Des = :pCoEmp \n" +
@@ -380,7 +415,10 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                     "       AND r.Nu_Emi = t.Nu_Emi \n" +
                     /*-- [HPB] Inicio 27/09/22 OS-0000768-2022 --*/
                     //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9')\n" +
-                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                    //"       AND r.Es_Doc_Emi NOT IN ('5', '7', '9', 'A', 'B')\n" +
+                    "       AND r.Es_Doc_Emi NOT IN ('5', '7', '9','4', 'A', 'B')\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                     /*-- [HPB] Fin 27/09/22 OS-0000768-2022 --*/
                     "       AND t.Co_Dep_Des = :pCoDep \n" +
                     "       AND t.Co_Emp_Des = :pCoEmp \n" +
@@ -403,7 +441,13 @@ public class AvisoBandejaEntradaDaoImp  extends SimpleJdbcDaoBase implements Avi
                         "SELECT 8 orden,'09' Ti_Pen, 'OBSERVADOS (Mesa Partes Virtual)' De_Pen, 'Documentos emitidos observados en la Mesa de Partes Virtual' de_resumen, \n" +
                         "       COUNT(1) Nu_Can , :pCoDep co_dep  \n" +
                         "       FROM tdtv_remitos a \n" +
-                        "      WHERE a.es_doc_emi in ('0') \n" +
+                        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
+                        "       ,tdtv_Destinos t\n"+
+                        "       WHERE a.Nu_Ann = t.Nu_Ann AND a.Nu_Emi = t.Nu_Emi\n"+
+                        //"      WHERE a.es_doc_emi in ('0') \n" +
+                        "      AND a.es_doc_emi in ('0') \n" +
+                        "      AND t.Es_Eli = '0'\n"+
+                        /* [HPB] Fin 18/09/23 OS-0000786-2023 Omitir los documentos archivados y anulados en la bandeja */
                         "        AND a.doc_estado_msj IN ('7','8') \n" +
                         "        AND a.ti_env_msj is null \n" +
                         "        AND a.co_dep_emi=:pCoDep \n" +

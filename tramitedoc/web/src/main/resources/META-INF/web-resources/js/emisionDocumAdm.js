@@ -694,6 +694,9 @@ function fu_cambia_estado_estado_tabla(idTable, iniFila, colMostrar, colEstadoAc
 //}
 var $objFilaReferencia;
 function fn_searchDocReferentbl(cell) {
+    /* [HPB] Inicio 25/10/23 OS-0001287-2023 Validar numero documento al buscar documento a referenciar */
+    var nuDoc;
+    /* [HPB] Fin 25/10/23 OS-0001287-2023 Validar numero documento al buscar documento a referenciar */
     var p = new Array();
     p[0] = "accion=goBuscaDocumentotblReferencia";
     (($(cell).parent()).parent()).children().each(function(index) {
@@ -718,12 +721,21 @@ function fn_searchDocReferentbl(cell) {
                 $(this).find("input[type=radio][value='"+valTiBusqueda+"']").prop('checked',true);
                 break;
             case 3:
+                /* [HPB] Inicio 25/10/23 OS-0001287-2023 Validar numero documento al buscar documento a referenciar */
+                nuDoc = $(this).find('input[type=text]').val();
+                /* [HPB] Fin 25/10/23 OS-0001287-2023 Validar numero documento al buscar documento a referenciar  */
                 p[4] = "pnuDoc=" + $(this).find('input[type=text]').val();
                 break;
             default:
                 break;
         }
     });
+    /* [HPB] Inicio 25/10/23 OS-0001287-2023 Validar numero documento al buscar documento a referenciar */
+    if(nuDoc==="" || nuDoc===null){
+        alert_Danger("Alerta:", "Debe ingresar el número del documento.");
+        return false;        
+    }
+    /* [HPB] Fin 25/10/23 OS-0001287-2023 Validar numero documento al buscar documento a referenciar */
     ajaxCall("/srDocumentoAdmEmision.do", p.join("&"), function(data) {
         fn_rptaBuscaDocumentoReferencia(data);
         jQuery('#txtTblRefEmiFilaWhereButton').val((($(cell).parent()).parent()).index());
@@ -5251,7 +5263,7 @@ function fn_inicializaDocAdmEmi(sCoAnnio){
             }
         }
     });*/
-    jQuery('#buscarDocumentoEmiBean').find("#fechaFiltro").showDatePicker({defaultOpcionSelected: 5});        
+    jQuery('#buscarDocumentoEmiBean').find("#fechaFiltro").showDatePicker({defaultOpcionSelected: 5});
     jQuery('#buscarDocumentoEmiBean').find('#sNumDocRef').change(function() {
         $(this).val(replicate($(this).val(), 6));
     });

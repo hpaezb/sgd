@@ -130,6 +130,10 @@ public class DocumentoBean extends ReporteBean {
     private String nuAnnDocOriPlazoAtencion;
     private String nuEmiDocOriPlazoAtencion;
     /*[HPB-02/10/20] Fin - Plazo de Atencion*/
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    private String coTema;
+    private String deTema;
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
     public DocumentoBean() {
         // TODO Auto-generated constructor stub
     }
@@ -1115,7 +1119,21 @@ public class DocumentoBean extends ReporteBean {
     public void setNuEmiDocOriPlazoAtencion(String nuEmiDocOriPlazoAtencion) {
         this.nuEmiDocOriPlazoAtencion = nuEmiDocOriPlazoAtencion;
     }
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    public String getCoTema() {
+        return coTema;
+    }
 
-    
-    
+    public void setCoTema(String coTema) {
+        this.coTema = coTema;
+    }
+
+    public String getDeTema() {
+        return deTema;
+    }
+
+    public void setDeTema(String deTema) {
+        this.deTema = deTema;
+    }
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
 }

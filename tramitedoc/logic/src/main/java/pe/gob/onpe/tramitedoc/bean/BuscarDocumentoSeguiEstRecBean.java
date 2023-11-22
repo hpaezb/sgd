@@ -60,7 +60,9 @@ public class BuscarDocumentoSeguiEstRecBean extends ReporteBean{
     private String feArcDocCorta;
     private String feAteDocCorta;
     private String dePrioridad;
-
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    private String coTema;
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
     public String getDeAsu() {
         return deAsu;
     }
@@ -494,6 +496,14 @@ public class BuscarDocumentoSeguiEstRecBean extends ReporteBean{
     public void setDePrioridad(String dePrioridad) {
         this.dePrioridad = dePrioridad;
     }
-    
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    public String getCoTema() {
+        return coTema;
+    }
+
+    public void setCoTema(String coTema) {
+        this.coTema = coTema;
+    }
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
     
 }

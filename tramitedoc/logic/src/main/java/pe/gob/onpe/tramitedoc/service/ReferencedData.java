@@ -602,4 +602,10 @@ public class ReferencedData {
         return grpElementoListPerfil;        
     }
     /*-- [HPB] Fin 26/09/22 OS-0000768-2022 --*/
+    /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+    public List<SiElementoBean> grpElementoListTipoExpediente(String pctabCodtab){
+        this.grpElementoList = maestrosDao.getLsSiElementoTipoExpediente(pctabCodtab);
+        return grpElementoList;        
+    }
+    /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
 }

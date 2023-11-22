@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TDR391_XLS" printOrder="Horizontal" pageWidth="1615" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1575" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c82441b-1dc7-44dd-9279-7ba0678158be">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TDR391_XLS" printOrder="Horizontal" pageWidth="1705" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1665" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c82441b-1dc7-44dd-9279-7ba0678158be">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="5741"/>
+	<property name="ireport.y" value="96"/>
 	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
 	<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 	<parameter name="P_LOGO_DIR" class="java.io.InputStream">
@@ -30,43 +30,47 @@
 	<field name="feArcDocCorta" class="java.lang.String"/>
 	<field name="feAteDocCorta" class="java.lang.String"/>
 	<field name="dePrioridad" class="java.lang.String"/>
+	<field name="deTema" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="97">
 			<image>
-				<reportElement x="0" y="0" width="153" height="19" uuid="268d6387-6603-40fd-aa06-6e0e349dc25d"/>
+				<reportElement uuid="268d6387-6603-40fd-aa06-6e0e349dc25d" x="0" y="0" width="153" height="19"/>
 				<imageExpression><![CDATA[$P{P_LOGO_DIR}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement mode="Opaque" x="236" y="0" width="905" height="19" forecolor="#000066" backcolor="#CCCCCC" uuid="dd8755b8-4272-4c69-9be4-1ac14d377e5f"/>
+				<reportElement uuid="dd8755b8-4272-4c69-9be4-1ac14d377e5f" mode="Opaque" x="236" y="0" width="905" height="19" forecolor="#000066" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SEGUIMIENTO DE ESTADOS DE LOS DOCUMENTOS ADMINISTRATIVOS RECEPCIONADOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="33" width="183" height="14" uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141"/>
+				<reportElement uuid="f254e6b1-0fb4-4f89-8154-2f139d06a141" x="53" y="33" width="183" height="14"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dependencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="48" width="183" height="14" uuid="b95b10d6-a867-44d2-92fc-6a60b8e0324c"/>
+				<reportElement uuid="b95b10d6-a867-44d2-92fc-6a60b8e0324c" x="53" y="48" width="183" height="14"/>
+				<textElement/>
 				<text><![CDATA[Fecha de Impresión:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="63" width="183" height="14" uuid="37bb4c72-09cc-4b77-8433-1b0ed480f28d"/>
+				<reportElement uuid="37bb4c72-09cc-4b77-8433-1b0ed480f28d" x="53" y="63" width="183" height="14"/>
+				<textElement/>
 				<text><![CDATA[Usuario:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="236" y="33" width="771" height="14" forecolor="#330099" uuid="0324f602-6035-4fd9-b52d-ff6af27fa4a8"/>
+				<reportElement uuid="0324f602-6035-4fd9-b52d-ff6af27fa4a8" x="236" y="33" width="771" height="14" forecolor="#330099"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$P{P_DE_DEPENDENCIA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="false">
-				<reportElement key="textField" x="236" y="48" width="357" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="d9a8d03d-9bbc-4e0b-b31a-a677237ec11b"/>
+				<reportElement uuid="d9a8d03d-9bbc-4e0b-b31a-a677237ec11b" key="textField" x="236" y="48" width="357" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -79,11 +83,12 @@
 				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="236" y="63" width="357" height="14" uuid="9de16b4c-cd7d-4d16-95ed-0b3eb12d54d9"/>
+				<reportElement uuid="9de16b4c-cd7d-4d16-95ed-0b3eb12d54d9" x="236" y="63" width="357" height="14"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$P{P_USER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="83" width="53" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="6187c741-b473-49bd-b74c-81426ec0eddd"/>
+				<reportElement uuid="6187c741-b473-49bd-b74c-81426ec0eddd" mode="Opaque" x="0" y="83" width="53" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -97,7 +102,7 @@
 				<text><![CDATA[NRO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="236" y="83" width="75" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="d23563fd-7986-4bfc-862c-ba08f35f5f75"/>
+				<reportElement uuid="d23563fd-7986-4bfc-862c-ba08f35f5f75" mode="Opaque" x="236" y="83" width="75" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -111,7 +116,7 @@
 				<text><![CDATA[TIPO DOC.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="311" y="83" width="89" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="fe38db24-cf22-4911-8e36-0cd9f2bc724d"/>
+				<reportElement uuid="fe38db24-cf22-4911-8e36-0cd9f2bc724d" mode="Opaque" x="311" y="83" width="89" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -125,7 +130,7 @@
 				<text><![CDATA[NRO DOC.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="468" y="83" width="125" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="12a5c23c-5ee4-4a83-b115-d5ca0a514a54"/>
+				<reportElement uuid="12a5c23c-5ee4-4a83-b115-d5ca0a514a54" mode="Opaque" x="468" y="83" width="125" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -139,7 +144,7 @@
 				<text><![CDATA[DESTINATARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="593" y="83" width="141" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="6202f088-9472-4d77-bdf5-47f7a2035a2a"/>
+				<reportElement uuid="6202f088-9472-4d77-bdf5-47f7a2035a2a" mode="Opaque" x="593" y="83" width="141" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -153,7 +158,7 @@
 				<text><![CDATA[ASUNTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="872" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="d90ed513-9781-472a-9b53-f57874f30fcc"/>
+				<reportElement uuid="d90ed513-9781-472a-9b53-f57874f30fcc" mode="Opaque" x="872" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -167,7 +172,7 @@
 				<text><![CDATA[FECHA LIM.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1074" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="d93b83b0-dca1-4201-a2c4-75f3d636c135"/>
+				<reportElement uuid="d93b83b0-dca1-4201-a2c4-75f3d636c135" mode="Opaque" x="1074" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -181,7 +186,7 @@
 				<text><![CDATA[FECHA ATE.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1141" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="c958d8e6-f979-496f-8414-f0566aeb04a3"/>
+				<reportElement uuid="c958d8e6-f979-496f-8414-f0566aeb04a3" mode="Opaque" x="1141" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -195,7 +200,7 @@
 				<text><![CDATA[FECHA ARC.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="939" y="83" width="68" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="bed95526-145e-4dff-bb70-a32a9bb56658"/>
+				<reportElement uuid="bed95526-145e-4dff-bb70-a32a9bb56658" mode="Opaque" x="939" y="83" width="68" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -209,7 +214,7 @@
 				<text><![CDATA[DIAS EXC.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="53" y="83" width="100" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="1046f903-af88-4372-a4c4-dae0dbc8dc4a"/>
+				<reportElement uuid="1046f903-af88-4372-a4c4-dae0dbc8dc4a" mode="Opaque" x="53" y="83" width="100" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -223,7 +228,7 @@
 				<text><![CDATA[REMITENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="153" y="83" width="83" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="6e288844-edaf-4dfc-ad6f-03d293d93c08"/>
+				<reportElement uuid="6e288844-edaf-4dfc-ad6f-03d293d93c08" mode="Opaque" x="153" y="83" width="83" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -237,7 +242,7 @@
 				<text><![CDATA[EXPEDIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="400" y="83" width="68" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="833f51b5-5bd2-4280-bd41-0f33cfe19bbc"/>
+				<reportElement uuid="833f51b5-5bd2-4280-bd41-0f33cfe19bbc" mode="Opaque" x="400" y="83" width="68" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -251,7 +256,7 @@
 				<text><![CDATA[FECHA EMI.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="804" y="83" width="68" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="a933c0cd-766f-413c-b33a-68ed0699e4a9"/>
+				<reportElement uuid="a933c0cd-766f-413c-b33a-68ed0699e4a9" mode="Opaque" x="804" y="83" width="68" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -265,7 +270,7 @@
 				<text><![CDATA[DIAS PROY.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="734" y="83" width="70" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="dad77212-fb51-4ba0-8c48-0e2d914ebbce"/>
+				<reportElement uuid="dad77212-fb51-4ba0-8c48-0e2d914ebbce" mode="Opaque" x="734" y="83" width="70" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -279,7 +284,7 @@
 				<text><![CDATA[VENCIMIENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1007" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="5e4aa36c-2b32-4964-bcb3-6ef53c66d7b1"/>
+				<reportElement uuid="5e4aa36c-2b32-4964-bcb3-6ef53c66d7b1" mode="Opaque" x="1007" y="83" width="67" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -293,7 +298,7 @@
 				<text><![CDATA[FECHA REC.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1208" y="83" width="70" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="8f0fc18e-ee0d-440b-851c-c1d4acf9af6f"/>
+				<reportElement uuid="8f0fc18e-ee0d-440b-851c-c1d4acf9af6f" mode="Opaque" x="1208" y="83" width="70" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -307,7 +312,7 @@
 				<text><![CDATA[ESTADO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1278" y="83" width="51" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="93266002-0b53-45ed-8557-a2e45c1f6ab7"/>
+				<reportElement uuid="93266002-0b53-45ed-8557-a2e45c1f6ab7" mode="Opaque" x="1278" y="83" width="51" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -321,7 +326,7 @@
 				<text><![CDATA[MOTIVO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1387" y="83" width="90" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="0c3a769a-3941-4cda-8998-3fbaddac653d"/>
+				<reportElement uuid="0c3a769a-3941-4cda-8998-3fbaddac653d" mode="Opaque" x="1387" y="83" width="90" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -335,7 +340,7 @@
 				<text><![CDATA[RECEPTOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1477" y="83" width="98" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="84186f1f-6e1b-46bc-9d6b-e4cc984e7456"/>
+				<reportElement uuid="84186f1f-6e1b-46bc-9d6b-e4cc984e7456" mode="Opaque" x="1567" y="83" width="98" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -349,7 +354,7 @@
 				<text><![CDATA[ELABORADO POR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1329" y="83" width="58" height="14" forecolor="#000066" backcolor="#CCCCCC" uuid="dbcd59e2-c237-4264-8864-ea828b6309d9"/>
+				<reportElement uuid="dbcd59e2-c237-4264-8864-ea828b6309d9" mode="Opaque" x="1329" y="83" width="58" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -362,12 +367,26 @@
 				</textElement>
 				<text><![CDATA[PRIORIDAD]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="0c3a769a-3941-4cda-8998-3fbaddac653d" mode="Opaque" x="1477" y="83" width="90" height="14" forecolor="#000066" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TEMA]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="53" height="14" isPrintWhenDetailOverflows="true" uuid="96d65713-43d6-46a8-9a9d-4dc9a1464b69">
+				<reportElement uuid="96d65713-43d6-46a8-9a9d-4dc9a1464b69" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="53" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -383,7 +402,7 @@
 				<textFieldExpression><![CDATA[$F{nuCorDes}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1007" y="0" width="67" height="14" isPrintWhenDetailOverflows="true" uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769">
+				<reportElement uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769" positionType="Float" stretchType="RelativeToTallestObject" x="1007" y="0" width="67" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -399,7 +418,7 @@
 				<textFieldExpression><![CDATA[$F{feRecCorta}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="236" y="0" width="75" height="14" isPrintWhenDetailOverflows="true" uuid="cb6c4feb-9314-446b-8156-7126426ac3bb">
+				<reportElement uuid="cb6c4feb-9314-446b-8156-7126426ac3bb" positionType="Float" stretchType="RelativeToTallestObject" x="236" y="0" width="75" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -415,7 +434,7 @@
 				<textFieldExpression><![CDATA[$F{deTipDocAdm}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="311" y="0" width="89" height="14" isPrintWhenDetailOverflows="true" uuid="0ecd0c7a-33c3-4d21-9e33-2475ea9567e8">
+				<reportElement uuid="0ecd0c7a-33c3-4d21-9e33-2475ea9567e8" positionType="Float" stretchType="RelativeToTallestObject" x="311" y="0" width="89" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -431,7 +450,7 @@
 				<textFieldExpression><![CDATA[$F{nuDoc}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="468" y="0" width="125" height="14" isPrintWhenDetailOverflows="true" uuid="1f5d8263-4ac0-411e-b6cd-6677a695d38d">
+				<reportElement uuid="1f5d8263-4ac0-411e-b6cd-6677a695d38d" positionType="Float" stretchType="RelativeToTallestObject" x="468" y="0" width="125" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -447,7 +466,7 @@
 				<textFieldExpression><![CDATA[$F{deEmpDes}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="593" y="0" width="141" height="14" isPrintWhenDetailOverflows="true" uuid="f34db6b4-4632-48f7-b100-57698c7a9a30">
+				<reportElement uuid="f34db6b4-4632-48f7-b100-57698c7a9a30" positionType="Float" stretchType="RelativeToTallestObject" x="593" y="0" width="141" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -463,7 +482,7 @@
 				<textFieldExpression><![CDATA[$F{deAsu}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1208" y="0" width="70" height="14" isPrintWhenDetailOverflows="true" uuid="a6cb7b6b-e666-40b8-8072-73d651da72f2">
+				<reportElement uuid="a6cb7b6b-e666-40b8-8072-73d651da72f2" positionType="Float" stretchType="RelativeToTallestObject" x="1208" y="0" width="70" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -479,7 +498,7 @@
 				<textFieldExpression><![CDATA[$F{deEsDocDes}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1387" y="0" width="90" height="14" isPrintWhenDetailOverflows="true" uuid="8336282f-ce6a-46d3-851a-4348d7674b02">
+				<reportElement uuid="8336282f-ce6a-46d3-851a-4348d7674b02" positionType="Float" stretchType="RelativeToTallestObject" x="1387" y="0" width="90" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -495,7 +514,7 @@
 				<textFieldExpression><![CDATA[$F{deEmpRec}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="153" y="0" width="83" height="14" isPrintWhenDetailOverflows="true" uuid="c2a4514b-c06e-4d89-a21a-87facb321e41">
+				<reportElement uuid="c2a4514b-c06e-4d89-a21a-87facb321e41" positionType="Float" stretchType="RelativeToTallestObject" x="153" y="0" width="83" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -511,7 +530,7 @@
 				<textFieldExpression><![CDATA[$F{nuExpediente}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="53" y="0" width="100" height="14" isPrintWhenDetailOverflows="true" uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769">
+				<reportElement uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769" positionType="Float" stretchType="RelativeToTallestObject" x="53" y="0" width="100" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -527,7 +546,7 @@
 				<textFieldExpression><![CDATA[$F{deOriEmi}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="400" y="0" width="68" height="14" isPrintWhenDetailOverflows="true" uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769">
+				<reportElement uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769" positionType="Float" stretchType="RelativeToTallestObject" x="400" y="0" width="68" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -543,7 +562,7 @@
 				<textFieldExpression><![CDATA[$F{feEmiCorta}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1477" y="0" width="98" height="14" isPrintWhenDetailOverflows="true" uuid="eeade71c-bd2d-4141-8338-f21f29fb5b19">
+				<reportElement uuid="eeade71c-bd2d-4141-8338-f21f29fb5b19" positionType="Float" stretchType="RelativeToTallestObject" x="1567" y="0" width="98" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -559,7 +578,7 @@
 				<textFieldExpression><![CDATA[$F{deEmpRes}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1278" y="0" width="51" height="14" isPrintWhenDetailOverflows="true" uuid="4306111e-562c-495f-a7bd-492175bca982">
+				<reportElement uuid="4306111e-562c-495f-a7bd-492175bca982" positionType="Float" stretchType="RelativeToTallestObject" x="1278" y="0" width="51" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -575,7 +594,7 @@
 				<textFieldExpression><![CDATA[$F{deMotivo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="804" y="0" width="68" height="14" isPrintWhenDetailOverflows="true" uuid="28bd52d5-7cf8-4781-a195-ff696a3bed47">
+				<reportElement uuid="28bd52d5-7cf8-4781-a195-ff696a3bed47" positionType="Float" stretchType="RelativeToTallestObject" x="804" y="0" width="68" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -591,7 +610,7 @@
 				<textFieldExpression><![CDATA[$F{nuDiaAte}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="872" y="0" width="67" height="14" isPrintWhenDetailOverflows="true" uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769">
+				<reportElement uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769" positionType="Float" stretchType="RelativeToTallestObject" x="872" y="0" width="67" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -607,7 +626,7 @@
 				<textFieldExpression><![CDATA[$F{fLimiteCorta}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1074" y="0" width="67" height="14" isPrintWhenDetailOverflows="true" uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769">
+				<reportElement uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769" positionType="Float" stretchType="RelativeToTallestObject" x="1074" y="0" width="67" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -623,7 +642,7 @@
 				<textFieldExpression><![CDATA[$F{feAteDocCorta}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1141" y="0" width="67" height="14" isPrintWhenDetailOverflows="true" uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769">
+				<reportElement uuid="5ffcbda7-9fdf-4326-90dc-5f4b1baaf769" positionType="Float" stretchType="RelativeToTallestObject" x="1141" y="0" width="67" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -639,7 +658,7 @@
 				<textFieldExpression><![CDATA[$F{feArcDocCorta}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="939" y="0" width="68" height="14" isPrintWhenDetailOverflows="true" uuid="b8029288-a3a0-4543-94f0-c6bd55eb7aeb">
+				<reportElement uuid="b8029288-a3a0-4543-94f0-c6bd55eb7aeb" positionType="Float" stretchType="RelativeToTallestObject" x="939" y="0" width="68" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -655,7 +674,7 @@
 				<textFieldExpression><![CDATA[$F{nuDiaExc}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="734" y="0" width="70" height="14" isPrintWhenDetailOverflows="true" uuid="90e8aec5-c5e5-4d56-8eaa-1f35c4119135">
+				<reportElement uuid="90e8aec5-c5e5-4d56-8eaa-1f35c4119135" positionType="Float" stretchType="RelativeToTallestObject" x="734" y="0" width="70" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -676,7 +695,7 @@ $F{coEstVen}.equals("1") ? "PROXIMO A VENCER":
 "NORMAL"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1329" y="0" width="58" height="14" isPrintWhenDetailOverflows="true" uuid="7b6bc36e-9c84-4c38-b4ef-9aed04f17392">
+				<reportElement uuid="7b6bc36e-9c84-4c38-b4ef-9aed04f17392" positionType="Float" stretchType="RelativeToTallestObject" x="1329" y="0" width="58" height="14" isPrintWhenDetailOverflows="true">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
@@ -690,6 +709,22 @@ $F{coEstVen}.equals("1") ? "PROXIMO A VENCER":
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dePrioridad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement uuid="8336282f-ce6a-46d3-851a-4348d7674b02" positionType="Float" stretchType="RelativeToTallestObject" x="1477" y="0" width="90" height="14" isPrintWhenDetailOverflows="true">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+				</reportElement>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deTema}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

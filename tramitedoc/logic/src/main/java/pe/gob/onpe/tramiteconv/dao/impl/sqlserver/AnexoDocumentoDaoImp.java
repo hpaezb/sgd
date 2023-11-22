@@ -514,4 +514,14 @@ public class AnexoDocumentoDaoImp extends SimpleJdbcDaoBase implements AnexoDocu
     public String updAnexoDetalleAntesEliminar(DocumentoAnexoBean docAnexo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String getCanAnexosDuplicadosNombres(String string, String string1, String string2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getCanAnexosDuplicadosNombres(String string, String string1, String string2, String string3) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

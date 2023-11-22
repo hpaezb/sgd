@@ -604,6 +604,9 @@ public class RecepDocumentoAdmDaoImp extends SimpleJdbcDaoBase implements RecepD
                 + "TO_CHAR(B.FE_REC_DOC,'DD/MM/YYYY HH24:MI') FE_REC_DOC_CORTA, TO_CHAR(B.FE_ARC_DOC,'DD/MM/YYYY HH24:MI') FE_ARC_DOC_CORTA, \n"
                 + "TO_CHAR(B.FE_ATE_DOC,'DD/MM/YYYY HH24:MI') FE_ATE_DOC_CORTA,'1' EXISTE_DOC,PK_SGD_DESCRIPCION.FU_DOC_ANE(A.NU_ANN,A.NU_EMI) EXISTE_ANEXO\n"
                 + ",B.Ti_Fisico_Rec,B.Co_Etiqueta_Rec\n"
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+                + ",B.CO_TEMA, (SELECT de_tema FROM tdtr_tema WHERE CO_TEMA=B.CO_TEMA AND CO_DEPENDENCIA=B.CO_DEP_DES) AS DE_TEMA \n"
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
                 + "FROM TDTV_REMITOS A,TDTV_DESTINOS B\n"
                 + "WHERE A.ES_ELI='0' AND B.ES_ELI='0'\n"
                 + "AND A.NU_ANN = B.NU_ANN AND A.NU_EMI = B.NU_EMI\n"

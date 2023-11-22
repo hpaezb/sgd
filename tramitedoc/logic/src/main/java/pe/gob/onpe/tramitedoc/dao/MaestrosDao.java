@@ -97,4 +97,7 @@ public interface MaestrosDao {
     /*-- [HPB] Inicio 26/09/22 OS-0000768-2022 --*/
     List<SiElementoBean> getLsSiElementoPerfil(String pctabCodtab);
     /*-- [HPB] Fin 26/09/22 OS-0000768-2022 --*/
+    /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+    List<SiElementoBean> getLsSiElementoTipoExpediente(String pctabCodtab);
+    /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
 }

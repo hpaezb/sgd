@@ -32,4 +32,8 @@ public interface AnexoDocumentoDao {
         String updArchivoAnexoFirmado(final DocumentoObjBean docObjBean);
         String getCanAnexosReqFirma(String nuAnn, String nuEmi);
         String updAnexoDetalleAntesEliminar(DocumentoAnexoBean docAnexo);/*[HPB-21/06/21] Campos Auditoria-*/
+        /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+        String getCanAnexosDuplicadosNombres(String nuAnn, String nuEmi,String nombre);
+        String getCanAnexosDuplicadosNombres(String nuAnn, String nuEmi,String anexo,String nombre);
+        /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
 }

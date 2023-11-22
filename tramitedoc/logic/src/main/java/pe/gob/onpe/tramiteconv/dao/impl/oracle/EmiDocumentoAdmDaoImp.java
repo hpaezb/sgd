@@ -296,7 +296,9 @@ private SimpleJdbcCall spInsMesaVirtual;
                 
                 + " ,NVL((select MAX(ca.NU_ANE) from TDTV_ANEXOS ca where ca.NU_EMI=A.NU_EMI_PROYECTO and ca.NU_ANN=A.NU_ANN_PROYECTO and ca.ES_PROYECTO='1'),'0')  NU_ANE_PROYECTO \n"
                 + " ,A.CO_TIP_DOC_ADM "
-                
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+                + ",A.CO_TEMA, (SELECT de_tema FROM tdtr_tema WHERE CO_TEMA=A.CO_TEMA AND CO_DEPENDENCIA=A.CO_DEP_EMI) AS DE_TEMA"
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
                 + " from TDTV_REMITOS A left join TDTC_EXPEDIENTE B\n"
                 + " on A.NU_ANN_EXP = B.NU_ANN_EXP and A.NU_SEC_EXP = B.NU_SEC_EXP,\n"
                 + " TDTX_REMITOS_RESUMEN RR\n"
@@ -459,7 +461,10 @@ private SimpleJdbcCall spInsMesaVirtual;
                 + "AND RE.CO_GRU = '1'\n"
                 + "AND RE.co_dep_emi in \n"
                 + "(select ?/*:b_02.co_dep_emi*/ from dual \n"
-                + "union \n"
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
+                //+ "union \n"
+                + "union all\n"
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
                 + "  SELECT co_dep_ref\n"
                 + "    FROM tdtx_referencia\n"
                 + "   WHERE co_dep_emi = ?/*:b_02.co_dep_emi*/\n"
@@ -470,7 +475,10 @@ private SimpleJdbcCall spInsMesaVirtual;
                     pnuDoc=Utility.getInstancia().rellenaCerosIzquierda(pnuDoc, 6);
                     sql.append("AND (RE.NU_DOC_EMI = '").append(pnuDoc).append("' OR RR.NU_EXPEDIENTE LIKE '%").append(pnuDoc).append("%')\n");
                 }
-                sql.append("UNION\n"
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
+                //sql.append("UNION\n"
+                sql.append("UNION ALL\n"
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
                 + "select \n"
                 + "RE.fe_emi,\n"                        
                 + "SUBSTR(PK_SGD_DESCRIPCION.DE_DOCUMENTO(RE.co_tip_doc_adm),1,100) TIPO,\n"
@@ -492,6 +500,11 @@ private SimpleJdbcCall spInsMesaVirtual;
                 + "AND RE.es_eli = '0'\n"
                 + "and RE.es_doc_emi not in ('9','7','5')\n"
                 + "AND RE.CO_GRU = '2'\n"
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
+                + "AND RE.co_dep_emi = ? \n"
+                //+ "AND RE.co_dep_emi IN (SELECT ? FROM dual UNION SELECT co_dep_ref FROM tdtx_referencia\n"
+                //+ "  WHERE co_dep_emi = ? AND ti_emi = 'D' AND es_ref = '1')\n"        
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
                 + "AND RE.co_tip_doc_adm = ?/*:B_03.LI_TIP_DOC*/\n");
                 if(pnuDoc!=null&&pnuDoc.trim().length()>0){
                     pnuDoc=Utility.getInstancia().rellenaCerosIzquierda(pnuDoc, 6);
@@ -508,7 +521,10 @@ private SimpleJdbcCall spInsMesaVirtual;
 
         try {
             list = this.jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(DocumentoBean.class),
-                    new Object[]{pannio, pcoDepen, pcoDepen, ptiDoc, pannio, ptiDoc});
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
+                    //new Object[]{pannio, pcoDepen, pcoDepen, ptiDoc, pannio, ptiDoc});
+                    new Object[]{pannio, pcoDepen, pcoDepen, ptiDoc, pannio, pcoDepen, ptiDoc});
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos emitidos por la oficina */
         } catch (EmptyResultDataAccessException e) {
             list = null;
         } catch (Exception e) {
@@ -563,7 +579,10 @@ private SimpleJdbcCall spInsMesaVirtual;
                     "and d.es_doc_rec <> '0'  \n" +
                     "and d.co_dep_des in \n" +
                     "(select ?/*:b_02.co_dep_emi*/ from dual \n" +
-                    "union \n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
+                    //"union \n" +
+                    "union all\n" +
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
                     "  SELECT co_dep_ref\n" +
                     "    FROM tdtx_referencia\n" +
                     "   WHERE co_dep_emi = ?/*:b_02.co_dep_emi*/\n" +
@@ -574,9 +593,10 @@ private SimpleJdbcCall spInsMesaVirtual;
                         pnuDoc=Utility.getInstancia().rellenaCerosIzquierda(pnuDoc, 6);
                         sql.append("AND (R.NU_DOC_EMI = '").append(pnuDoc).append("' OR RR.NU_EXPEDIENTE LIKE '%").append(pnuDoc).append("%')\n");
                     }
-                    
-                    sql.append("UNION \n" +
-                            
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
+                    //sql.append("UNION \n" +
+                    sql.append("UNION ALL\n" +        
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */        
                     "select\n"+
                     "d.FE_REC_DOC,\n" +
                     "SUBSTR(PK_SGD_DESCRIPCION.de_documento(r.co_tip_doc_adm),1,100) de_tip_doc_adm,\n" +
@@ -602,6 +622,11 @@ private SimpleJdbcCall spInsMesaVirtual;
                     "AND d.nu_emi = r.nu_emi\n" +
                     "AND r.es_doc_emi NOT IN ('5', '9', '7')\n" +
                     "and d.es_doc_rec <> '0'  \n" +
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
+                    "AND d.co_dep_des = ? \n" +
+                    //"AND d.co_dep_des IN (SELECT ? FROM dual UNION ALL SELECT co_dep_ref FROM tdtx_referencia\n" +
+                    //"WHERE co_dep_emi = ? AND ti_emi = 'D' AND es_ref = '1') \n"+        
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
                     "and (R.nu_ann||R.nu_emi) in ( \n" + 
                     "select  (REF.nu_ann_ref||REF.nu_emi_ref) as nurem from TDTR_REFERENCIA REF where (REF.nu_ann||REF.nu_emi) in \n" +
                     "(select (R.nu_ann||R.nu_emi) as nurem \n" +
@@ -627,13 +652,16 @@ private SimpleJdbcCall spInsMesaVirtual;
                     
 	sql.append(") A ");
         sql.append("WHERE ROWNUM < 201");    
-
+        
         logger.info("SQL Ref.: "+sql);
         try {
 //            list = this.jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(DocumentoBean.class),
 //                    new Object[]{pannio,pcoDepen, pcoDepen, ptiDoc});
             list = this.jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(DocumentoBean.class),
-                    new Object[]{pannio,pcoDepen, pcoDepen, ptiDoc, pannio,pcoDepen});
+                    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
+                    //new Object[]{pannio,pcoDepen, pcoDepen, ptiDoc, pannio,pcoDepen});
+                    new Object[]{pannio,pcoDepen, pcoDepen, ptiDoc, pcoDepen, pannio,pcoDepen});
+                    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar como referencia solo documentos recibidos por la oficina */
         } catch (EmptyResultDataAccessException e) {
             list = null;
         } catch (Exception e) {

@@ -557,4 +557,33 @@ public class AnexoDocumentoDaoImp extends SimpleJdbcDaoBase implements AnexoDocu
         return vReturn;
     }
     /*[HPB-21/06/21] Campos Auditoria-*/
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+    @Override
+    public String getCanAnexosDuplicadosNombres(String nuAnn, String nuEmi, String anexo, String nombre) {
+        String vReturn = "NO_OK";
+        try {
+            vReturn = this.jdbcTemplate.queryForObject("SELECT count(1) from IDOSGD.tdtv_anexos where\n" +
+                                    "NU_ANN=? AND NU_EMI=? AND NU_ANE<>? AND de_rut_ori='"+nombre+"'", String.class, 
+                        new Object[]{nuAnn,nuEmi,anexo});
+        } catch (Exception e) {
+            e.printStackTrace();
+            vReturn = "0";
+        }
+        return vReturn;  
+    }
+
+    @Override
+    public String getCanAnexosDuplicadosNombres(String nuAnn, String nuEmi, String nombre) {
+        String vReturn = "NO_OK";
+        try {
+            vReturn = this.jdbcTemplate.queryForObject("SELECT count(1) from IDOSGD.tdtv_anexos where\n" +
+                                    "NU_ANN=? AND NU_EMI=? AND de_rut_ori='"+nombre+"'", String.class, 
+                        new Object[]{nuAnn,nuEmi});
+        } catch (Exception e) {
+            e.printStackTrace();
+            vReturn = "0";
+        }
+        return vReturn;   
+    }
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
 }

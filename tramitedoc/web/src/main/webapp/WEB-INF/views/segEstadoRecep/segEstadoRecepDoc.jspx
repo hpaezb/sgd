@@ -230,6 +230,17 @@
                                                 </form:select>
                                             </td>
                                         </tr>
+                                        <!-- [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes -->
+                                        <tr>
+                                            <td>Tema:</td>
+                                            <td>
+                                                <form:select path="coTema"  >
+                                                    <option  value="">.:TODOS:.</option>
+                                                    <form:options items="${deListTema}" itemValue="coTema" itemLabel="deTema" />
+                                                </form:select>                                           
+                                            </td>
+                                        </tr>
+                                        <!-- [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes -->
                                     </table>
                                 </div>
                             </fieldset>                        

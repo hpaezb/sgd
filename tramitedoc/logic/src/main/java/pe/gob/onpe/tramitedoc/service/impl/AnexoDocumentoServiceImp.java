@@ -473,8 +473,18 @@ public String updAnexoDetalle(DocumentoAnexoBeansContenedor docsAnexos,String co
 
         try {
             if(size<=maxUploadSize){
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+                String cantidadAnexo=anexoDocumentoDao.getCanAnexosDuplicadosNombres(pnuAnn, pnuEmi, pfileAnexo.getNombreArchivo());
+                if (cantidadAnexo.equals("0")){
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
                 vReturn = anexoDocumentoDao.insArchivoAnexo(docAnexo, archivoAnexo, size);
-            }            
+                /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+                }else{vReturn = "El archivo "+pfileAnexo.getNombreArchivo()+" ya está registrado.";}
+                /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+            }
+            /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
+            else{vReturn = "El tamaño de archivo supera el limite permitido.";}
+            /* [HPB] Fin 18/09/23 OS-0000786-2023 Mejoras al comprimir en ZIP los anexos adjuntos */
         } catch (Exception e) {
             e.printStackTrace();
         }finally{

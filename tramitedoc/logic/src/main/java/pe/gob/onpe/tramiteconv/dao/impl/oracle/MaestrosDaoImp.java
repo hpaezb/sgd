@@ -1632,4 +1632,22 @@ public class MaestrosDaoImp extends SimpleJdbcDaoBase implements MaestrosDao{
         return list;
     }
     /*-- [HPB] Fin 26/09/22 OS-0000768-2022 --*/
+    /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+    @Override
+    public List<SiElementoBean> getLsSiElementoTipoExpediente(String pctabCodtab) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT CELE_CODELE,CELE_DESELE,NELE_NUMSEC,CELE_DESCOR\n" +
+            "FROM   SI_ELEMENTO\n" +
+            "WHERE  CTAB_CODTAB = ? AND ESTADO = '1'");
+
+        List<SiElementoBean> list = null;
+        try {
+            list = this.jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(SiElementoBean.class),
+                    new Object[]{pctabCodtab});
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
 }

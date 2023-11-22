@@ -20,7 +20,7 @@ function fn_inicializaRecepDocAdm(sCoAnnio){
             }
         }
     });*/
-    jQuery('#buscarDocumentoRecepBean').find("#fechaFiltro").showDatePicker({defaultOpcionSelected: 5});        
+    jQuery('#buscarDocumentoRecepBean').find("#fechaFiltro").showDatePicker({defaultOpcionSelected: 5});
     jQuery('#buscarDocumentoRecepBean').find('#sNumDocRef').change(function() {
         $(this).val(replicate($(this).val(), 6));
     });

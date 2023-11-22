@@ -58,7 +58,10 @@ public class DocumentoSeguiEstRecibidoBean {
     private String feAteDocCorta;
   
     private String coAvanceRec;/*HPB 15/10/2019 Avance de recepcionados*/
-    
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    private String coTema;
+    private String deTema;
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */ 
     public DocumentoSeguiEstRecibidoBean() {
     }
 
@@ -430,8 +433,22 @@ public class DocumentoSeguiEstRecibidoBean {
     public void setCoAvanceRec(String coAvanceRec) {
         this.coAvanceRec = coAvanceRec;
     }
-    
-    
-    
+    /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    public String getCoTema() {
+        return coTema;
+    }
+
+    public void setCoTema(String coTema) {
+        this.coTema = coTema;
+    }
+
+    public String getDeTema() {
+        return deTema;
+    }
+
+    public void setDeTema(String deTema) {
+        this.deTema = deTema;
+    }
+    /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */   
     
 }

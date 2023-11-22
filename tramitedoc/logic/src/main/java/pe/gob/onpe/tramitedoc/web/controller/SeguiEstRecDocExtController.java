@@ -63,8 +63,10 @@ public class SeguiEstRecDocExtController {
             buscarDocExtRecSeguiEstBean.setCoDepEmi(codDependencia);
             buscarDocExtRecSeguiEstBean.setDeDepEmi(commonQryService.getDependenciaxCoDependencia(codDependencia).getDeDependencia());
             buscarDocExtRecSeguiEstBean.setCoEstVen("3");
-            
-            model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+            /* [HPB] Inicio 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
+            //model.addAttribute("lstTipoExp", referencedData.grpElementoList("TIP_EXPEDIENTE"));
+            model.addAttribute("lstTipoExp", referencedData.grpElementoListTipoExpediente("TIP_EXPEDIENTE"));
+            /* [HPB] Fin 06/10/23 OS-0000786-2023 Listar tipo de expedientes activo */
             model.addAttribute("lstOrigen", referencedData.grpElementoList("ORI_DOCUMENTO"));
             model.addAttribute("deEmisorList",referencedData.getLstEmisorDocExtRecep()); 
             model.addAttribute("buscarDocExtRecSeguiEstado",buscarDocExtRecSeguiEstBean);
