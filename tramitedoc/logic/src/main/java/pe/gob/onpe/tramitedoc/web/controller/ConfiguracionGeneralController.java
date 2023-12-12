@@ -1410,6 +1410,9 @@ public class ConfiguracionGeneralController {
             //verifica disponibilidad de USERNAME
             acceso.setCoUsuario(acceso.getCoUsuario().toUpperCase().trim());
             List<AdmEmpleadoAccesoBean> list = new ArrayList<AdmEmpleadoAccesoBean>();
+            /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+            List<DependenciaBean> lstDependencia = new ArrayList<DependenciaBean>();
+            /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
             if(acceso.getCoUsuario().trim().length()>0){// Verificar si existe el usuario a registrar
                 list = admEmpleadoService.getLsAcceso(acceso);
             }
@@ -1421,6 +1424,16 @@ public class ConfiguracionGeneralController {
                     obj.put("exito",true);
                     obj.put("mensaje","Nuevo Empleado registrado.");
                 } else { // ACTUALIZAR EMPLEADO
+                    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+                    if("0".equals(empleado.getEstado())){
+                        lstDependencia = admEmpleadoService.getBsqEncargadoDependencia(empleado.getCoEmpleado());
+                    }
+                    if(!lstDependencia.isEmpty()){
+                        for(DependenciaBean dependenciaBean : lstDependencia){
+                            dependenciaService.updEncargadoDependenciaBean(usuario.getCempCodemp(), dependenciaBean.getCoDependencia());
+                        }
+                    }
+                    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
                     int tmp = admEmpleadoService.updAdmEmpleado(empleado,acceso);
                     /*-- [HPB] Inicio 26/09/22 OS-0000768-2022 --*/
                     if(acceso.getCoUsuario().length()>0){
@@ -2024,5 +2037,19 @@ public class ConfiguracionGeneralController {
         }
         return "/configGeneral/admEmpleadoLocal";
     }
-    /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/    
+    /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/ 
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    @RequestMapping(method = RequestMethod.POST, params = "accion=goEncargadoDependencia")
+    public @ResponseBody String goEncargadoDependencia(HttpServletRequest request, Model model){
+        String result=""; 
+        String pcoEmp = ServletUtility.getInstancia().loadRequestParameter(request, "pcoEmp");
+        
+        try{
+            result = admEmpleadoService.getValidaEncargadoDependencia(pcoEmp);
+        }catch(Exception e){
+            e.getMessage();
+        }       
+        return result;
+    }
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */    
 }

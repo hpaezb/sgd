@@ -310,13 +310,22 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
         sql.append(" 	   ) DE_EMP_DES,"); 
         sql.append(" PK_SGD_DESCRIPCION.ESTADOS_MP(X.ES_DOC_EMI,'TDTV_REMITOS') DE_ES_DOC_EMI_MP,");        
         sql.append(" PK_SGD_DESCRIPCION.DE_LOCAL(X.CO_LOC_EMI) DE_LOC_EMI,");
-        sql.append(" PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP) DE_DEPENDENCIA,");
+        /* [HPB] Inicio 23/11/23 OS-0001287-2023 Trazabilida de documento - hoja de ruta */
+        sql.append(" CASE ");
+        sql.append(" WHEN X.CO_GRU='3' THEN");
+        //sql.append(" PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP) DE_DEPENDENCIA,");
+        sql.append(" IDOSGD.PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP)");
+        sql.append(" ELSE IDOSGD.PK_SGD_DESCRIPCION.DE_DEPENDENCIA(X.CO_DEP_EMI) END DE_DEPENDENCIA,");        
+        /* [HPB] Fin 23/11/23 OS-0001287-2023 Trazabilida de documento - hoja de ruta */
         sql.append(" ROWNUM");
         sql.append(" FROM ( ");
         sql.append(" SELECT A.NU_ANN,A.NU_EMI,B.NU_EXPEDIENTE,TO_CHAR(A.FE_EMI,'DD/MM/YYYY') FE_EMI_CORTA, TO_CHAR(C.FE_EXP,'DD/MM/YYYY') FE_EXP, PK_SGD_DESCRIPCION.DE_DOMINIOS('TIP_EXPEDIENTE',C.CCOD_TIPO_EXP) CO_TIPO_EXP,");
         sql.append(" A.DE_ASU,A.CO_DEP_EMI,A.CO_EMP_EMI,A.CO_OTR_ORI_EMI,A.CO_TIP_DOC_ADM,A.NU_DOC_EMI,A.DE_DOC_SIG,");
         sql.append(" B.IN_EXISTE_DOC EXISTE_DOC,");
-        sql.append(" A.TI_EMI,A.NU_RUC_EMI,A.NU_DNI_EMI,A.NU_CANDES,A.ES_DOC_EMI,A.CO_LOC_EMI,");
+        /* [HPB] Inicio 23/11/23 OS-0001287-2023 Trazabilida de documento - hoja de ruta */
+        //sql.append(" A.TI_EMI,A.NU_RUC_EMI,A.NU_DNI_EMI,A.NU_CANDES,A.ES_DOC_EMI,A.CO_LOC_EMI,");
+        sql.append(" A.TI_EMI,A.NU_RUC_EMI,A.NU_DNI_EMI,A.NU_CANDES,A.ES_DOC_EMI,A.CO_LOC_EMI, A.CO_GRU,");
+        /* [HPB] Fin 23/11/23 OS-0001287-2023 Trazabilida de documento - hoja de ruta */
         sql.append(" A.CO_DEP");
         sql.append(" FROM TDTV_REMITOS A, TDTX_REMITOS_RESUMEN B, TDTC_EXPEDIENTE C");
         sql.append(" WHERE");
@@ -1801,7 +1810,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
                 .addValue("NU_EMISI", pnuEmi)
                 .addValue("TIPO", pTipo);
 //        sqlQry.append("EXECUTE PK_SGD_DESCRIPCION.HOJA_RUTA_RAIZ(?,?)");
-        sqlQry.append("SELECT FE_EMI feEmi, DE_SIGLA_EMITE deDepEmi, EMISOR deEmpEmi, ESTADO_REMITO estadoRemito, NU_DOC nuDoc, DE_SIGLA_DESTINO deDepDes, RECEPTOR deEmpDes, ESTADO_DESTINO estadoDestino, TIPO tipo\n"
+        /* [HPB] Inicio 23/11/23 OS-0001287-2023 Mostrar fecha y empleado que recepciona documento en reporte hoja de ruta */
+        //sqlQry.append("SELECT FE_EMI feEmi, DE_SIGLA_EMITE deDepEmi, EMISOR deEmpEmi, ESTADO_REMITO estadoRemito, NU_DOC nuDoc, DE_SIGLA_DESTINO deDepDes, RECEPTOR deEmpDes, ESTADO_DESTINO estadoDestino, TIPO tipo\n"
+        sqlQry.append("SELECT FE_EMI feEmi, DE_SIGLA_EMITE deDepEmi, EMISOR deEmpEmi, ESTADO_REMITO estadoRemito, NU_DOC nuDoc, DE_SIGLA_DESTINO deDepDes, RECEPTOR deEmpDes, ESTADO_DESTINO estadoDestino, TIPO tipo, FE_REC_DOC feRecDoc, PK_SGD_DESCRIPCION.DE_NOM_EMP(CO_EMP_REC) coEmpRec\n"
+        /* [HPB] Fin 23/11/23 OS-0001287-2023 Mostrar fecha y empleado que recepciona documento en reporte hoja de ruta */
                 + "FROM HOJA_RUTA order by FE_EMI");
         
         try {

@@ -24,4 +24,7 @@ public interface DependenciaService {
     String updDependenciaBean(TrxDependenciaBean trxDep,String coDepAn,LocalDepBean localDep,String pTipoAnt) throws Exception;
     String getCoLocal(String coDep);
     List<EmpleadoBean> getLsEmpDepen(String coDep);
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    String updEncargadoDependenciaBean(String coUsuario, String codDependencia) throws Exception;
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
 }

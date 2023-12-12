@@ -1420,7 +1420,21 @@ function fn_goEditarDocExtRecep(pnuAnn,pnuEmi){
         }
     }
 }
+/* [HPB] Inicio 23/11/23 OS-0001287-2023 Trazabilida de documento - hoja de ruta */
+function fn_goHojaRutaEmiDocClick(pnuAnn,pnuEmi){
+    console.log('fn_goHojaRutaEmiDocClick');
 
+    if(!!pnuAnn&&!!pnuEmi){
+        var p = new Array();
+        p[0] = "pnuAnn=" + pnuAnn;
+        p[1] = "pnuEmi=" + pnuEmi;
+        p[2] = "ptipo=3";
+        ajaxCall("/srMesaPartes.do?accion=goHojaDeRuta", p.join("&"), function(data) {
+           fn_rptaHojaDeRuta(data);
+        }, 'text', false, false, "POST");
+    }
+}
+/* [HPB] Fin 23/11/23 OS-0001287-2023 Trazabilida de documento - hoja de ruta */
 function fn_goHojaRutaExtRecepClick(pnuAnn,pnuEmi){
     if(jQuery('#divTablaDocExtRecep').length===1){
         if(!!pnuAnn&&!!pnuEmi){

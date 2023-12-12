@@ -284,4 +284,17 @@ public class DependenciaServiceImp implements DependenciaService{
 
         return list;
     }    
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    @Override
+    public String updEncargadoDependenciaBean(String coUsuario, String coDependencia) throws Exception {
+        String vReturn = "NO_OK";
+        try {
+            vReturn=dependenciaDao.updEncargadoDependenciaBean(coUsuario, coDependencia);
+
+        } catch (Exception e) {
+            throw e;
+        }        
+        return vReturn;
+    }
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
 }

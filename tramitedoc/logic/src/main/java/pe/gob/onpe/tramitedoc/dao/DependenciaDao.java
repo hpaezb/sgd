@@ -41,4 +41,8 @@ public interface DependenciaDao {
     /*-- [HPB] Inicio 16/01/23 CLS-087-2022 --*/
     String delEmpDependenciaLst(String coEmp,String coDep);
     /*-- [HPB] Fin 16/01/23 CLS-087-2022 --*/
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    String delEmpDepen(String coEmp);
+    String updEncargadoDependenciaBean(String coUsuario, String codDependencia) throws Exception;
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */    
 }

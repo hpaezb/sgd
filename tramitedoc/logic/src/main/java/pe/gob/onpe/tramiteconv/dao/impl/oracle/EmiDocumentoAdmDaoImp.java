@@ -654,6 +654,7 @@ private SimpleJdbcCall spInsMesaVirtual;
         sql.append("WHERE ROWNUM < 201");    
         
         logger.info("SQL Ref.: "+sql);
+        System.out.println("SQL Ref.:"+sql);
         try {
 //            list = this.jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(DocumentoBean.class),
 //                    new Object[]{pannio,pcoDepen, pcoDepen, ptiDoc});

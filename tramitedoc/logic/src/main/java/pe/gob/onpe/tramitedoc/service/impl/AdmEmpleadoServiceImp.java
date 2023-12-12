@@ -80,6 +80,12 @@ public class AdmEmpleadoServiceImp implements AdmEmpleadoService{
         int vReturn=0;
         try {
             vReturn=admEmpleadoDao.updAdmEmpleado(empleado);
+            /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+            String retorno = dependenciaDao.delEmpDepen(empleado.getCoEmpleado());
+            if("OK".equals(retorno)){
+                vReturn = 1;
+            }
+            /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
             if(acceso.getCoUsuario().length()>0){//Crear acceso si solo viene con USERNAME 
                 String vnuDni=Utility.getInstancia().cifrar(empleado.getDni(),ConstantesSec.SGD_SECRET_KEY_PASSWORD);
                 admEmpleadoDao.saveNuevoAcceso(acceso.getCoUsuario(), acceso.getCoEmpleado(), vnuDni);
@@ -461,4 +467,50 @@ public class AdmEmpleadoServiceImp implements AdmEmpleadoService{
         }
     }
     /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/    
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    @Override
+    public List<DependenciaBean> getBsqEncargadoDependencia(String coEmp) throws Exception {
+        try {
+            return admEmpleadoDao.getBsqEncargadoDependencia(coEmp);
+        } catch (Exception e) {
+            throw e;
+        }
+    }   
+
+    @Override
+    public String getValidaEncargadoDependencia(String coEmp) throws Exception {
+        String coRespuesta="0";
+        StringBuilder retval = new StringBuilder();
+        int cantidad =0;
+        String dependencias = "";
+        List<DependenciaBean> lstDependencia = new ArrayList<DependenciaBean>();
+        try {
+            lstDependencia = admEmpleadoDao.getBsqEncargadoDependencia(coEmp);
+            if(!lstDependencia.isEmpty()){
+                cantidad = lstDependencia.size();
+                for (DependenciaBean dependenciaBean: lstDependencia){
+                    dependencias = dependencias+", "+dependenciaBean.getDeDependencia();
+                }                
+            }
+            retval.append("{\"coRespuesta\":\"");
+            if(cantidad > 0){                 
+                coRespuesta="1";
+                retval.append(coRespuesta);
+                retval.append("\",");                
+                retval.append("\"cantidad\":\"");
+                retval.append(cantidad);
+                retval.append("\",\"dependencias\":\"");
+                retval.append(dependencias);                 
+                retval.append("\"");                 
+            }else{
+                retval.append(coRespuesta);
+                retval.append("\"");                
+            }
+            retval.append("}");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retval.toString();
+    }
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */     
 }

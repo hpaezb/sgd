@@ -523,4 +523,9 @@ public class AdmEmpleadoDaoImp extends SimpleJdbcDaoBase implements AdmEmpleadoD
     public List<LocalBean> getBsqLocal(String string) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public List<DependenciaBean> getBsqEncargadoDependencia(String string) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TDR35" pageWidth="1359" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1319" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="2c82441b-1dc7-44dd-9279-7ba0678158be">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TDR35" pageWidth="1259" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1219" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="2c82441b-1dc7-44dd-9279-7ba0678158be">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="311"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
 	<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
@@ -32,15 +32,13 @@
 	<field name="deEmpDes" class="java.lang.String"/>
 	<field name="estadoDestino" class="java.lang.String"/>
 	<field name="tipo" class="java.lang.String"/>
-	<field name="feRecDoc" class="java.lang.String"/>
-	<field name="coEmpRec" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="190">
 			<staticText>
-				<reportElement uuid="6202f088-9472-4d77-bdf5-47f7a2035a2a" mode="Opaque" x="1145" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<reportElement uuid="6202f088-9472-4d77-bdf5-47f7a2035a2a" mode="Opaque" x="895" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -54,7 +52,7 @@
 				<text><![CDATA[OFICINA DESTINO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="12a5c23c-5ee4-4a83-b115-d5ca0a514a54" mode="Opaque" x="925" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<reportElement uuid="12a5c23c-5ee4-4a83-b115-d5ca0a514a54" mode="Opaque" x="675" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -82,7 +80,7 @@
 				<text><![CDATA[REMITENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8f0fc18e-ee0d-440b-851c-c1d4acf9af6f" mode="Opaque" x="1215" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<reportElement uuid="8f0fc18e-ee0d-440b-851c-c1d4acf9af6f" mode="Opaque" x="965" y="160" width="70" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -138,7 +136,7 @@
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fe38db24-cf22-4911-8e36-0cd9f2bc724d" mode="Opaque" x="705" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
+				<reportElement uuid="fe38db24-cf22-4911-8e36-0cd9f2bc724d" mode="Opaque" x="455" y="160" width="220" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -260,34 +258,6 @@
 				<reportElement uuid="2e26840b-f43b-4dad-8032-b9c67ce05677" x="0" y="0" width="135" height="40"/>
 				<imageExpression><![CDATA[$P{P_LOGO_DIR}]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement uuid="5e4aa36c-2b32-4964-bcb3-6ef53c66d7b1" mode="Opaque" x="455" y="160" width="100" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true" isUnderline="false"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<text><![CDATA[FECHA RECEPCIÓN]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="5e4aa36c-2b32-4964-bcb3-6ef53c66d7b1" mode="Opaque" x="555" y="160" width="150" height="27" forecolor="#000066" backcolor="#CCCCCC"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true" isUnderline="false"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<text><![CDATA[EMPLEADO QUE RECEP.]]></text>
-			</staticText>
 		</band>
 	</title>
 	<detail>
@@ -313,34 +283,24 @@
 				<textFieldExpression><![CDATA[$F{estadoRemito}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e8d44786-03bf-4713-b3b7-a038243f9920" positionType="Float" stretchType="RelativeToTallestObject" x="710" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e8d44786-03bf-4713-b3b7-a038243f9920" positionType="Float" stretchType="RelativeToTallestObject" x="460" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{nuDoc}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="527f7fd5-2a30-4ad9-a6a0-b72fa4cf2b40" positionType="Float" stretchType="RelativeToTallestObject" x="930" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="527f7fd5-2a30-4ad9-a6a0-b72fa4cf2b40" positionType="Float" stretchType="RelativeToTallestObject" x="680" y="0" width="220" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{deEmpDes}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="eb872f3f-3041-4bb5-9c05-92f8325f6d55" positionType="Float" stretchType="RelativeToTallestObject" x="1150" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="eb872f3f-3041-4bb5-9c05-92f8325f6d55" positionType="Float" stretchType="RelativeToTallestObject" x="900" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{deDepDes}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="fe632d7b-2a46-4c53-97bd-ffbd360f33f7" positionType="Float" stretchType="RelativeToTallestObject" x="1220" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="fe632d7b-2a46-4c53-97bd-ffbd360f33f7" positionType="Float" stretchType="RelativeToTallestObject" x="970" y="0" width="70" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{estadoDestino}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="711a0a6d-1a92-424a-9fa0-cbdbb862c0c6" positionType="Float" stretchType="RelativeToTallestObject" x="460" y="0" width="100" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{feRecDoc}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="dba089ee-7ce6-42ca-bf76-9b268146bde6" positionType="Float" stretchType="RelativeToTallestObject" x="560" y="0" width="150" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{coEmpRec}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

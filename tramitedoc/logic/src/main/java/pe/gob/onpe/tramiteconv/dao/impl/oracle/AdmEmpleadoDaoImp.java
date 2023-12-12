@@ -633,4 +633,22 @@ public class AdmEmpleadoDaoImp extends SimpleJdbcDaoBase implements AdmEmpleadoD
         return list;
     }
     /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/    
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    @Override
+    public List<DependenciaBean> getBsqEncargadoDependencia(String coEmp) throws Exception {
+        StringBuilder sql = new StringBuilder();
+        Map<String, Object> objectParam = new HashMap<String, Object>();
+        sql.append("SELECT CO_DEPENDENCIA coDependencia, CO_EMPLEADO coEmpleado, IN_BAJA inBaja, ");
+        sql.append(" DE_DEPENDENCIA deDependencia  FROM RHTM_DEPENDENCIA");
+        sql.append(" WHERE IN_BAJA = '0' AND CO_EMPLEADO LIKE ''||:pCriterio||'%' ");
+        objectParam.put("pCriterio", coEmp);
+        List<DependenciaBean> list = new ArrayList<DependenciaBean>();
+        try {
+            list = this.namedParameterJdbcTemplate.query(sql.toString(), objectParam, BeanPropertyRowMapper.newInstance(DependenciaBean.class));
+        } catch (Exception e) {
+            throw e;
+        }
+        return list;
+    }
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
 }

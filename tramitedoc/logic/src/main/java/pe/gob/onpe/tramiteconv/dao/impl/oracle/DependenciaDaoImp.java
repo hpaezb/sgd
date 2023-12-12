@@ -449,4 +449,41 @@ public class DependenciaDaoImp extends SimpleJdbcDaoBase implements DependenciaD
         return vReturn;
     }
     /*-- [HPB] Fin 16/01/23 CLS-087-2022 --*/
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    @Override
+    public String updEncargadoDependenciaBean(String coUsuario, String coDependencia) throws Exception {
+        String vReturn = "NO_OK";
+        StringBuilder sqlUpd = new StringBuilder();
+        
+        sqlUpd.append("update RHTM_DEPENDENCIA \n"
+                    + "set co_empleado = null,\n"
+                    + "fe_act = SYSDATE,\n"
+                    + "ID_ACT = ?\n"
+                    + "WHERE co_dependencia = ?");
+        try {
+            this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{coUsuario, coDependencia});
+            vReturn = "OK";
+        } catch (DataAccessException e) {
+            vReturn = e.getMessage();
+        }
+        return vReturn;
+    }
+
+    @Override
+    public String delEmpDepen(String coEmp) {
+        String vReturn = "ERROR";
+        StringBuilder sql = new StringBuilder();
+        sql.append("DELETE FROM TDTX_DEPENDENCIA_EMPLEADO\n" +
+                    "WHERE CO_EMP=?");        
+        
+        try {
+            this.jdbcTemplate.update(sql.toString(), new Object[]{coEmp});
+            vReturn = "OK";
+        }catch (Exception e) {
+            e.printStackTrace();
+            //vReturn = e.getMessage();
+        }
+        return vReturn;
+    }
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
 }

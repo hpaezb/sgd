@@ -2092,7 +2092,72 @@ function fn_grabarDatosPersonal() {
     /* [HPB] Inicio 23/02/23 CLS-087-2022 */
     //if(!!dni && (!!apPaterno || !!apMaterno) && !!nombres && !!coDependencia){   
     if(!!dni && (!!apPaterno || !!apMaterno) && !!nombres && !!coDependencia && !!coLocal){
-    /* [HPB] Fin 23/02/23 CLS-087-2022 */       
+    /* [HPB] Fin 23/02/23 CLS-087-2022 */
+        /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+        var coEstado = $('#estado').val();
+        var verificaEncargado = null;
+        if(coEstado==='0'){
+            verificaEncargado = verificaEncargadoDependencia(coEmpleado);
+        }
+        if (verificaEncargado!==null){
+                bootbox.dialog({
+                message: " <h5>El empleado a dar de baja es Director/Encargado de la(s) dependencia(s) "+verificaEncargado+" \n\
+                                ¿Desea grabar los cambios?</h5>",
+                buttons: {
+                    SI: {
+                         label: "SI",
+                         className: "btn-primary",
+                         callback: function() {
+                            var jsonBody ={
+                                    "empleado" :{
+                                        "coEmpleado": coEmpleado, "dni": dni, "apPaterno": apPaterno,"apMaterno": apMaterno, 
+                                        "nombres": nombres,"fechaNacimiento":fechaNacimiento,"sexo":sexo,"coDependencia": coDependencia,
+                                        "email":$('#email').val(),"estado":$('#estado').val(),
+                                        /* [HPB] Inicio 23/02/23 CLS-087-2022 */
+                                        "coLocal": coLocal,
+                                        /* [HPB] Fin 23/02/23 CLS-087-2022 */                    
+                                        "coCargo":coCargo,"coCategoria":coCategoria
+                                    },
+                                    "acceso":{
+                                        "coEmpleado" : coEmpleado, "coUsuario":username
+                                        /* [HPB] Inicio 26/09/22 OS-0000768-2022 */
+                                        , "coPerfil" : coPerfil
+                                        /* [HPB] Fin 26/09/22 OS-0000768-2022 */
+                                    }
+                                };
+                            var jsonString = JSON.stringify(jsonBody);
+                            var url = '/srTablaConfiguracion.do?accion=goUpdAdmEmpleado';
+                            ajaxCallSendJson(url, jsonString, function(data) {
+                                if(data.exito){
+                                    if(typeof data.list !== 'undefined'){
+                                        alert_Warning("MENSAJE",data.mensaje);
+                                        $('#div_user_verify').html(fu_muestraLsNombreUsuario(data.list));
+                                    }else{
+                                        $('#formEditPersonal #btn_salir').trigger('click');
+                                        var item = '<td>'+data.coEmpleado+'</td><td>'+data.dni+'</td><td>'+data.apPaterno+'</td>'
+                                                    +'<td>'+data.apMaterno+'</td><td>'+data.nombres+'</td><td>'+data.deDependencia+'</td><td>'+data.deCargo+'</td>'
+                                                    +'<td>'+((data.estado==1) ? '<span class="label label-success">Activo</span>':'<span class="label label-danger">Baja</span>')+'</td>';
+                                        if($('#tr_'+data.coEmpleado).length>0){ //Editar empleado
+                                            $('#tr_'+data.coEmpleado).html(item);
+                                        }else{//nuevo empleado
+                                            $('#tblLsAdmEmpleado tbody').prepend('<tr id="tr_'+data.coEmpleado+'" class="row_emp">'+item+'</tr>');
+                                        }
+                                        alert_Sucess("MENSAJE:", data.mensaje);
+                                    }
+                                }else{
+                                    alert_Danger("ERROR:", data.mensaje);
+                                }
+                            }, 'json', false, false, 'POST');           
+                         }                      
+                    },
+                    NO: {
+                        label: "NO",
+                        className: "btn-default"
+                    }
+                }
+                });            
+        }else{
+        /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
         var jsonBody ={
                 "empleado" :{
                     "coEmpleado": coEmpleado, "dni": dni, "apPaterno": apPaterno,"apMaterno": apMaterno, 
@@ -2133,6 +2198,7 @@ function fn_grabarDatosPersonal() {
                 alert_Danger("ERROR:", data.mensaje);
             }
         }, 'json', false, false, 'POST');
+        }
     } else {
         alert_Warning('MENSAJE', 'No se completó todos los datos requeridos');
     }
@@ -4744,3 +4810,22 @@ function fu_goAdmEmpleadoLocal() {
     }, 'text', false, false, "POST");
 }
 /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/
+/* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+function verificaEncargadoDependencia(pcoEmp){
+    var cant="";
+    var p = new Array();
+    
+    p[0] = "accion=goEncargadoDependencia";
+    p[1] = "pcoEmp=" + pcoEmp;
+    
+    ajaxCall("/srTablaConfiguracion.do", p.join("&"), function(data) {
+        if(data.coRespuesta==='1'){
+            cant = data.dependencias;
+        }else{
+            cant = null;
+        }
+    },'json', true, false, "POST"); 
+    
+    return cant;
+}
+/* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */

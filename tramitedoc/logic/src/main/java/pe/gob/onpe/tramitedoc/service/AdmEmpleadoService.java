@@ -157,5 +157,9 @@ public interface AdmEmpleadoService {
      * @throws Exception 
      */
     List<LocalBean> getBsqLocal(String criterio)throws Exception;
-    /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/    
+    /*-- [HPB] Fin 23/02/23 CLS-087-2022 --*/ 
+    /* [HPB] Inicio 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */
+    List<DependenciaBean> getBsqEncargadoDependencia(String coEmp)throws Exception;
+    String getValidaEncargadoDependencia(String coEmp) throws Exception;
+    /* [HPB] Fin 23/11/23 OS-0001287-2023 Dar de baja a empleado en grupos y comisiones. Advertencia si es jefe */    
 }
