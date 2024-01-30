@@ -571,6 +571,11 @@ function fn_eventEstDoc(sTipoDestEmi, sTipoDestEmiNew, sEstadoDocAdm) {
         fu_changeDocumentoEmiBean();
     });
     /**HPB-02/10/20] Inicio - Plazo de Atencion*/
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+    //jQuery('#documentoEmiBean').find('#coSubTipDocAdm').change(function() {
+    //    fu_changeDocumentoEmiBean();
+    //});
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
     //jazanero
     if(jQuery('#txtEsNuevoDocAdm').val()==='1' && jQuery('#txtsEsTipoProyecto').val()==='SI'){       
         jQuery('#envDocumentoEmiBean').val("1");    
@@ -2263,7 +2268,9 @@ function getJsonFormDocumentoEmiBean() {
     arrCampoBean[20] = "nuAnnProyecto";
     arrCampoBean[21] = "fePlaAte";/*[HPB-02/10/20] Inicio - Plazo de Atencion*/
     arrCampoBean[22] = "inPlaAte";/*[HPB-02/10/20] Inicio - Plazo de Atencion*/
-    
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+    //arrCampoBean[23] = "coSubTipDocAdm";
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
     var o = {};
     var a = $('#documentoEmiBean').serializeArray();
     $.each(a, function() {
@@ -5638,7 +5645,13 @@ function fn_llenaComboTramiteDocEmi() {
         }
     }, 'json', false, true, "POST");
 }
-
+/* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+/*function fn_changeSubTipoDocEmiAdm(cmbSubTipoDoc){
+    var coTiDoc=jQuery(cmbSubTipoDoc).val();
+    var deSubTiDoc = $("#coSubTipDocAdm option:selected").text();
+    $("#deAsu").val(deSubTiDoc);
+}*/
+/* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
 function fn_changeTipoDocEmiAdm(cmbTipoDoc){
     var coTiDoc=jQuery(cmbTipoDoc).val();
     var coTiDocLast=jQuery(cmbTipoDoc).find('option:last').val();
@@ -5660,7 +5673,25 @@ function fn_changeTipoDocEmiAdm(cmbTipoDoc){
     }
     /*[HPB] 02/02/21 Orden de trabajo*/
     var sEstadoDocAdm = jQuery('#documentoEmiBean').find('#esDocEmi').val()
-    
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+    /*
+    if(coTiDoc==="319"){
+        //document.getElementById('divSubTipo').style.display = 'block';
+        //document.getElementById('divSubTipoTitulo').style.display = 'block';
+        //document.getElementById('divSubTipoDetalle').style.display = 'block';
+        var deSubTiDoc = $("#coSubTipDocAdm option:selected").text();
+        $("#coSubTipDocAdm").removeAttr('disabled');
+        //$("#deAsu").val(deSubTiDoc);
+    }else{
+        //document.getElementById('divSubTipo').style.display = 'none';
+        //document.getElementById('divSubTipoTitulo').style.display = 'none';
+        //document.getElementById('divSubTipoDetalle').style.display = 'none';
+        $("#coSubTipDocAdm").val("");
+        $("#deAsu").val("");
+        $("#coSubTipDocAdm").attr('disabled', 'disabled');
+    }
+    */
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
     if(coTiDoc==="340"){
         //$("#divtablaRefEmiDocAdm *").prop('disabled',true);
         $("#accordion *").prop('disabled',true);

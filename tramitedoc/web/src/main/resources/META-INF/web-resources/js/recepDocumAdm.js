@@ -1579,6 +1579,15 @@ function fu_cargaEdicionDocAdm(tModulo,estadoDocAdm){
                 $("#divtablaDestEmiDocAdmIntitu").show(); 
             }
             /*[HPB] 02/02/21 Orden de trabajo*/
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+            /*
+            if(coTipoDocumento==="319"){
+                $("#coSubTipDocAdm").removeAttr('disabled');
+            }else{
+                $("#coSubTipDocAdm").attr('disabled', 'disabled');
+            }
+            */
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
         }else{
           jQuery('#coDepEmi').prop('disabled','true');
           jQuery('#coLocEmi').prop('disabled','true');

@@ -257,6 +257,9 @@ public class DocumentoAdmEmisionController {
            System.out.println("documentoEmiBean.getCoLocEmi()--> "+ documentoEmiBean.getCoLocEmi());
            System.out.println("documentoEmiBean.getDeLocEmi()--> "+ documentoEmiBean.getDeLocEmi());
            //jazanero
+           /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+           //model.addAttribute("lstSubTipoDoc", referencedData.grpElementoList("SUB_TIPO_DOCUMENTO"));
+           /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA*/           
            model.addAttribute("pusuario",usuario.getCoUsuario());
            
            
@@ -355,7 +358,9 @@ public class DocumentoAdmEmisionController {
            model.addAttribute("pDatosOblDesJur",commonQryService.obtenerValorParametro("DATOS_OBL_DES_JUR"));
            /*interoperabilidad*/           
            model.addAttribute("pusuario",usuario.getCoUsuario());
-           
+           /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+           //model.addAttribute("lstSubTipoDoc", referencedData.grpElementoList("SUB_TIPO_DOCUMENTO"));
+           /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA*/ 
            //jazanero
            if(documentoEmiBean.getNuEmiProyecto()!=null && documentoEmiBean.getNuEmiProyecto().length()>0 
                    && documentoEmiBean.getNuAnnProyecto()!=null && documentoEmiBean.getNuAnnProyecto().length()>0)
@@ -1071,7 +1076,9 @@ public class DocumentoAdmEmisionController {
                     model.addAttribute("pfechaHoraActual",fechaHoraActual);
                     model.addAttribute("pcodEmp",usuario.getCempCodemp());
                     model.addAttribute("pdesEmp",usuario.getDeFullName());
-
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+                    //model.addAttribute("lstSubTipoDoc", referencedData.grpElementoList("SUB_TIPO_DOCUMENTO"));
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA*/ 
                     DocumentoEmiBean pdocumentoEmiBean = documentoBasicoService.getNumeroAnexoProyecto(documentoRecepBean.getNuAnn(), documentoRecepBean.getNuEmi());
                     if(pdocumentoEmiBean!=null){
                         documentoEmiBean.setNuAneProyecto(pdocumentoEmiBean.getNuAneProyecto());
@@ -1134,7 +1141,9 @@ public class DocumentoAdmEmisionController {
                 model.addAttribute("pfechaHoraActual",fechaHoraActual);
                 model.addAttribute("pcodEmp",usuario.getCempCodemp());
                 model.addAttribute("pdesEmp",usuario.getDeFullName());
-                
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+                //model.addAttribute("lstSubTipoDoc", referencedData.grpElementoList("SUB_TIPO_DOCUMENTO"));
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA*/ 
 //                if(documentoRecepBean.getCoTipDocAdm()!=null && documentoRecepBean.getCoTipDocAdm().equals("332")){
 //                    if(documentoRecepBean.getNuEmi()!=null && documentoRecepBean.getNuAnn()!=null ){
 //                        

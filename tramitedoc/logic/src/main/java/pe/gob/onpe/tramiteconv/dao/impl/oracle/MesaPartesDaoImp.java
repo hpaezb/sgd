@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+/* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
@@ -50,6 +54,9 @@ import pe.gob.onpe.tramitedoc.web.util.BusquedaTextual;
 @Repository("mesaPartesDao")
 public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDao{
     
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+    private final Logger logger=Logger.getLogger(this.getClass().getPackage().getName());
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
     @Autowired
     private ApplicationProperties applicationProperties;
 
@@ -57,7 +64,9 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
     
     @Override
     public List<DocumentoExtRecepBean> getDocumentosExtRecep(BuscarDocumentoExtRecepBean buscarDocumentoExtRecepBean) {
-        System.out.println("ORACLE");
+        /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+        logger.log(Level.INFO, "Ingresando al repository getDocumentosExtRecep()");
+        /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         boolean bBusqFiltro = false;
         boolean bBusqDep = false;
         StringBuilder sql = new StringBuilder();
@@ -152,9 +161,14 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
         //sql.append(" AND A.TI_EMI<>'01'");
         sql.append(" AND A.TI_EMI IN ('02', '03', '04', '06') ");/*Mejora Query 03/05/19*/
         sql.append(" AND A.ES_ELI='0'");
+        /* [HPB] Inicio 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
+        if(buscarDocumentoExtRecepBean.getCoDepEmi().equals("11351")){
+        /* [HPB] Fin 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
         sql.append(" AND A.CO_DEP_EMI = :pCoDepEmi");        
         objectParam.put("pCoDepEmi", buscarDocumentoExtRecepBean.getCoDepEmi());
-
+        /* [HPB] Inicio 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
+        }
+        /* [HPB] Fin 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
         String pTipoBusqueda = buscarDocumentoExtRecepBean.getTipoBusqueda();
         if (pTipoBusqueda.equals("1") && buscarDocumentoExtRecepBean.isEsIncluyeFiltro()) {
             bBusqFiltro = true;
@@ -275,16 +289,40 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
         sql.append(") X ");
         //sql.append("WHERE ROWNUM < 51");        
         sql.append("WHERE ROWNUM <=  ").append(applicationProperties.getTopRegistrosConsultas());
-
+        System.out.println("sql MP: "+sql.toString());
         List<DocumentoExtRecepBean> list = new ArrayList<DocumentoExtRecepBean>();
 
         try {
             list = this.namedParameterJdbcTemplate.query(sql.toString(),objectParam,BeanPropertyRowMapper.newInstance(DocumentoExtRecepBean.class));
         }catch (EmptyResultDataAccessException e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.WARNING, "No se encontraron resultado: {0}", e.getMessage());
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
             list = null;
         }catch (Exception e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.SEVERE, "Dependencia que emite: {0}", buscarDocumentoExtRecepBean.getCoDepEmi());
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", buscarDocumentoExtRecepBean.getCoEmpleado());
+            logger.log(Level.SEVERE, "Codigo tipo documento: {0}", buscarDocumentoExtRecepBean.getCoTipoDoc());
+            logger.log(Level.SEVERE, "Codigo estado: {0}", buscarDocumentoExtRecepBean.getCoEstadoDoc());
+            logger.log(Level.SEVERE, "Codigo tipo emisor: {0}", buscarDocumentoExtRecepBean.getCoTipoEmisor());
+            logger.log(Level.SEVERE, "Codigo dependencia origen: {0}", buscarDocumentoExtRecepBean.getCoDepOriRec());
+            logger.log(Level.SEVERE, "Codigo proceso: {0}", buscarDocumentoExtRecepBean.getCoProceso());
+            logger.log(Level.SEVERE, "Fecha inicio: {0}", buscarDocumentoExtRecepBean.getFeEmiIni());
+            logger.log(Level.SEVERE, "Fecha fin: {0}", buscarDocumentoExtRecepBean.getFeEmiFin());
+            logger.log(Level.SEVERE, "N\u00famero de documento: {0}", buscarDocumentoExtRecepBean.getBusNumDoc());
+            logger.log(Level.SEVERE, "N\u00famero de expediente: {0}", buscarDocumentoExtRecepBean.getBusNumExpediente());
+            logger.log(Level.SEVERE, "Asunto: {0}", buscarDocumentoExtRecepBean.getBusAsunto());
+            logger.log(Level.SEVERE, "Tipo expediente: {0}", buscarDocumentoExtRecepBean.getCoTipoExp());
+            logger.log(Level.SEVERE, "Origen: {0}", buscarDocumentoExtRecepBean.getCoOriDoc());
+            logger.log(Level.SEVERE, "Tipo persona: {0}", buscarDocumentoExtRecepBean.getCoTipoPersona());
+            logger.log(Level.SEVERE, "N\u00famero de DNI: {0}", buscarDocumentoExtRecepBean.getBusNumDni());
+            logger.log(Level.SEVERE, "N\u00famero de RUC: {0}", buscarDocumentoExtRecepBean.getBusNumRuc());
+            logger.log(Level.SEVERE, "Codigo Otros: {0}", buscarDocumentoExtRecepBean.getBusCoOtros());            
+            logger.log(Level.SEVERE, "Ocurrió un error al consultar en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
             list = null;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return list;
     }
@@ -343,9 +381,15 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
             documentoExtRecepBean = this.jdbcTemplate.queryForObject(sql.toString(),BeanPropertyRowMapper.newInstance(DocumentoExtRecepBean.class),  new Object[]{pnuAnn, pnuEmi});
         }catch (EmptyResultDataAccessException e) {
             documentoExtRecepBean = null;
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.WARNING, "No se encontraron datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         }catch (Exception e) {
             documentoExtRecepBean = null;
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al obtener los datos en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         }
         return documentoExtRecepBean;
     }
@@ -391,9 +435,15 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
                 expedienteBean.getUsCreaAudi(), expedienteBean.getCoTipoExp(), clave});
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */               
+            logger.log(Level.WARNING, "Número de expediente duplicado");
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
             vReturn = "Numero de Expediente Duplicado.";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al crear el expediente en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         }
         return vReturn;        
     }
@@ -417,7 +467,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
             expedienteBean.getCoProceso(),expedienteBean.getNuAnnExp(),expedienteBean.getNuSecExp()});
             vReturn = "OK";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al actualizar el expediente en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
             vReturn = e.getMessage();
 
         }
@@ -567,15 +620,24 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
             }
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */ 
+            logger.log(Level.WARNING, "Numero de Documento Duplicado: ", con );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */              
             vReturn = "Numero de Documento Duplicado";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al crear el documento en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
         }
         return vReturn;
     }    
 
     @Override
     public String insDocumentoExtBean(DocumentoExtRecepBean documentoExtRecepBean, ExpedienteDocExtRecepBean expedienteBean, RemitenteDocExtRecepBean remitenteDocExtRecepBean) {
+        /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+        logger.log(Level.INFO, "Ingresando al repository insDocumentoExtBean()");
+        /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         String vReturn = "NO_OK";
         StringBuilder sqlUpd = new StringBuilder();
         StringBuilder sqlQry = new StringBuilder();
@@ -654,9 +716,16 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
 
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.WARNING, "Numero de Documento Duplicado.: ", con );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
             vReturn = "Numero de Documento Duplicado.";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.SEVERE, "Usuario responsable 1: {0}", documentoExtRecepBean.getCoUseMod());
+            logger.log(Level.SEVERE, "Ocurrió una error al grabar en la base de datos: ", e );
+            //e.printStackTrace();
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         }
         return vReturn;
     }
@@ -701,7 +770,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
                 destinatarioDocumentoEmiBean.getCoUseCre(), destinatarioDocumentoEmiBean.getCoUseCre()});
             vReturn = "OK";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */ 
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al crear el documento destino en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
             //vReturn = e.getMessage();
 
         }
@@ -735,7 +807,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
                 ref.getCoUseCre(), ref.getCoUseMod()});/*[HPB-21/06/21] Campos Auditoria-*/
             vReturn = "OK";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al crear la referencia en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */               
         }
         return vReturn;        
     }    
@@ -753,7 +828,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
         try {
             vReturn = this.jdbcTemplate.queryForObject(sqlQry.toString(), String.class, new Object[]{pnuAnn,pcoDepEmi,ptiEmi});
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al retornar el número correlativo del documento en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
             vReturn = "NO_OK";
         }
         return vReturn;
@@ -773,9 +851,15 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
             documentoExtRecepBean = this.jdbcTemplate.queryForObject(sql.toString(), BeanPropertyRowMapper.newInstance(DocumentoExtRecepBean.class),
                     new Object[]{coDependencia});
         } catch (EmptyResultDataAccessException e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
+            logger.log(Level.WARNING, "No se encontraron datos de la dependencia: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
             documentoExtRecepBean = null;
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */  
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al retornar la dependencia de la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */              
         }
         return documentoExtRecepBean;
     }    
@@ -868,10 +952,16 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
             }
             
         } catch (EmptyResultDataAccessException e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */  
+            logger.log(Level.WARNING, "No se encontró la referencia del expediente de la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */              
             list = null;
         } catch (Exception e) {
             list = null;
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al retornar la referencia del expediente de la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
         }
         return list;        
     }
@@ -926,10 +1016,16 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
 //                    new Object[]{pnuAnn,pcoTiDoc,pcoDepEmi});
                     new Object[]{pnuAnn,pcoTiDoc});
         } catch (EmptyResultDataAccessException e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */  
+            logger.log(Level.WARNING, "No se encontró la referencia del documento del expediente de la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
             list = null;
         } catch (Exception e) {
             list = null;
-            e.printStackTrace();
+            /* [HPB] Incio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */ 
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al retornar la referencia del documento del expediente de la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
         }
         return list;        
     }
@@ -980,7 +1076,10 @@ public class MesaPartesDaoImp extends SimpleJdbcDaoBase  implements MesaPartesDa
                 destinatarioDocumentoEmiBean.getCoUseCre(), nuAnn, nuEmi, destinatarioDocumentoEmiBean.getNuDes()});
             vReturn = "OK";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */  
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al actualizar destinos del documento de la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */              
         }
         return vReturn;
     }

@@ -235,10 +235,30 @@
                                                         <!--ejecutaOpcionModal(this, '/srDocumentoAdmEmision.do?accion=goDetalleProyectoPrevio&amp;pnuAnn='+'2018'+'&amp;pnuEmi='+'2222555', 'POST');-->
                                                         <td colspan="2"></td>                                                
                                                 </tr>
+                                                <!-- [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA                                             
+                                                <tr>
+                                                    <td >Sub Tipo:</td>    
+                                                    <td >
+                                                        <input id="txtcoSubTipDocAdm" name="txtcoSubTipDocAdm" type="hidden" value="${documentoEmiBean.coSubTipDocAdm}"/>
+                                                        <form:select path="coSubTipDocAdm" onchange="fn_changeSubTipoDocEmiAdm(this);" style="width:190px;">
+                                                                    <c:if test="${sEsNuevoDocAdm eq '1' and sEsTipoProyecto eq 'NO'}">
+                                                                        <option selected="selected" value="-1"/>    
+                                                                    </c:if>  
+                                                            <form:option value="" label="[Seleccionar]" />            
+                                                            <form:options items="${lstSubTipoDoc}" itemValue="celeCodele" itemLabel="celeDesele" />
+                                                        </form:select>	                                                                                         
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>                                                                                               
+                                                 [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA -->
                                                 <tr>
                                                         <td>Asunto:</td>    
                                                         <td colspan="3">
-                                                        <form:textarea path="deAsu" rows="4" cols="60" class="delUpperCase" style="height:90px;width:98%;" maxlength="1000"/>
+                                                        <!-- [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA -->    
+                                                        <form:textarea path="deAsu" rows="4" cols="60" class="delUpperCase" style="height:90px;width:98%;" maxlength="1000"/> 
+                                                        <!--<form:textarea path="deAsu" id="deAsu" rows="4" cols="60" class="delUpperCase" style="height:90px;width:98%;" maxlength="1000"/>-->
+                                                        <!-- [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA -->
                                                     </td>
                                                 </tr>
                                                 <tr>

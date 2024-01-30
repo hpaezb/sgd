@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+/* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+import java.util.logging.Logger;
+//import org.apache.log4j.Logger;
+/* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -58,8 +62,10 @@ private SimpleJdbcCall spActualizaEstado;
 /*interoperabilidad*/
 private SimpleJdbcCall spInsMesaVirtual;
 /*interoperabilidad*/
-    private static Logger logger=Logger.getLogger(EmiDocumentoAdmDaoImp.class);
-    
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+    //private static Logger logger=Logger.getLogger(EmiDocumentoAdmDaoImp.class);
+    private final Logger logger=Logger.getLogger(this.getClass().getPackage().getName());
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */    
     @Override
     public List<DocumentoEmiBean> getDocumentosBuscaEmiAdm(BuscarDocumentoEmiBean buscarDocumentoEmi) {
         StringBuilder sql = new StringBuilder();
@@ -204,9 +210,29 @@ private SimpleJdbcCall spInsMesaVirtual;
 
         } catch (EmptyResultDataAccessException e) {
             list = null;
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.WARNING, "No se encontraron datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
         } catch (Exception e) {
             list = null;
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Dependencia que emite: {0}", buscarDocumentoEmi.getsCoDependencia());
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", buscarDocumentoEmi.getsCoEmpleado());
+            logger.log(Level.SEVERE, "Codigo tipo documento: {0}", buscarDocumentoEmi.getsTipoDoc());
+            logger.log(Level.SEVERE, "Codigo estado: {0}", buscarDocumentoEmi.getsEstadoDoc());
+            logger.log(Level.SEVERE, "Prioridad: {0}", buscarDocumentoEmi.getsPrioridadDoc());
+            logger.log(Level.SEVERE, "Tema: {0}", buscarDocumentoEmi.getCoTema());
+            logger.log(Level.SEVERE, "Tipo emisor destino: {0}", buscarDocumentoEmi.getsDestinatario());
+            logger.log(Level.SEVERE, "Tipo emisor referencia: {0}", buscarDocumentoEmi.getsRefOrigen());
+            logger.log(Level.SEVERE, "Fecha inicio: {0}", buscarDocumentoEmi.getsFeEmiIni());
+            logger.log(Level.SEVERE, "Fecha fin: {0}", buscarDocumentoEmi.getsFeEmiFin());
+            logger.log(Level.SEVERE, "N\u00famero de documento: {0}", buscarDocumentoEmi.getsNumDoc());
+            logger.log(Level.SEVERE, "N\u00famero de expediente: {0}", buscarDocumentoEmi.getsBuscNroExpediente());
+            logger.log(Level.SEVERE, "Asunto: {0}", buscarDocumentoEmi.getsDeAsuM());     
+            logger.log(Level.SEVERE, "N\u00famero emision: {0}", buscarDocumentoEmi.getsNumCorEmision());            
+            logger.log(Level.SEVERE, "Ocurrió un error al consultar en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         }
         return list;
     }
@@ -296,6 +322,9 @@ private SimpleJdbcCall spInsMesaVirtual;
                 
                 + " ,NVL((select MAX(ca.NU_ANE) from TDTV_ANEXOS ca where ca.NU_EMI=A.NU_EMI_PROYECTO and ca.NU_ANN=A.NU_ANN_PROYECTO and ca.ES_PROYECTO='1'),'0')  NU_ANE_PROYECTO \n"
                 + " ,A.CO_TIP_DOC_ADM "
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+                //+ " ,A.CO_SUB_TIP_DOC AS CO_SUB_TIP_DOC_ADM"
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                 /* [HPB] Inicio 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
                 + ",A.CO_TEMA, (SELECT de_tema FROM tdtr_tema WHERE CO_TEMA=A.CO_TEMA AND CO_DEPENDENCIA=A.CO_DEP_EMI) AS DE_TEMA"
                 /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
@@ -314,9 +343,12 @@ private SimpleJdbcCall spInsMesaVirtual;
                     new Object[]{pnuAnn, pnuEmi, pnuAnn, pnuEmi});
         } catch (EmptyResultDataAccessException e) {
             documentoEmiBean = null;
-        } catch (Exception e) {           
-            logger.error("nu_ann="+pnuAnn+","+"nu_emi="+pnuEmi);
-            e.printStackTrace();
+        } catch (Exception e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
+            //logger.error("nu_ann="+pnuAnn+","+"nu_emi="+pnuEmi);
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al consultar en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         }
         return documentoEmiBean;
     }
@@ -651,7 +683,7 @@ private SimpleJdbcCall spInsMesaVirtual;
                     "order by 1 desc");
                     
 	sql.append(") A ");
-        sql.append("WHERE ROWNUM < 201");    
+        //sql.append("WHERE ROWNUM < 201");    
         
         logger.info("SQL Ref.: "+sql);
         System.out.println("SQL Ref.:"+sql);
@@ -898,6 +930,9 @@ private SimpleJdbcCall spInsMesaVirtual;
                 + "NU_DIA_ATE, \n"
                 + "TI_CAP, \n"
                 + "CO_TIP_DOC_ADM, \n"
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+                //+ "CO_SUB_TIP_DOC, \n"
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                 + "NU_COR_DOC, \n"
                 + "DE_DOC_SIG, \n"
                 + "NU_ANN_EXP, \n"
@@ -915,7 +950,10 @@ private SimpleJdbcCall spInsMesaVirtual;
                 + "FE_PLA_ATE,\n" /*[HPB-02/10/20] Inicio - Plazo de Atencion*/
                 + "IN_PLA_ATE,\n" /*[HPB-02/10/20] Inicio - Plazo de Atencion*/
                  + "NCLAVEACCESO)\n" /*[YPA-16/04/22] Codigo de Verificación Documental*/
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                 + "VALUES(?,?,?,?,?,?,?,?,SYSDATE,'1',?,?,?,'03',?,\n"
+                //+ "VALUES(?,?,?,?,?,?,?,?,SYSDATE,'1',?,?,?,'03',?,?,\n"
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                 + "?,?,?,?,1,\n"
                 + "'0',?,?,SYSDATE,?,SYSDATE,?,?,?,?,?,?)");
         
@@ -932,7 +970,10 @@ private SimpleJdbcCall spInsMesaVirtual;
 
             this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{documentoEmiBean.getNuAnn(), snuEmi, snuCorEmi,
                 documentoEmiBean.getCoLocEmi(), documentoEmiBean.getCoDepEmi(), documentoEmiBean.getCoEmpEmi(), documentoEmiBean.getCoEmpRes(),
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                 documentoEmiBean.getTiEmi(), documentoEmiBean.getDeAsu(), documentoEmiBean.getEsDocEmi(), documentoEmiBean.getNuDiaAte(),documentoEmiBean.getCoTipDocAdm(),
+                //documentoEmiBean.getTiEmi(), documentoEmiBean.getDeAsu(), documentoEmiBean.getEsDocEmi(), documentoEmiBean.getNuDiaAte(),documentoEmiBean.getCoTipDocAdm(),documentoEmiBean.getCoSubTipDocAdm(),
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                 documentoEmiBean.getNuCorDoc(), documentoEmiBean.getDeDocSig(),documentoEmiBean.getNuAnnExp(), documentoEmiBean.getNuSecExp(), 
                 documentoEmiBean.getNuDocEmi(),documentoEmiBean.getCoUseMod(), documentoEmiBean.getCoUseMod(), documentoEmiBean.getDeObsDoc(),
                 documentoEmiBean.getNuEmiProyecto(), documentoEmiBean.getNuAnnProyecto(), documentoEmiBean.getFePlaAte(), documentoEmiBean.getInPlaAte(),/*[HPB-02/10/20] Inicio - Plazo de Atencion*/
@@ -941,10 +982,17 @@ private SimpleJdbcCall spInsMesaVirtual;
 
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+            logger.log(Level.WARNING, "Numero de Documento Duplicado.: ",  con);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */               
             vReturn = "Numero de Documento Duplicado.";
             //con.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", documentoEmiBean.getCoEmpEmi());
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */    
             //vReturn = e.getMessage();
 
         }
@@ -1050,10 +1098,17 @@ private SimpleJdbcCall spInsMesaVirtual;
             
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+            logger.log(Level.WARNING, "Datos Duplicado Destino.: ",  con);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */                
             vReturn = "Datos Duplicado Destino.";
             //con.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */    
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", destinatarioDocumentoEmiBean.getCoUseCre());
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */                
             //vReturn = e.getMessage();
 
         }
@@ -1201,7 +1256,11 @@ private SimpleJdbcCall spInsMesaVirtual;
                 referenciaEmiDocBean.getNuDes(), referenciaEmiDocBean.getCoUseCre(), referenciaEmiDocBean.getCoUseMod()});/*[HPB-21/06/21] Campos Auditoria-*/
             vReturn = "OK";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */ 
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", referenciaEmiDocBean.getCoUseCre());
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */             
             //vReturn = e.getMessage();
 
         }
@@ -1329,7 +1388,11 @@ private SimpleJdbcCall spInsMesaVirtual;
                 expedienteBean.getNuFolios(), expedienteBean.getNuPlazo(), expedienteBean.getUsCreaAudi(), expedienteBean.getUsCreaAudi()});
             vReturn = "OK";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */  
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", expedienteBean.getUsCreaAudi());
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */              
             //vReturn = e.getMessage();
         }
         return vReturn;
@@ -1471,7 +1534,11 @@ private SimpleJdbcCall spInsMesaVirtual;
                 });
                 vReturn = "OK";
             } catch (Exception e) {
-                e.printStackTrace();
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+                //e.printStackTrace();
+                logger.log(Level.SEVERE, "Empleado responsable: {0}", docObjBean.getCoUseMod());
+                logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */                   
             }
         } else {
             StringBuilder sql1 = new StringBuilder();
@@ -1512,7 +1579,11 @@ private SimpleJdbcCall spInsMesaVirtual;
                 vReturn = "OK";
                 
             } catch (Exception e) {
-                e.printStackTrace();
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */    
+                //e.printStackTrace();
+                logger.log(Level.SEVERE, "Empleado responsable: {0}", docObjBean.getCoUseMod());
+                logger.log(Level.SEVERE, "Error al actualizar en la base de datos: ",  e);
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */                     
                 vReturn = e.getMessage().substring(0, 20);
             }
         }
@@ -1654,6 +1725,9 @@ private SimpleJdbcCall spInsMesaVirtual;
             sqlUpd.append("A.DE_ASU=?\n"
                     + ",A.NU_DIA_ATE=?\n"
                     + ",A.CO_TIP_DOC_ADM=?\n"
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+                    //+ ",A.CO_SUB_TIP_DOC=?\n"
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                     + ",A.NU_DOC_EMI=?\n"
                     + ",A.DE_DOC_SIG=?\n"
                     + ",A.NU_COR_DOC=nvl2(?,?,?)\n"
@@ -1698,7 +1772,10 @@ private SimpleJdbcCall spInsMesaVirtual;
         try {
             if (documentoEmiBean != null) {
                 this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{pcoUserMod, documentoEmiBean.getDeAsu(), documentoEmiBean.getNuDiaAte(),
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                     documentoEmiBean.getCoTipDocAdm(), documentoEmiBean.getNuDocEmi(), documentoEmiBean.getDeDocSig(),
+                    //documentoEmiBean.getCoTipDocAdm(), documentoEmiBean.getCoSubTipDocAdm(), documentoEmiBean.getNuDocEmi(), documentoEmiBean.getDeDocSig(),
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
                     documentoEmiBean.getNuDocEmi(), documentoEmiBean.getNuCorDoc(),documentoEmiBean.getNuCorDoc(), documentoEmiBean.getDeObsDoc(),
                     documentoEmiBean.getFePlaAte(), documentoEmiBean.getInPlaAte(),/*[HPB-02/10/20] Inicio - Plazo de Atencion*/
                     /*, nuAnn, documentoEmiBean.getCoDepEmi(), documentoEmiBean.getCoTipDocAdm(),
@@ -2509,7 +2586,7 @@ private SimpleJdbcCall spInsMesaVirtual;
                     
 	sql.append(") A ");
         sql.append("WHERE ROWNUM < 201");    
-
+        System.out.println("sql: "+ sql.toString());
         try {
 //            list = this.jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(DocumentoBean.class),
 //                    new Object[]{pannio,pcoDepen, pcoDepen, ptiDoc, pannio, ptiDoc});
@@ -2559,9 +2636,16 @@ private SimpleJdbcCall spInsMesaVirtual;
             this.jdbcTemplate.update(sqlUpd.toString(), new Object[]{nuAnn,nuEmi,coDep,coEmp,coUser,coUser});
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+            logger.log(Level.WARNING, "Datos Duplicado INSERT TDTV_PERSONAL_VB.: ",  con);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
             vReturn = "Datos Duplicado INSERT TDTV_PERSONAL_VB.";
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */   
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", coUser);
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */               
         }
         return vReturn;        
     }
@@ -2855,10 +2939,17 @@ private SimpleJdbcCall spInsMesaVirtual;
 
             vReturn = "OK";
         } catch (DuplicateKeyException con) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.SEVERE, "Numero de Documento Duplicado.: ",  con);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
             vReturn = "Numero de Documento Duplicado.";
             //con.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", documentoEmiBean.getCoUseMod());
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */                 
             //vReturn = e.getMessage();
 
         }
@@ -2998,7 +3089,11 @@ private SimpleJdbcCall spInsMesaVirtual;
             vReturn = "Datos Duplicado Destino.";
             //con.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Empleado responsable: {0}", destinatarioDocumentoEmiBean.getCoUseCre());
+            logger.log(Level.SEVERE, "Error al registrar en la base de datos: ",  e);
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
             //vReturn = e.getMessage();
 
         }
@@ -3182,8 +3277,14 @@ private SimpleJdbcCall spInsMesaVirtual;
                     new Object[]{pnuAnn, pnuEmi});
         } catch (EmptyResultDataAccessException e) {
             documentoEmiBean = null;
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            logger.log(Level.WARNING, "No se encontraron datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
         } catch (Exception e) {
-            logger.error("nu_ann="+pnuAnn+","+"nu_emi="+pnuEmi);
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
+            //logger.error("nu_ann="+pnuAnn+","+"nu_emi="+pnuEmi);
+            logger.log(Level.SEVERE, "Ocurrió un error al consultar en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */
             e.printStackTrace();
         }
         return documentoEmiBean;
@@ -3247,9 +3348,12 @@ private SimpleJdbcCall spInsMesaVirtual;
                     new Object[]{pnuAnn, pnuEmi});
         } catch (EmptyResultDataAccessException e) {
             documentoEmiBean = null;
-        } catch (Exception e) {            
-            logger.error("nu_ann="+pnuAnn+","+"nu_emi="+pnuEmi);
-            e.printStackTrace();
+        } catch (Exception e) {
+            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
+            //logger.error("nu_ann="+pnuAnn+","+"nu_emi="+pnuEmi);
+            //e.printStackTrace();
+            logger.log(Level.SEVERE, "Ocurrió un error al consultar en la base de datos: ", e );
+            /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar registros Log a nivel GRAVE */            
         }
         return documentoEmiBean;
     }

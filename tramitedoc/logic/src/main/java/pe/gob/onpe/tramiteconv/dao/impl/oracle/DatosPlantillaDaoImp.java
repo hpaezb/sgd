@@ -42,7 +42,10 @@ public class DatosPlantillaDaoImp extends SimpleJdbcDaoBase implements DatosPlan
                     "a.co_emp_res, \n" +
                     "b.co_empleado co_emp_fun, \n" +
                     "b.de_cargo_completo de_cargo_fun,\n" +
-                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') de_ti_fun, \n" +
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
+                    //"decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') de_ti_fun, \n" +
+                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','5','(df)','(e)') de_ti_fun, \n" +
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
                     "PK_SGD_DESCRIPCION.fu_iniciales_emp(a.co_emp_emi)|| decode (a.co_emp_emi,a.co_emp_res,'','/'|| lower(PK_SGD_DESCRIPCION.fu_iniciales_emp(a.co_emp_res))) de_iniciales,\n" +
                     "TO_CHAR(a.fe_emi, 'DD/MM/YYYY') fe_emi, \n" +
                     "trim(to_char(a.fe_emi,'DD \"de \"fmMonth \"de\" YYYY','NLS_DATE_LANGUAGE=SPANISH')) fe_emi_largo,\n" +
@@ -93,7 +96,10 @@ public class DatosPlantillaDaoImp extends SimpleJdbcDaoBase implements DatosPlan
                     "b.de_dependencia de_dep_dest_mae,\n" +
                     "b.de_cargo_completo de_tramite,\n" +
                     "decode (b.co_empleado, a.co_emp_des, PK_SGD_DESCRIPCION.de_cargo(b.co_cargo), PK_SGD_DESCRIPCION.de_cargo(e.cemp_co_cargo)) de_cargo_fun_dest_mae, \n" +
-                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') co_tramite,\n" +
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
+                    //"decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') co_tramite,\n" +
+                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','5','(df)','(e)') co_tramite, \n" +
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
                     "b.co_empleado co_local,\n" +
                     "a.co_emp_des co_empleado,\n" +
                     "a.ti_des co_tipo_destino ,\n" +
@@ -342,7 +348,10 @@ public class DatosPlantillaDaoImp extends SimpleJdbcDaoBase implements DatosPlan
                     "a.co_emp_res, \n" +
                     "b.co_empleado co_emp_fun, \n" +
                     "b.de_cargo_completo de_cargo_fun,\n" +
-                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') de_ti_fun, \n" +
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
+                    //"decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') de_ti_fun, \n" +
+                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','5','(df)','(e)') de_ti_fun, \n" +
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
                     "PK_SGD_DESCRIPCION.fu_iniciales_emp(a.co_emp_emi)|| decode (a.co_emp_emi,a.co_emp_res,'','/'|| lower(PK_SGD_DESCRIPCION.fu_iniciales_emp(a.co_emp_res))) de_iniciales,\n" +
                     "TO_CHAR(a.fe_emi, 'DD/MM/YYYY') fe_emi, \n" +
                     "trim(to_char(a.fe_emi,'DD \"de \"fmMonth \"de\" YYYY','NLS_DATE_LANGUAGE=SPANISH')) fe_emi_largo,\n" +
@@ -394,7 +403,10 @@ public class DatosPlantillaDaoImp extends SimpleJdbcDaoBase implements DatosPlan
                     "b.de_dependencia de_dep_dest_mae,\n" +
                     "b.de_cargo_completo de_tramite,\n" +
                     "decode (b.co_empleado, a.co_emp_des, PK_SGD_DESCRIPCION.de_cargo(b.co_cargo), PK_SGD_DESCRIPCION.de_cargo(e.cemp_co_cargo)) de_cargo_fun_dest_mae, \n" +
-                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') co_tramite,\n" +
+                    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
+                    //"decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','(e)') co_tramite,\n" +
+                    "decode(nvl(b.co_tipo_encargatura,'1'),'1',' ','4','(i)','5','(df)','(e)') co_tramite, \n" +
+                    /* [HPB] Fin 11/12/23 OS-0001287-2023 Agregar tipo de encargatura */
                     "b.co_empleado co_local,\n" +
                     "a.co_emp_des co_empleado,\n" +
                     "a.ti_des co_tipo_destino ,\n" +

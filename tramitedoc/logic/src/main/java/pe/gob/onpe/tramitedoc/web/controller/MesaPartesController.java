@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -75,6 +77,8 @@ public class MesaPartesController {
     @Autowired
     private ApplicationProperties applicationProperties;
     
+    private static final Logger logger = LogManager.getLogger(MesaPartesController.class);
+    
     @RequestMapping(method = RequestMethod.GET, params = "accion=goInicio")
     public String goInicio(HttpServletRequest request, Model model){
         System.out.println("accion=goInicio GET--> ");
@@ -118,9 +122,17 @@ public class MesaPartesController {
         buscarDocumentoExtRecepBean.setCoEmpleado(codEmpleado);
         buscarDocumentoExtRecepBean.setTiAcceso(tipAcceso);
         //buscarDocumentoExtRecepBean.setCoLocal(usuarioConfigBean.getCoLocal());
+        /* [HPB] Inicio 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
+        if("11351".equals(codDependencia)){
+        /* [HPB] Fin 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
         buscarDocumentoExtRecepBean.setCoDepEmi(usuarioConfigBean.getCoDepMp());
+        /* [HPB] Inicio 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
+        }else{
+            buscarDocumentoExtRecepBean.setCoDepEmi(codDependencia);
+        }
+        /* [HPB] Fin 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
         buscarDocumentoExtRecepBean.setInMesaPartes(usuarioConfigBean.getInMesaPartes());
-        
+
         List list = null;
 
         try{
@@ -157,7 +169,10 @@ public class MesaPartesController {
        String nuAnn = Utility.getInstancia().dateToFormatStringYYYY(new Date());
        String fechaActual = Utility.getInstancia().dateToFormatString(new Date());
        String fechaHoraActual = Utility.getInstancia().dateToFormatString2(new Date());
+       /* [HPB] Inicio 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
        String codDependencia = usuarioConfigBean.getCoDepMp();//usuario.getCoDep();
+       String codDependenciaUsuario = usuario.getCoDep();
+       /* [HPB] Fin 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
        DocumentoExtRecepBean documentoExtRecepBean;
        String pdeDepen = null;
        try{
@@ -170,6 +185,12 @@ public class MesaPartesController {
                 documentoExtRecepBean.setCoDepEmi(codDependencia);
                 documentoExtRecepBean.setCoLocEmi(usuarioConfigBean.getCoLocal());
                 documentoExtRecepBean.setCoEmpRes(usuario.getCempCodemp());
+                /* [HPB] Inicio 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
+                if(!"11351".equals(codDependenciaUsuario)){
+                    documentoExtRecepBean.setCoEmpEmi(usuario.getCempCodemp());
+                    //documentoExtRecepBean.setCoDepEmi(usuario.getCoDep());
+                }
+                /* [HPB] Fin 11/12/23 OS-0001287-2023 Registrar encargado de la mesa de partes correspondiente */
                 documentoExtRecepBean.setDeEmpRes(usuario.getDeFullName());
                 documentoExtRecepBean.setFeExp(fechaHoraActual);
                 documentoExtRecepBean.setNuAnn(nuAnn);
@@ -183,7 +204,6 @@ public class MesaPartesController {
                 model.addAttribute("lstTipDocDependencia",referencedData.listTipDocXDependencia(codDependencia));
                 model.addAttribute("lstPrioridadDestEmi",referencedData.getLstPrioridadDestEmi());           
                 model.addAttribute("pfechaHoraActual",fechaHoraActual);
-                
                 /*--HPB 13/01/20 Integrar PIDE--*/
                 String vIndicadorPide = commonQryService.obtenerValorParametro("IN_PIDE");
                 model.addAttribute("vIndicadorPide", vIndicadorPide);

@@ -737,11 +737,13 @@ public class DocumentoExtRecepServiceImp implements DocumentoExtRecepService{
                             /* [HPB] Inicio 25/08/22 OS-0000768-2022 */
                             String pcoEmpJefe = empleadoBean.getCempCodemp();
                             if(!(pcoEmpJefe!=null&&pcoEmpJefe.equals(pcoEmpRes))){//Se verifica si es el responsable de la UTD
-                            /* [HPB] Fin 25/08/22 OS-0000768-2022 */    
-                            if(!(pcoEmpEmi!=null&&pcoEmpEmi.equals(pcoEmpRes))){
-                                isChangeEstado=false;
-                                vReturn = "El documento solo puede ser cambiado por el Responsable del Área.";
-                            }
+                            /* [HPB] Fin 25/08/22 OS-0000768-2022 */
+                            /* [HPB] Inicio 11/12/23 OS-0001287-2023 Permitir a cualquier usuario modificar de REGISTRADOS a EN REGISTROS */
+                            //if(!(pcoEmpEmi!=null&&pcoEmpEmi.equals(pcoEmpRes))){
+                                //isChangeEstado=false;
+                                //vReturn = "El documento solo puede ser cambiado por el Responsable del Área.";
+                            //}
+                            /* [HPB] Fin 11/12/23 OS-0001287-2023 Permitir a cualquier usuario modificar de REGISTRADOS a EN REGISTROS */
                             /* [HPB] Inicio 25/08/22 OS-0000768-2022 */
                             }                                
                             /* [HPB] Fin 25/08/22 OS-0000768-2022 */

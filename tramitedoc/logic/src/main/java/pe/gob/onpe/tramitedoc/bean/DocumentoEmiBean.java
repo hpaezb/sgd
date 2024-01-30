@@ -115,6 +115,9 @@ public class DocumentoEmiBean {
     private String coTema;
     private String deTema;
     /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */     
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+    private String coSubTipDocAdm;
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
     public String getRecursoenvio() {
         return recursoenvio;
     }
@@ -866,4 +869,13 @@ public class DocumentoEmiBean {
         this.deTema = deTema;
     }
     /* [HPB] Fin 18/09/23 OS-0000786-2023 Mostrar el tema seleccionado en el detalle del documento y filtros de Reportes */
+    /* [HPB] Inicio 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
+    public String getCoSubTipDocAdm() {
+        return coSubTipDocAdm;
+    }
+
+    public void setCoSubTipDocAdm(String coSubTipDocAdm) {
+        this.coSubTipDocAdm = coSubTipDocAdm;
+    }
+    /* [HPB] Fin 11/12/23 OS-0001287-2023 Implementar SubTipo para documentos tipo PAPELETA */
 }
